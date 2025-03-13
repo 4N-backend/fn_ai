@@ -1,0 +1,25 @@
+services:
+  db:
+    container_name: db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: sa
+    networks:
+      - app_network
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    networks:
+      - app_network
+    ports:
+      - "9411:9411"
+
+networks:
+  app_network:
+    driver: bridge
