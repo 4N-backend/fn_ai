@@ -1,0 +1,42 @@
+server:
+  port: 18081  # 게이트웨이 서비스가 실행될 포트 번호
+
+spring:
+  main:
+    web-application-type: reactive  # Spring 애플리케이션이 리액티브 웹 애플리케이션으로 설정됨
+  application:
+    name: gateway-service  # 애플리케이션 이름을 'gateway-service'로 설정
+  cloud:
+    gateway:
+      routes:  # Spring Cloud Gateway의 라우팅 설정
+        - id: company-service  # 라우트 식별자
+          uri: lb://company-service
+          predicates:
+            - Path=/company/**
+#        - id: delivery-service  # 라우트 식별자
+#          uri: lb://delivery-service
+#          predicates:
+#            - Path=/delivery/**
+#        - id: hub-service  # 라우트 식별자
+#          uri: lb://hub-service
+#          predicates:
+#            - Path=/hub/**
+#        - id: notification-service  # 라우트 식별자
+#          uri: lb://notification-service
+#          predicates:
+#            - Path=/notification/**
+#        - id: order-service  # 라우트 식별자
+#          uri: lb://order-service
+#          predicates:
+#            - Path=/order/**
+#        - id: user-service  # 라우트 식별자
+#          uri: lb://user-service
+#          predicates:
+#            - Path=/user/**
+#        - id: product-service  # 라우트 식별자
+#          uri: lb://product-service
+#          predicates:
+#            - Path=/product/**
+      discovery:
+        locator:
+          enabled: true  # 서비스 디스커버리를 통해 동적으로 라우트를 생성하도록 설정
