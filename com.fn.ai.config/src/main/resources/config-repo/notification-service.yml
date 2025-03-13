@@ -1,0 +1,6 @@
+server:
+  port: 18086
+
+spring:
+  application:
+    name: notification-service

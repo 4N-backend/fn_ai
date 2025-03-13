@@ -1,0 +1,6 @@
+server:
+  port: 18085
+
+spring:
+  application:
+    name: order-service
