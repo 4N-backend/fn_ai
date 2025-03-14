@@ -1,0 +1,13 @@
+rootProject.name = 'root'
+
+include 'com.fn.ai.common'
+include 'com.fn.ai.company'
+include 'com.fn.ai.config'
+include 'com.fn.ai.delivery'
+include 'com.fn.ai.eureka'
+include 'com.fn.ai.gateway'
+include 'com.fn.ai.hub'
+include 'com.fn.ai.notification'
+include 'com.fn.ai.order'
+include 'com.fn.ai.product'
+include 'com.fn.ai.user'

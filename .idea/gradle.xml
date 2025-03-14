@@ -4,118 +4,20 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.auth" />
-        <option name="gradleJvm" value="17" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/com.fn.ai.auth" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.company" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/com.fn.ai.common" />
             <option value="$PROJECT_DIR$/com.fn.ai.company" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.config" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/com.fn.ai.config" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.delivery" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/com.fn.ai.delivery" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.eureka" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/com.fn.ai.eureka" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.gateway" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/com.fn.ai.gateway" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.hub" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/com.fn.ai.hub" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.notification" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/com.fn.ai.notification" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.order" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/com.fn.ai.order" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.product" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/com.fn.ai.product" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/com.fn.ai.user" />
-        <option name="gradleJvm" value="17" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/com.fn.ai.user" />
           </set>
         </option>
