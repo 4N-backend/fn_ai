@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/com.fn.ai.auth" />
     <file type="web" url="file://$PROJECT_DIR$/com.fn.ai.company" />
     <file type="web" url="file://$PROJECT_DIR$/com.fn.ai.config" />
     <file type="web" url="file://$PROJECT_DIR$/com.fn.ai.delivery" />
