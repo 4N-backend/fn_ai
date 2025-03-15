@@ -1,0 +1,9 @@
+server:
+  port: 18089
+
+spring:
+  application:
+    name: auth-service
+
+jwt:
+  secret-key: "7JWI64WV7ZWY7IS47JqUIDLssKjtlITroZzsoJ3tirggMTTsobAgNE7snoXri4jri6Q="

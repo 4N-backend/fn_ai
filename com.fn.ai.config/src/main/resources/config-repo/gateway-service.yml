@@ -13,30 +13,38 @@ spring:
           uri: lb://company-service
           predicates:
             - Path=/company/**
-#        - id: delivery-service  # 라우트 식별자
-#          uri: lb://delivery-service
-#          predicates:
-#            - Path=/delivery/**
-#        - id: hub-service  # 라우트 식별자
-#          uri: lb://hub-service
-#          predicates:
-#            - Path=/hub/**
-#        - id: notification-service  # 라우트 식별자
-#          uri: lb://notification-service
-#          predicates:
-#            - Path=/notification/**
-#        - id: order-service  # 라우트 식별자
-#          uri: lb://order-service
-#          predicates:
-#            - Path=/order/**
-#        - id: user-service  # 라우트 식별자
-#          uri: lb://user-service
-#          predicates:
-#            - Path=/user/**
-#        - id: product-service  # 라우트 식별자
-#          uri: lb://product-service
-#          predicates:
-#            - Path=/product/**
+        - id: delivery-service  # 라우트 식별자
+          uri: lb://delivery-service
+          predicates:
+            - Path=/delivery/**
+        - id: hub-service  # 라우트 식별자
+          uri: lb://hub-service
+          predicates:
+            - Path=/hub/**
+        - id: notification-service  # 라우트 식별자
+          uri: lb://notification-service
+          predicates:
+            - Path=/notification/**
+        - id: order-service  # 라우트 식별자
+          uri: lb://order-service
+          predicates:
+            - Path=/api/order/**
+        - id: user-service  # 라우트 식별자
+          uri: lb://user-service
+          predicates:
+            - Path=api/user/**
+        - id: product-service  # 라우트 식별자
+          uri: lb://product-service
+          predicates:
+            - Path=/product/**
+        - id: auth-service  # 라우트 식별자
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
       discovery:
         locator:
           enabled: true  # 서비스 디스커버리를 통해 동적으로 라우트를 생성하도록 설정
+
+
+jwt:
+  secret-key: "7JWI64WV7ZWY7IS47JqUIDLssKjtlITroZzsoJ3tirggMTTsobAgNE7snoXri4jri6Q="
