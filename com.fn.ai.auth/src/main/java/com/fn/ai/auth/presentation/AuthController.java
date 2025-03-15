@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AuthService authService;
+  private final AuthService authService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<SignUpResponseDto> signup(@RequestBody SignUpRequestDto requestDto) {
-        return ResponseEntity.ok().body(authService.signup(requestDto));
-    }
+  @PostMapping("/signup")
+  public ResponseEntity<SignUpResponseDto> signup(@RequestBody SignUpRequestDto requestDto) {
+    return ResponseEntity.ok().body(authService.signup(requestDto));
+  }
 }

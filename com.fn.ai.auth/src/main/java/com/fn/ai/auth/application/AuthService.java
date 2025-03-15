@@ -12,21 +12,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserClient userClient;
+  private final UserClient userClient;
 
-    private final PasswordEncoder passwordEncoder;
+  private final PasswordEncoder passwordEncoder;
 
-    public SignUpResponseDto signup(SignUpRequestDto requestDto) {
+  public SignUpResponseDto signup(SignUpRequestDto requestDto) {
 
-        UserRegisterRequestDto userResponseDto = UserRegisterRequestDto.builder()
-                .username(requestDto.username())
-                .password(passwordEncoder.encode(requestDto.password()))
-                .role(requestDto.role())
-                .build();
+    UserRegisterRequestDto userResponseDto = UserRegisterRequestDto.of(
+        requestDto.username(),
+        passwordEncoder.encode(requestDto.password()),
+        requestDto.role());
 
-        SignUpResponseDto responseDto = userClient.signup(userResponseDto).orElseThrow(
-                () -> new IllegalArgumentException("Signup failed"));
-        //후처리 로직(?)
-        return responseDto;
-    }
+    SignUpResponseDto responseDto = userClient.signup(userResponseDto).orElseThrow(
+        () -> new IllegalArgumentException("Signup failed"));
+    //후처리 로직(?)
+    return responseDto;
+  }
 }

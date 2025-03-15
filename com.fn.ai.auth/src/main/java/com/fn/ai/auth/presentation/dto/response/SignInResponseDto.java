@@ -4,4 +4,5 @@ import lombok.Builder;
 
 @Builder
 public record SignInResponseDto(String username) {
+
 }

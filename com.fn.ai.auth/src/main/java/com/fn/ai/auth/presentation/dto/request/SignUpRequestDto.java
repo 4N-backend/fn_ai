@@ -6,4 +6,5 @@ import com.fn.ai.auth.security.UserRoleEnum;
 public record SignUpRequestDto(String username,
                                String password,
                                UserRoleEnum role) {
+
 }
