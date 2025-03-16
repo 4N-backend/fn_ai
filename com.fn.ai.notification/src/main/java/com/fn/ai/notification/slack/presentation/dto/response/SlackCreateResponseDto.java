@@ -7,26 +7,30 @@ import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
-public class SlackResponseDto {
+public class SlackCreateResponseDto {
     private UUID slackId;
     private String message;
     private String recipientSlackId;
     private Timestamp sentAt;
 
     @Builder
-    private SlackResponseDto(UUID slackId, String message, String recipientSlackId, Timestamp sentAt) {
+    private SlackCreateResponseDto(UUID slackId, String message, String recipientSlackId, Timestamp sentAt) {
         this.slackId = slackId;
         this.message = message;
         this.recipientSlackId = recipientSlackId;
         this.sentAt = sentAt;
     }
 
-    public static SlackResponseDto from(Slack slack) {
-        return SlackResponseDto.builder()
+    public static SlackCreateResponseDto from(Slack slack) {
+        return SlackCreateResponseDto.builder()
                 .slackId(slack.getSlackId())
                 .message(slack.getMessage())
                 .recipientSlackId(slack.getRecipientSlackId())
                 .sentAt(slack.getSentAt())
                 .build();
     }
+
+
+
+
 }

@@ -13,6 +13,8 @@ public enum ErrorType {
     INVALID_RECIPIENT(HttpStatus.BAD_REQUEST, "SLACK002", "유효하지 않은 수신자 정보입니다."),
     // 지정한 채널을 찾을 수 없는 경우
     CHANNEL_NOT_FOUND(HttpStatus.NOT_FOUND, "SLACK003", "지정한 Slack 채널을 찾을 수 없습니다."),
+    // 지정한 사용자를 찾을 수 없는 경우
+    SLACK_NOT_FOUND(HttpStatus.NOT_FOUND, "SLACK004", "지정한 Slack 사용자를 찾을 수 없습니다."),
     // Slack API 내부 오류 발생 시
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "SLACK500", "Slack 처리 중 내부 서버 오류가 발생하였습니다.");
 

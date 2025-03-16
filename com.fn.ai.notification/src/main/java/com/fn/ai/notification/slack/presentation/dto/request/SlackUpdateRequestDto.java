@@ -2,10 +2,11 @@ package com.fn.ai.notification.slack.presentation.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
-public class SlackRequestDto {
-    private String recipientSlackId;
+public class SlackUpdateRequestDto {
     private String message;
 }
