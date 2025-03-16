@@ -8,9 +8,11 @@ import com.fn.ai.notification.slack.infrastructure.client.SlackApiClient;
 import com.fn.ai.notification.slack.infrastructure.dto.response.SlackSendResponse;
 import com.fn.ai.notification.slack.presentation.dto.request.SlackCreateRequestDto;
 import com.fn.ai.notification.slack.presentation.dto.request.SlackUpdateRequestDto;
-import com.fn.ai.notification.slack.presentation.dto.response.SlackCreateResponseDto;
+import com.fn.ai.notification.slack.presentation.dto.response.SlackResponseDto;
 import com.fn.ai.notification.slack.presentation.dto.response.SlackUpdateResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +27,7 @@ public class SlackServiceImpl implements SlackService {
 
     @Transactional
     @Override
-    public SlackCreateResponseDto createSlackMessage(SlackCreateRequestDto requestDto) {
+    public SlackResponseDto createSlackMessage(SlackCreateRequestDto requestDto) {
         SlackSendResponse sendResponse = slackApiClient.sendMessage(requestDto);
 
         UUID userId = UUID.randomUUID();
@@ -39,7 +41,7 @@ public class SlackServiceImpl implements SlackService {
         );
         slackRepository.save(slack);
 
-        return SlackCreateResponseDto.from(slack);
+        return SlackResponseDto.from(slack);
     }
 
     @Transactional
@@ -58,5 +60,25 @@ public class SlackServiceImpl implements SlackService {
         slackRepository.save(slack);
 
         return SlackUpdateResponseDto.from(slack);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public SlackResponseDto getSlackMessage(UUID slackId) {
+        Slack slack = slackRepository.findById(slackId)
+                .orElseThrow(() -> new CustomException(ErrorType.SLACK_NOT_FOUND));
+        return SlackResponseDto.from(slack);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<SlackResponseDto> getAllSlackMessage(String recievedSlackId, Pageable pageable) {
+        Page<Slack> page;
+        if (recievedSlackId != null && !recievedSlackId.isEmpty()) {
+            page = slackRepository.findByRecipientSlackId(recievedSlackId, pageable);
+        } else {
+            page = slackRepository.findAll(pageable);
+        }
+        return page.map(SlackResponseDto::from);
     }
 }
