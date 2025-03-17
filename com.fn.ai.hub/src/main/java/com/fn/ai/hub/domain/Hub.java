@@ -34,4 +34,22 @@ public class Hub {
 
     @Embedded
     private Location location;
+
+    public Hub(String name,String address,Double latitude,Double longitude){
+        this.name = new Name(name);
+        this.address = new Address(address);
+        this.location = new Location(latitude, longitude);
+    }
+
+    public void updatedName(String value){
+        this.name = this.name.update(value);
+    }
+
+    public void updateAddress(String value){
+        this.address = this.address.update(value);
+    }
+
+    public void updatedLocation(double latitude,double longitude){
+        this.location = this.location.update(latitude, longitude);
+    }
 }
