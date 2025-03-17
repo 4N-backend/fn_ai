@@ -5,6 +5,7 @@ import com.fn.ai.notification.slack.common.ResponseDataDto;
 import com.fn.ai.notification.slack.common.ResponseStatus;
 import com.fn.ai.notification.slack.presentation.dto.request.SlackCreateRequestDto;
 import com.fn.ai.notification.slack.presentation.dto.request.SlackUpdateRequestDto;
+import com.fn.ai.notification.slack.presentation.dto.response.SlackDeleteResponseDto;
 import com.fn.ai.notification.slack.presentation.dto.response.SlackResponseDto;
 import com.fn.ai.notification.slack.presentation.dto.response.SlackUpdateResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -81,4 +82,20 @@ public class SlackController {
         Page<SlackResponseDto> page = slackService.getAllSlackMessage(recievedSlackId, pageable);
         return ResponseEntity.ok(new ResponseDataDto<>(ResponseStatus.GET_SLACK_SUCCESS, page));
     }
+
+    /**
+     * Slack 메시지 삭제 API (소프트 딜리트)
+     *
+     * @param slackId Slack 메시지 ID
+     * @return 삭제된 Slack 메시지 ID 응답
+     */
+    @DeleteMapping("/{slackId}") // TODO: MASTER 권한만 수정할 수 있도록 권한 설정
+    public ResponseEntity<ResponseDataDto<SlackDeleteResponseDto>> deleteMessage(@PathVariable UUID slackId) {
+        slackService.deleteSlackMessage(slackId);
+        SlackDeleteResponseDto responseDto = SlackDeleteResponseDto.builder()
+                .slackId(slackId)
+                .build();
+        return ResponseEntity.ok(new ResponseDataDto<>(ResponseStatus.DELETE_SLACK_SUCCESS, responseDto));
+    }
+
 }

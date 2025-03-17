@@ -28,6 +28,7 @@ public class SlackApiClient {
 
     private static final String POST_MESSAGE_URL = "https://slack.com/api/chat.postMessage";
     private static final String UPDATE_MESSAGE_URL = "https://slack.com/api/chat.update";
+    private static final String DELETE_MESSAGE_URL = "https://slack.com/api/chat.delete";
 
     /**
      * Slack 메시지 생성 요청
@@ -67,6 +68,37 @@ public class SlackApiClient {
         checkHttpStatus(response);
 
         return parseSlackResponse(response.getBody());
+    }
+
+    /**
+     * Slack 메시지 삭제 요청
+     * 채널과 ts를 기반으로 Slack API를 호출하여 메시지 삭제
+     */
+    public void deleteMessage(String recipientChannelId, String slackTs) {
+        HttpEntity<String> httpRequest = createHttpRequest(
+                String.format("{\"channel\":\"%s\", \"ts\":\"%s\"}",
+                        recipientChannelId,
+                        slackTs)
+        );
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                DELETE_MESSAGE_URL, HttpMethod.POST, httpRequest, String.class
+        );
+        checkHttpStatus(response);
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode root = objectMapper.readTree(response.getBody());
+            if (!root.get("ok").asBoolean()) {
+                String slackError = root.has("error") ? root.get("error").asText() : "unknown_error";
+                if ("channel_not_found".equals(slackError)) {
+                    throw new CustomException(ErrorType.CHANNEL_NOT_FOUND);
+                }
+                throw new CustomException(ErrorType.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            throw new CustomException(ErrorType.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

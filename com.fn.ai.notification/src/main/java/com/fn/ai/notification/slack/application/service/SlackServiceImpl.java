@@ -81,4 +81,17 @@ public class SlackServiceImpl implements SlackService {
         }
         return page.map(SlackResponseDto::from);
     }
+
+    @Transactional
+    @Override
+    public void deleteSlackMessage(UUID slackId) {
+        Slack slack = slackRepository.findById(slackId)
+                .orElseThrow(() -> new CustomException(ErrorType.SLACK_NOT_FOUND));
+
+        // Slack API를 호출하여 메시지 삭제
+        slackApiClient.deleteMessage(slack.getChannelId(), slack.getSlackTs());
+
+        // TODO: 소프트 삭제로 변경
+        slackRepository.delete(slack);
+    }
 }

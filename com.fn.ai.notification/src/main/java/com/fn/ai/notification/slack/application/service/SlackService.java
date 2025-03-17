@@ -19,5 +19,7 @@ public interface SlackService {
 
     Page<SlackResponseDto> getAllSlackMessage(String recievedSlackId, Pageable pageable);
 
+    void deleteSlackMessage(UUID slackId);
+
 
 }
