@@ -1,58 +1,63 @@
 package com.fn.ai.common.application;
 
+import com.fn.ai.common.exception.code.CommonResponseCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @RequiredArgsConstructor
 @Getter
 public class CommonResponse<T> {
 
-    private final HttpStatus status;
     private final String message;
     private final T result;
 
     /**
      * 성공 메서드
      */
-    public static <T> CommonResponse<T> success(T result) {
-        return new CommonResponse<>(HttpStatus.OK, "success", result);
+    public static <T> ResponseEntity<CommonResponse<T>> success(T result){
+        return new ResponseEntity<>(createCommonResponse(CommonResponseCode.SUCCESS.getMessage(), result),
+            HttpStatus.OK);
     }
 
-    public static <T> CommonResponse<T> success(String message, T result) {
-        return new CommonResponse<>(HttpStatus.OK, message, result);
+    public static <T> ResponseEntity<CommonResponse<T>> success(String message, T result) {
+        return new ResponseEntity<>(createCommonResponse(message, result), HttpStatus.OK);
     }
+
     /**
      * 에러
      */
-    public static <T> CommonResponse<T> error(HttpStatus status, String message) {
-        return new CommonResponse<>(status, message, null);
+
+    public static <T> ResponseEntity<CommonResponse<T>> badRequest(){
+        return new ResponseEntity<>(createCommonResponse(CommonResponseCode.BAD_REQUEST.getMessage(), null), HttpStatus.BAD_REQUEST);
     }
 
-    public static <T> CommonResponse<T> badRequest(String message) {
-        return new CommonResponse<>(HttpStatus.BAD_REQUEST, message, null);
+    public static <T> ResponseEntity<CommonResponse<T>> notFound(){
+        return new ResponseEntity<>(
+            createCommonResponse(CommonResponseCode.DATA_NOT_FOUND.getMessage(), null),
+            HttpStatus.NOT_FOUND);
     }
 
-    public static <T> CommonResponse<T> notFound(String message) {
-        return new CommonResponse<>(HttpStatus.NOT_FOUND, message, null);
-    }
+    public static <T> ResponseEntity<CommonResponse<T>> unauthorized(){
+        return new ResponseEntity<>(
+            createCommonResponse(CommonResponseCode.UNAUTHORIZED.getMessage(), null),
+            HttpStatus.UNAUTHORIZED);
 
-    public static <T> CommonResponse<T> unauthorized(String message) {
-        return new CommonResponse<>(HttpStatus.UNAUTHORIZED, message, null);
     }
-
 
     /**
      * of
-
+     * status : HttpStatus
+     * message
+     * result
      */
-    public static <T> CommonResponse<T> of(HttpStatus status, String message,
+    public static <T>ResponseEntity<CommonResponse<T>> of(HttpStatus status,String message, T result){
+        return new ResponseEntity<>(createCommonResponse(message,result),status);
+    }
+
+    private static  <T> CommonResponse<T> createCommonResponse(String message,
         T result) {
-        return new CommonResponse<>(status, message, result);
+        return new CommonResponse<>(message, result);
     }
-
-    public boolean isSuccess(){
-        return this.status.is2xxSuccessful();
-    }
-
 }
