@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class HubRoute {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID])
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "hub_route_id")
     private UUID id;
 
