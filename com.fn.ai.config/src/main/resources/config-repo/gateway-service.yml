@@ -28,7 +28,7 @@ spring:
         - id: order-service  # 라우트 식별자
           uri: lb://order-service
           predicates:
-            - Path=/api/order/**
+            - Path=/api/orders/**
         - id: user-service  # 라우트 식별자
           uri: lb://user-service
           predicates:
