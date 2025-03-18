@@ -1,8 +1,8 @@
 package com.fn.ai.delivery.presentation;
 
 import com.fn.ai.delivery.application.DeliveryService;
-import com.fn.ai.delivery.dto.DeliveryCreateRequestDto;
-import com.fn.ai.delivery.dto.DeliveryCreateResponseDto;
+import com.fn.ai.delivery.presentation.dto.DeliveryCreateRequestDto;
+import com.fn.ai.delivery.presentation.dto.DeliveryCreateResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

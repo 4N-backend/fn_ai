@@ -1,7 +1,6 @@
 package com.fn.ai.delivery.infrastructure;
 
 import com.fn.ai.delivery.application.client.HubClient;
-import com.fn.ai.delivery.application.client.dto.HubRouteRequestDto;
 import com.fn.ai.delivery.application.client.dto.HubRouteResponseDto;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

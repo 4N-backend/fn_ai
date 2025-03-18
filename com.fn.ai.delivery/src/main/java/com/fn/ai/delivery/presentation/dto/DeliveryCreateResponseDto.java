@@ -1,4 +1,4 @@
-package com.fn.ai.delivery.dto;
+package com.fn.ai.delivery.presentation.dto;
 
 import com.fn.ai.delivery.model.Delivery;
 import com.fn.ai.delivery.model.type.DeliveryStatus;
@@ -9,18 +9,19 @@ import lombok.Builder;
 public record DeliveryCreateResponseDto(
     UUID deliveryId,
     UUID orderId,
-    UUID startHubId,
-    UUID endHubId,
-    String address,
+    UUID departureHubId,
+    UUID arrivalHubId,
+    String targetAddress,
     DeliveryStatus status
 ) {
+
   public static DeliveryCreateResponseDto fromEntity(Delivery delivery) {
     return DeliveryCreateResponseDto.builder()
         .deliveryId(delivery.getId())
         .orderId(delivery.getOrderId())
-        .startHubId(delivery.getDepartureHubId())
-        .endHubId(delivery.getArrivalHubId())
-        .address(delivery.getTargetAddress())
+        .departureHubId(delivery.getDepartureHubId())
+        .arrivalHubId(delivery.getArrivalHubId())
+        .targetAddress(delivery.getTargetAddress().getValue())
         .status(delivery.getStatus())
         .build();
   }
