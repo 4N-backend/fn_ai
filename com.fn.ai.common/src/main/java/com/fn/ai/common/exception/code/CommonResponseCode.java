@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum CommonResponseCode {
     SUCCESS(HttpStatus.OK,"요청 성공"),
+    CREATED(HttpStatus.CREATED, "생성 성공"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     UNAUTHORIZED( HttpStatus.UNAUTHORIZED,"유효한 인증 정보가 아닙니다."),
     FORBIDDEN(HttpStatus.FORBIDDEN,"권한이 없습니다."),
