@@ -8,7 +8,7 @@ spring:
     name: gateway-service  # 애플리케이션 이름을 'gateway-service'로 설정
   cloud:
     gateway:
-      routes:  # Spring Cloud Gateway의 라우팅 설정
+      routes: # Spring Cloud Gateway의 라우팅 설정
         - id: company-service  # 라우트 식별자
           uri: lb://company-service
           predicates:
@@ -36,7 +36,7 @@ spring:
         - id: product-service  # 라우트 식별자
           uri: lb://product-service
           predicates:
-            - Path=/product/**
+            - Path=/api/products/**
         - id: auth-service  # 라우트 식별자
           uri: lb://auth-service
           predicates:
@@ -44,7 +44,6 @@ spring:
       discovery:
         locator:
           enabled: true  # 서비스 디스커버리를 통해 동적으로 라우트를 생성하도록 설정
-
 
 jwt:
   secret-key: "7JWI64WV7ZWY7IS47JqUIDLssKjtlITroZzsoJ3tirggMTTsobAgNE7snoXri4jri6Q="
