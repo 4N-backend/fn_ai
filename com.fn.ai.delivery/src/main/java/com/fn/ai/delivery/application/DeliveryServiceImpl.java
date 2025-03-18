@@ -1,14 +1,13 @@
 package com.fn.ai.delivery.application;
 
 import com.fn.ai.delivery.application.client.HubClient;
-import com.fn.ai.delivery.application.client.dto.HubRouteRequestDto;
 import com.fn.ai.delivery.application.client.dto.HubRouteResponseDto;
-import com.fn.ai.delivery.dto.DeliveryCreateRequestDto;
-import com.fn.ai.delivery.dto.DeliveryCreateResponseDto;
 import com.fn.ai.delivery.model.Delivery;
-import com.fn.ai.delivery.model.repository.DeliveryRepository;
 import com.fn.ai.delivery.model.DeliveryRoute;
+import com.fn.ai.delivery.model.repository.DeliveryRepository;
 import com.fn.ai.delivery.model.repository.DeliveryRouteRepository;
+import com.fn.ai.delivery.presentation.dto.DeliveryCreateRequestDto;
+import com.fn.ai.delivery.presentation.dto.DeliveryCreateResponseDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,8 +41,8 @@ public class DeliveryServiceImpl implements DeliveryService {
             delivery.getId(),
             routeStopInfo.departureHubId(),
             routeStopInfo.arrivalHubId(),
-            routeStopInfo.estimatedDistance(),
-            routeStopInfo.estimatedDuration())).toList();
+            routeStopInfo.distance(),
+            routeStopInfo.travelTime())).toList();
 
     deliveryRouteRepository.saveAll(routes);
 
