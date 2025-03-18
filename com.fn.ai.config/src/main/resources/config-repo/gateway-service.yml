@@ -16,7 +16,7 @@ spring:
         - id: delivery-service  # 라우트 식별자
           uri: lb://delivery-service
           predicates:
-            - Path=/delivery/**
+            - Path=/api/deliveries/**
         - id: hub-service  # 라우트 식별자
           uri: lb://hub-service
           predicates:
