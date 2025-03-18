@@ -1,5 +1,7 @@
 package com.fn.ai.hub.presentation;
 
+import com.fn.ai.common.application.CommonResponse;
+import com.fn.ai.common.exception.code.CommonResponseCode;
 import com.fn.ai.hub.application.HubService;
 import com.fn.ai.hub.application.dto.request.HubCreateRequestDto;
 import com.fn.ai.hub.application.dto.request.HubUpdateRequestDto;
@@ -26,33 +28,36 @@ public class HubController {
     private final HubService hubService;
 
     @PostMapping("/")
-    public ResponseEntity<HubResponseDto> createHub(@RequestBody HubCreateRequestDto requestDto) {
+    public ResponseEntity<CommonResponse<HubResponseDto>> createHub(@RequestBody HubCreateRequestDto requestDto) {
 
         HubResponseDto responseDto = hubService.createHub(requestDto);
-        return ResponseEntity.ok(responseDto);
+        return CommonResponse.of(CommonResponseCode.CREATED.getCode(),
+            CommonResponseCode.CREATED.getMessage(), responseDto);
     }
 
     @GetMapping("/{hub_id}")
-    public ResponseEntity<HubResponseDto> getHub(@PathVariable UUID hub_id) {
+    public ResponseEntity<CommonResponse<HubResponseDto>> getHub(@PathVariable UUID hub_id) {
 
         HubResponseDto responseDto = hubService.getHub(hub_id);
-        return ResponseEntity.ok(responseDto);
+        return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.CREATED.getMessage(), responseDto);
     }
 
     @GetMapping("/")
-    public ResponseEntity<Page<HubResponseDto>> getAllHub(
+    public ResponseEntity<CommonResponse<Page<HubResponseDto>>> getAllHub(
         @RequestParam int page,
         @RequestParam int size,
         @RequestParam String sortBy,
         @RequestParam boolean isAsc
     ) {
 
-        Page<HubResponseDto> responseDtos = hubService.getAllHub(page, size, sortBy, isAsc);
-        return ResponseEntity.ok(responseDtos);
+        Page<HubResponseDto> responseDto = hubService.getAllHub(page, size, sortBy, isAsc);
+        return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), responseDto);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<HubResponseDto>> searchHub(
+    public ResponseEntity<CommonResponse<Page<HubResponseDto>>> searchHub(
         @RequestParam int page,
         @RequestParam int size,
         @RequestParam String sortBy,
@@ -60,28 +65,26 @@ public class HubController {
         @RequestParam String keyword
     ) {
 
-        Page<HubResponseDto> responseDtos = hubService.searchHub(page, size, sortBy, isAsc,
+        Page<HubResponseDto> responseDto = hubService.searchHub(page, size, sortBy, isAsc,
             keyword);
-        return ResponseEntity.ok(responseDtos);
+        return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), responseDto);
     }
 
     @PutMapping("/{hub_id}")
-    public ResponseEntity<HubResponseDto> updateHub(@RequestBody HubUpdateRequestDto requestDto,
+    public ResponseEntity<CommonResponse<HubResponseDto>> updateHub(@RequestBody HubUpdateRequestDto requestDto,
         @PathVariable UUID hub_id) {
 
         HubResponseDto responseDto = hubService.updateHub(requestDto, hub_id);
-        return ResponseEntity.ok(responseDto);
+        return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), responseDto);
     }
 
     @DeleteMapping("/{hub_id}")
-    public ResponseEntity<HubResponseDto> deleteHub(@PathVariable UUID hub_id) {
+    public ResponseEntity<CommonResponse<HubResponseDto>> deleteHub(@PathVariable UUID hub_id) {
 
         HubResponseDto responseDto = hubService.deleteHub(hub_id);
-        return ResponseEntity.ok(responseDto);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> hello(){
-        return ResponseEntity.ok("호날두 사랑해");
+        return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), responseDto);
     }
 }
