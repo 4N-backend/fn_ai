@@ -1,0 +1,46 @@
+package com.fn.ai.order.model;
+
+import com.fn.ai.order.presentation.dto.OrderItemRequestDto;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Entity(name = "p_order_item")
+public class OrderItem {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
+
+  @ManyToOne
+  @JoinColumn(name = "order_id", nullable = false)
+  private Order order;
+
+  private UUID productId;
+
+  private int quantity;
+
+  public static OrderItem of(OrderItemRequestDto requestDto) {
+    return OrderItem.builder()
+        .productId(requestDto.productId())
+        .quantity(requestDto.quantity())
+        .build();
+  }
+
+  public void addOrder(Order order) {
+    this.order = order;
+  }
+
+}
