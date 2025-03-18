@@ -42,7 +42,9 @@ public class DeliveryServiceImpl implements DeliveryService {
             routeStopInfo.departureHubId(),
             routeStopInfo.arrivalHubId(),
             routeStopInfo.distance(),
-            routeStopInfo.travelTime())).toList();
+            routeStopInfo.travelTime(),
+            routeStopInfo.sequence()
+        )).toList();
 
     deliveryRouteRepository.saveAll(routes);
 

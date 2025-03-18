@@ -11,7 +11,8 @@ public record HubRouteResponseDto(
       UUID departureHubId,
       UUID arrivalHubId,
       Double distance,
-      Long travelTime
+      Long travelTime,
+      Long sequence
   ) {
 
   }
