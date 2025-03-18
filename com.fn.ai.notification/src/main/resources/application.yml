@@ -3,6 +3,16 @@ spring:
     active: local
   application:
     name: notification-service
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/slack
+#    username: sa
+#    password: sa
+#    jpa:
+#      hibernate:
+#        ddl-auto: update
+#      show-sql: true
+#      database-platform: org.hibernate.dialect.PostgreSQLDialect
+
   config:
     import: "configserver:"
   cloud:
@@ -16,6 +26,10 @@ management:
     web:
       exposure:
         include: refresh
+
+slack:
+  bot:
+    token: {SLACK_BOT_TOKEN}
 
 eureka:
   client:
