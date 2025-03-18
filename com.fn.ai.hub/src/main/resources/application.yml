@@ -10,20 +10,6 @@ spring:
       discovery:
         enabled: true
         service-id: config-server
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/hub
-    username: postgres
-    password: 1234
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: create
-
 
 management:
   endpoints:

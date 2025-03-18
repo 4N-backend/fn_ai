@@ -4,7 +4,6 @@ import com.fn.ai.hub.domain.vo.Address;
 import com.fn.ai.hub.domain.vo.Location;
 import com.fn.ai.hub.domain.vo.Name;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,7 +40,14 @@ public class Hub {
         this.location = new Location(latitude, longitude);
     }
 
-    public void updatedName(String value){
+    public void updateHub(String newName, String newAddress, double newlatitude,
+        double newlongitude) {
+        updateName(newName);
+        updateAddress(newAddress);
+        updatedLocation(newlatitude,newlongitude);
+    }
+
+    public void updateName(String value){
         this.name = this.name.update(value);
     }
 
@@ -51,5 +57,13 @@ public class Hub {
 
     public void updatedLocation(double latitude,double longitude){
         this.location = this.location.update(latitude, longitude);
+    }
+
+    public void deleteHub() {
+        /**
+         * TODO
+         * soft delete 수행
+         * 나중에 BaseEntity에서 하거나, repository에서 직접 하는거로
+         */
     }
 }
