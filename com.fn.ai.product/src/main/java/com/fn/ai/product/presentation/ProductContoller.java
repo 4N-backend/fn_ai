@@ -6,6 +6,7 @@ import com.fn.ai.product.presentation.dto.request.ProductCreateResponseDto;
 import com.fn.ai.product.presentation.dto.response.ProductResponseDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateResponseDto;
+import jakarta.validation.Valid;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ProductContoller {
 
   @PostMapping
   public ResponseEntity<ProductCreateResponseDto> createProduct(
-      @RequestBody ProductCreateRequestDto product) {
+      @Valid @RequestBody ProductCreateRequestDto product) {
     return ResponseEntity.ok().body(productService.createProduct(product));
   }
 
