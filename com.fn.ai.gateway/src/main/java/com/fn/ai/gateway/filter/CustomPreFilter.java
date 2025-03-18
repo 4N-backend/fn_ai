@@ -36,21 +36,18 @@ public class CustomPreFilter implements GlobalFilter, Ordered {
 
     String tokenValue = jwtUtil.getJwtFromHeader(request);
 
-    if (StringUtils.hasText(tokenValue)) {
-
-      if (!jwtUtil.validateToken(tokenValue)) {
-        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-        return exchange.getResponse().setComplete();
-      }
-
-      Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
-
-      exchange.getRequest().mutate()
-          .header("X-User-Name", info.getSubject())
-          .header("X-User-Id", (String) info.get(JwtUtil.AUTHORIZATION_ID))
-          .header("X-User-Role", (String) info.get(JwtUtil.AUTHORIZATION_KEY))
-          .build();
+    if (!StringUtils.hasText(tokenValue) || !jwtUtil.validateToken(tokenValue)) {
+      exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+      return exchange.getResponse().setComplete();
     }
+
+    Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
+
+    exchange.getRequest().mutate()
+        .header("X-User-Name", info.getSubject())
+        .header("X-User-Id", (String) info.get(JwtUtil.AUTHORIZATION_ID))
+        .header("X-User-Role", (String) info.get(JwtUtil.AUTHORIZATION_KEY))
+        .build();
 
     return chain.filter(exchange);
   }

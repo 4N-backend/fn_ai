@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/com.fn.ai.auth" />
             <option value="$PROJECT_DIR$/com.fn.ai.common" />
             <option value="$PROJECT_DIR$/com.fn.ai.company" />
             <option value="$PROJECT_DIR$/com.fn.ai.config" />
