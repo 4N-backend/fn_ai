@@ -7,7 +7,6 @@ import com.fn.ai.order.infrastructure.DeliveryFeignClient;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Component
 @RequiredArgsConstructor
@@ -17,8 +16,7 @@ public class DeliveryClientImpl implements DeliveryClient {
 
 
   @Override
-  public Optional<DeliveryCreateResponseDto> createDelivery(
-      @RequestBody DeliveryCreateRequestDto requestDto) {
+  public Optional<DeliveryCreateResponseDto> createDelivery(DeliveryCreateRequestDto requestDto) {
     return deliveryFeignClient.createDelivery(requestDto);
   }
 }

@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient("product-service")
 public interface ProductFeignClient {
 
-  @PostMapping("/api/products")
-  Boolean reduceStockByOrderItems(
-      @RequestBody List<OrderItemRequestDto> requestDto
-  );
+  @PostMapping("/api/products/reduce")
+  Boolean reduceStockByOrderItems(@RequestBody List<OrderItemRequestDto> requestDto);
 }
