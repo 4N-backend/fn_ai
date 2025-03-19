@@ -25,7 +25,7 @@ public class UserContextFilter extends OncePerRequestFilter {
 
     String requestUri = request.getRequestURI();
 
-    if (requestUri.equals("/api/user/signup")) {
+    if (requestUri.startsWith("/api/user")) {
       filterChain.doFilter(request, response);
     }
 

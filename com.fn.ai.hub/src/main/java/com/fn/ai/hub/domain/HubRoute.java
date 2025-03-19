@@ -35,4 +35,11 @@ public class HubRoute {
 
     @Column(name = "arrival_hub_id")
     private UUID arrivalHubId;
+
+    public HubRoute(long travelTime, long distance, UUID depatureHubId, UUID arrivalHubId) {
+        this.travelTime = new TravelTime(travelTime);
+        this.distance = new Distance(distance);
+        this.depatureHubId = depatureHubId;
+        this.arrivalHubId = arrivalHubId;
+    }
 }

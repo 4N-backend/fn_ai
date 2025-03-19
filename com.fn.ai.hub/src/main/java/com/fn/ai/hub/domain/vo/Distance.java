@@ -13,17 +13,11 @@ import lombok.NoArgsConstructor;
 public class Distance {
 
     @Column(name = "distance", nullable = false)
-    private double value;
+    private long value;
 
-    public Distance(double departure,double arrival){
+    public Distance(long value){
         validate(value);
-        validate(arrival);
-
-        /**
-         * TODO 거리 계산 로직 짤 것
-         * 밑에는 임시
-         */
-        this .value = arrival-departure;
+        this.value = value;
     }
 
     private void validate(double value) {
@@ -32,7 +26,7 @@ public class Distance {
         }
     }
 
-    public Distance update(double departure,double arrival){
-        return new Distance(departure,arrival);
+    public Distance update(long value){
+        return new Distance(value);
     }
 }

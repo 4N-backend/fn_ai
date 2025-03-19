@@ -2,6 +2,7 @@ package com.fn.ai.hub.application;
 
 import com.fn.ai.hub.application.dto.request.HubCreateDeliveryRouteRequestDto;
 import com.fn.ai.hub.application.dto.request.HubRouteCreateRequestDto;
+import com.fn.ai.hub.application.dto.request.HubRouteFindRequestDto;
 import com.fn.ai.hub.application.dto.request.HubRouteUpdateRequestDto;
 import com.fn.ai.hub.application.dto.response.HubRouteResponseDto;
 import java.util.Queue;
@@ -26,8 +27,10 @@ public interface HubRouteService {
         String keyword);
 
     /**
-     * 허브 배달루트 생성
+     * 허브 루트 자동생성
      */
-    Queue<HubRouteResponseDto> createDeliveryRoute(HubCreateDeliveryRouteRequestDto requestDto);
+    void generateHubRoutes();
+
+    Queue<HubRouteResponseDto> findDeliveryRoute(HubRouteFindRequestDto requestDto);
 
 }

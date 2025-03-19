@@ -20,7 +20,7 @@ spring:
         - id: hub-service  # 라우트 식별자
           uri: lb://hub-service
           predicates:
-            - Path=/hub/**
+            - Path=/api/hubs/**
         - id: notification-service  # 라우트 식별자
           uri: lb://notification-service
           predicates:

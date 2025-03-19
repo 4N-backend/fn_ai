@@ -58,12 +58,4 @@ public class Hub {
     public void updatedLocation(double latitude,double longitude){
         this.location = this.location.update(latitude, longitude);
     }
-
-    public void deleteHub() {
-        /**
-         * TODO
-         * soft delete 수행
-         * 나중에 BaseEntity에서 하거나, repository에서 직접 하는거로
-         */
-    }
 }

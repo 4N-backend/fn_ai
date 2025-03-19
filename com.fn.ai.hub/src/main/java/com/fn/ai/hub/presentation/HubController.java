@@ -87,4 +87,10 @@ public class HubController {
         return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
             CommonResponseCode.SUCCESS.getMessage(), responseDto);
     }
+
+    @GetMapping("/init")
+    public ResponseEntity<CommonResponse<String>> initHubRoutes() {
+        hubService.initializeHubs();
+        return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(), CommonResponseCode.CREATED.getMessage(), "허브 초기화");
+    }
 }
