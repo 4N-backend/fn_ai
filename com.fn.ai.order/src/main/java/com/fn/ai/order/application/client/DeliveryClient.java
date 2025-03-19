@@ -1,7 +1,7 @@
-package com.fn.ai.order.application.service.client;
+package com.fn.ai.order.application.client;
 
-import com.fn.ai.order.application.service.dto.DeliveryCreateRequestDto;
-import com.fn.ai.order.application.service.dto.DeliveryCreateResponseDto;
+import com.fn.ai.order.application.dto.DeliveryCreateRequestDto;
+import com.fn.ai.order.application.dto.DeliveryCreateResponseDto;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.RequestBody;
 

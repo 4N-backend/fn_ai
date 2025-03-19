@@ -1,6 +1,6 @@
 package com.fn.ai.order.infrastructure.client;
 
-import com.fn.ai.order.application.service.client.ProductClient;
+import com.fn.ai.order.application.client.ProductClient;
 import com.fn.ai.order.infrastructure.ProductFeignClient;
 import com.fn.ai.order.presentation.dto.OrderItemRequestDto;
 import java.util.List;

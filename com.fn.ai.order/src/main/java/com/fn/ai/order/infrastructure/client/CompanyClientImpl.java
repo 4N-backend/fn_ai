@@ -1,7 +1,7 @@
 package com.fn.ai.order.infrastructure.client;
 
-import com.fn.ai.order.application.service.client.CompanyClient;
-import com.fn.ai.order.application.service.dto.CompanyResponseDto;
+import com.fn.ai.order.application.client.CompanyClient;
+import com.fn.ai.order.application.dto.CompanyResponseDto;
 import com.fn.ai.order.infrastructure.CompanyFeignClient;
 import java.util.Optional;
 import java.util.UUID;

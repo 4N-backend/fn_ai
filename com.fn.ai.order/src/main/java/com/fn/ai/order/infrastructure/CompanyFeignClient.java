@@ -1,6 +1,6 @@
 package com.fn.ai.order.infrastructure;
 
-import com.fn.ai.order.application.service.dto.CompanyResponseDto;
+import com.fn.ai.order.application.dto.CompanyResponseDto;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.cloud.openfeign.FeignClient;
