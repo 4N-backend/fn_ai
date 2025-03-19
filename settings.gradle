@@ -1,14 +1,29 @@
 rootProject.name = 'root'
 
-include 'com.fn.ai.common'
-include 'com.fn.ai.company'
-include 'com.fn.ai.config'
-include 'com.fn.ai.delivery'
-include 'com.fn.ai.eureka'
-include 'com.fn.ai.gateway'
-include 'com.fn.ai.hub'
-include 'com.fn.ai.notification'
-include 'com.fn.ai.order'
-include 'com.fn.ai.product'
-include 'com.fn.ai.user'
-include 'com.fn.ai.auth'
+// 각 모듈의 경로를 명확하게 지정
+include 'common'
+include 'company'
+include 'config'
+include 'delivery'
+include 'eureka'
+include 'gateway'
+include 'hub'
+include 'notification'
+include 'order'
+include 'product'
+include 'user'
+include 'auth'
+
+// 각 모듈의 실제 디렉터리 위치를 명확히 설정
+project(':common').projectDir = file('com.fn.ai.common')
+project(':company').projectDir = file('com.fn.ai.company')
+project(':config').projectDir = file('com.fn.ai.config')
+project(':delivery').projectDir = file('com.fn.ai.delivery')
+project(':eureka').projectDir = file('com.fn.ai.eureka')
+project(':gateway').projectDir = file('com.fn.ai.gateway')
+project(':hub').projectDir = file('com.fn.ai.hub')
+project(':notification').projectDir = file('com.fn.ai.notification')
+project(':order').projectDir = file('com.fn.ai.order')
+project(':product').projectDir = file('com.fn.ai.product')
+project(':user').projectDir = file('com.fn.ai.user')
+project(':auth').projectDir = file('com.fn.ai.auth')
