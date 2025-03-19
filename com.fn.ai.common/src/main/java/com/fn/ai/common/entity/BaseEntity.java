@@ -1,8 +1,11 @@
 package com.fn.ai.common.entity;
 
+import com.fn.ai.common.context.UserContextHolder;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
@@ -17,33 +20,33 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public abstract class BaseEntity {
 
     @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "created_at", updatable = false)
+    protected LocalDateTime createdAt;
 
     @CreatedBy
     @Column(name = "created_by", updatable = false)
-    private String createdBy;
+    protected String createdBy;
 
     @LastModifiedDate
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    protected LocalDateTime updatedAt;
 
     @LastModifiedBy
     @Column(name = "updated_by")
-    private String updatedBy;
+    protected String updatedBy;
 
     @Column(name ="deleted_at")
-    private LocalDateTime deletedAt;
+    protected LocalDateTime deletedAt;
 
     @Column(name ="deleted_by")
-    private String deletedBy;
+    protected String deletedBy;
 
     /**
      * soft delete
      */
     public void delete(String deletedBy){
         this.deletedAt = LocalDateTime.now();
-        this.deletedBy = deletedBy;
+        this.deletedBy = UserContextHolder.getUsername();
     }
 
     public void restore(){
@@ -54,4 +57,5 @@ public abstract class BaseEntity {
     public boolean isDeleted(){
         return deletedAt != null;
     }
+
 }
