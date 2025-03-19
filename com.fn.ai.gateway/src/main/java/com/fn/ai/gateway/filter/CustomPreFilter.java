@@ -43,13 +43,15 @@ public class CustomPreFilter implements GlobalFilter, Ordered {
 
     Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
 
-    exchange.getRequest().mutate()
+    ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate()
         .header("X-User-Name", info.getSubject())
         .header("X-User-Id", (String) info.get(JwtUtil.AUTHORIZATION_ID))
         .header("X-User-Role", (String) info.get(JwtUtil.AUTHORIZATION_KEY))
         .build();
 
-    return chain.filter(exchange);
+    ServerWebExchange exchangeBuild = exchange.mutate().request(serverHttpRequest).build();
+
+    return chain.filter(exchangeBuild);
   }
 
   @Override

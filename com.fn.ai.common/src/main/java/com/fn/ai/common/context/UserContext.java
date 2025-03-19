@@ -1,13 +1,12 @@
 package com.fn.ai.common.context;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import java.util.UUID;
+import lombok.Builder;
 
-@AllArgsConstructor
-@Getter
-public class UserContext {
+@Builder
+public record UserContext(
+    UUID userId,
+    String username,
+    UserRoleEnum userRole) {
 
-    private String userId;
-    private String userName;
-    private String userRole;
 }

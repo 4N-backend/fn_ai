@@ -1,5 +1,6 @@
 package com.fn.ai.order.application;
 
+import com.fn.ai.common.context.UserContext;
 import com.fn.ai.order.application.client.CompanyClient;
 import com.fn.ai.order.application.client.DeliveryClient;
 import com.fn.ai.order.application.client.ProductClient;
@@ -61,6 +62,7 @@ public class OrderService {
   public OrderResponseDto findByOrderId(UUID orderId) {
     Order order = orderRepository.findById(orderId).orElseThrow(() ->
         new RuntimeException("No Order found for given orderId"));
+
     return OrderResponseDto.from(order);
   }
 
@@ -73,9 +75,12 @@ public class OrderService {
     return OrderUpdateResponseDto.from(order);
   }
 
-  public void deleteOrder(UUID orderId) {
+  public OrderResponseDto deleteOrder(UUID orderId, UserContext userInfo) {
     Order order = orderRepository.findById(orderId).orElseThrow(() ->
         new RuntimeException("No Order found for given orderId"));
-    //삭제 로직
+
+    order.delete(userInfo.username());
+
+    return OrderResponseDto.from(order);
   }
 }

@@ -1,5 +1,6 @@
 package com.fn.ai.order.model;
 
+import com.fn.ai.common.entity.BaseEntity;
 import com.fn.ai.order.presentation.dto.OrderItemRequestDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 @Entity(name = "p_order_item")
-public class OrderItem {
+public class OrderItem extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

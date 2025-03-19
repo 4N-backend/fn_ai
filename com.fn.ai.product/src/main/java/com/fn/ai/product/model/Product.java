@@ -1,5 +1,6 @@
 package com.fn.ai.product.model;
 
+import com.fn.ai.common.entity.BaseEntity;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateRequestDto;
 import jakarta.persistence.Column;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @Entity(name = "p_product")
-public class Product {
+public class Product extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
