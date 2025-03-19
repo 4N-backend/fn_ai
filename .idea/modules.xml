@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.config/root.com.fn.ai.config.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.config/root.com.fn.ai.config.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.eureka/root.com.fn.ai.eureka.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.eureka/root.com.fn.ai.eureka.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.hub/root.com.fn.ai.hub.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.hub/root.com.fn.ai.hub.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/company/root.company.iml" filepath="$PROJECT_DIR$/.idea/modules/company/root.company.iml" />
     </modules>
   </component>
 </project>
