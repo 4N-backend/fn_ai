@@ -1,6 +1,7 @@
 package com.fn.ai.user.presentation.dto;
 
-import com.fn.ai.user.UserRoleEnum;
+
+import com.fn.ai.common.context.UserRoleEnum;
 import lombok.Builder;
 
 @Builder

@@ -1,6 +1,6 @@
 package com.fn.ai.user.application.service;
 
-import com.fn.ai.user.User;
+import com.fn.ai.user.model.User;
 import com.fn.ai.user.model.UserRespository;
 import com.fn.ai.user.presentation.dto.UserSignInResponseDto;
 import com.fn.ai.user.presentation.dto.UserSignUpRequestDto;
