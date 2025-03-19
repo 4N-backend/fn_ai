@@ -6,22 +6,19 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-public record OrderCreateResponseDto(UUID OrderId,
+public record OrderUpdateResponseDto(UUID receiverId,
                                      UUID supplierId,
-                                     UUID receiverId,
                                      UUID deliveryId,
                                      String instruction,
                                      List<OrderItemResponseDto> orderItems) {
 
-  public static OrderCreateResponseDto of(Order order) {
-    return OrderCreateResponseDto.builder()
-        .OrderId(order.getId())
+  public static OrderUpdateResponseDto from(Order order) {
+    return OrderUpdateResponseDto.builder()
+        .receiverId(order.getReceiverId())
         .supplierId(order.getSupplierId())
-        .receiverId(order.getSupplierId())
-        .deliveryId(order.getDeliveryId())
+        .deliveryId(order.getSupplierId())
         .instruction(order.getInstruction())
         .orderItems(order.getOrderItemList().stream().map(OrderItemResponseDto::of).toList())
         .build();
   }
-
 }

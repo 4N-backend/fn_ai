@@ -1,4 +1,4 @@
-package com.fn.ai.order.application.service.client;
+package com.fn.ai.order.application.client;
 
 import com.fn.ai.order.presentation.dto.OrderItemRequestDto;
 import java.util.List;

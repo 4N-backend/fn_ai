@@ -1,4 +1,4 @@
-package com.fn.ai.order.application.service.dto;
+package com.fn.ai.order.application.dto;
 
 import java.util.UUID;
 

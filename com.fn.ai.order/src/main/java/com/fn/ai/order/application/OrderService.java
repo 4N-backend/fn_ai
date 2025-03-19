@@ -1,16 +1,19 @@
-package com.fn.ai.order.application.service;
+package com.fn.ai.order.application;
 
-import com.fn.ai.order.application.service.client.CompanyClient;
-import com.fn.ai.order.application.service.client.DeliveryClient;
-import com.fn.ai.order.application.service.client.ProductClient;
-import com.fn.ai.order.application.service.dto.CompanyResponseDto;
-import com.fn.ai.order.application.service.dto.DeliveryCreateRequestDto;
-import com.fn.ai.order.application.service.dto.DeliveryCreateResponseDto;
+import com.fn.ai.order.application.client.CompanyClient;
+import com.fn.ai.order.application.client.DeliveryClient;
+import com.fn.ai.order.application.client.ProductClient;
+import com.fn.ai.order.application.dto.CompanyResponseDto;
+import com.fn.ai.order.application.dto.DeliveryCreateRequestDto;
+import com.fn.ai.order.application.dto.DeliveryCreateResponseDto;
 import com.fn.ai.order.model.Order;
-import com.fn.ai.order.model.OrderItem;
 import com.fn.ai.order.model.OrderRepository;
 import com.fn.ai.order.presentation.dto.OrderCreateRequestDto;
 import com.fn.ai.order.presentation.dto.OrderCreateResponseDto;
+import com.fn.ai.order.presentation.dto.OrderResponseDto;
+import com.fn.ai.order.presentation.dto.OrderUpdateRequestDto;
+import com.fn.ai.order.presentation.dto.OrderUpdateResponseDto;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,10 +41,6 @@ public class OrderService {
 
     //주문생성
     Order order = orderRepository.save(Order.create(requestDto));
-    order.addOrderItems(requestDto.orderItems()
-        .stream()
-        .map(OrderItem::of)
-        .toList());
 
     //배송통신로직
     DeliveryCreateResponseDto deliveryResponseDto = deliveryClient.createDelivery(
@@ -53,9 +52,30 @@ public class OrderService {
         new RuntimeException("fail to create delivery"));
 
     //받아온 배송ID를 set해준다
-    order.updateDeliveryId(deliveryResponseDto.DeliveryId());
+    order.updateDeliveryId(deliveryResponseDto.deliveryId());
 
     return OrderCreateResponseDto.of(order);
   }
 
+  @Transactional(readOnly = true)
+  public OrderResponseDto findByOrderId(UUID orderId) {
+    Order order = orderRepository.findById(orderId).orElseThrow(() ->
+        new RuntimeException("No Order found for given orderId"));
+    return OrderResponseDto.from(order);
+  }
+
+  public OrderUpdateResponseDto updateOrder(OrderUpdateRequestDto requestDto, UUID orderId) {
+    Order order = orderRepository.findById(orderId).orElseThrow(() ->
+        new RuntimeException("No Order found for given orderId"));
+
+    order.updateOrder(requestDto);
+
+    return OrderUpdateResponseDto.from(order);
+  }
+
+  public void deleteOrder(UUID orderId) {
+    Order order = orderRepository.findById(orderId).orElseThrow(() ->
+        new RuntimeException("No Order found for given orderId"));
+    //삭제 로직
+  }
 }

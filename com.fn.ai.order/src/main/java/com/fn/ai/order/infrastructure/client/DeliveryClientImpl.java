@@ -1,8 +1,8 @@
 package com.fn.ai.order.infrastructure.client;
 
-import com.fn.ai.order.application.service.client.DeliveryClient;
-import com.fn.ai.order.application.service.dto.DeliveryCreateRequestDto;
-import com.fn.ai.order.application.service.dto.DeliveryCreateResponseDto;
+import com.fn.ai.order.application.client.DeliveryClient;
+import com.fn.ai.order.application.dto.DeliveryCreateRequestDto;
+import com.fn.ai.order.application.dto.DeliveryCreateResponseDto;
 import com.fn.ai.order.infrastructure.DeliveryFeignClient;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
