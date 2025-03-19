@@ -8,7 +8,12 @@ import com.fn.ai.delivery.model.repository.DeliveryRepository;
 import com.fn.ai.delivery.model.repository.DeliveryRouteRepository;
 import com.fn.ai.delivery.presentation.dto.DeliveryCreateRequestDto;
 import com.fn.ai.delivery.presentation.dto.DeliveryCreateResponseDto;
+import com.fn.ai.delivery.presentation.dto.DeliveryDetailsResponseDto;
+import com.fn.ai.delivery.presentation.dto.DeliverySummaryResponseDto;
+import com.fn.ai.delivery.presentation.dto.DeliveryUpdateRequestDto;
+import com.fn.ai.delivery.presentation.dto.DeliveryUpdateResponseDto;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +26,7 @@ public class DeliveryServiceImpl implements DeliveryService {
   private final DeliveryRepository deliveryRepository;
   private final DeliveryRouteRepository deliveryRouteRepository;
 
+  @Override
   @Transactional
   public DeliveryCreateResponseDto create(DeliveryCreateRequestDto requestDto) {
     // 배송 생성
@@ -49,5 +55,40 @@ public class DeliveryServiceImpl implements DeliveryService {
     deliveryRouteRepository.saveAll(routes);
 
     return DeliveryCreateResponseDto.fromEntity(delivery);
+  }
+
+  @Override
+  @Transactional
+  public DeliveryUpdateResponseDto update(UUID deliveryId, DeliveryUpdateRequestDto requestDto) {
+    Delivery delivery = deliveryRepository.findById(deliveryId)
+        .orElseThrow(() -> new RuntimeException("존재하지 않는 배송입니다."));
+
+    delivery.update(requestDto.status());
+
+    return DeliveryUpdateResponseDto.fromEntity(delivery);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public DeliveryDetailsResponseDto readOne(UUID deliveryId) {
+    Delivery delivery = deliveryRepository.findById(deliveryId)
+        .orElseThrow(() -> new RuntimeException("존재하지 않는 배송입니다."));
+
+    return DeliveryDetailsResponseDto.fromEntity(delivery);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<DeliverySummaryResponseDto> readAll() {
+    List<Delivery> deliveryList = deliveryRepository.findAll();
+    return deliveryList.stream().map(DeliverySummaryResponseDto::fromEntity).toList();
+  }
+
+  @Override
+  public void delete(UUID deliveryId) {
+    Delivery delivery = deliveryRepository.findById(deliveryId)
+        .orElseThrow(() -> new RuntimeException("존재하지 않는 배송입니다."));
+
+    // TODO: 삭제 로직
   }
 }

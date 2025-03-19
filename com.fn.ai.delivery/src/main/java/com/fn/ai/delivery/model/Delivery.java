@@ -73,4 +73,8 @@ public class Delivery {
         .status(READY)
         .build();
   }
+
+  public void update(DeliveryStatus status) {
+    this.status = status;
+  }
 }
