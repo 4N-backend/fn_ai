@@ -3,12 +3,10 @@ package com.fn.ai.auth.presentation;
 import com.fn.ai.auth.application.AuthService;
 import com.fn.ai.auth.presentation.dto.request.SignUpRequestDto;
 import com.fn.ai.auth.presentation.dto.response.SignUpResponseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +16,7 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/signup")
-  public ResponseEntity<SignUpResponseDto> signup(@RequestBody SignUpRequestDto requestDto) {
+  public ResponseEntity<SignUpResponseDto> signup(@RequestBody @Valid SignUpRequestDto requestDto) {
     return ResponseEntity.ok().body(authService.signup(requestDto));
   }
 }

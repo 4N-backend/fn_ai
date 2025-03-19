@@ -1,6 +1,6 @@
 package com.fn.ai.user.presentation.dto;
 
-import com.fn.ai.user.UserRoleEnum;
+import com.fn.ai.user.model.enums.UserRoleEnum;
 import lombok.Builder;
 
 import java.util.UUID;
@@ -9,7 +9,6 @@ import java.util.UUID;
 public record UserSignInResponseDto(UUID id,
                                     String username,
                                     String password,
-                                    UserRoleEnum role){
-
+                                    UserRoleEnum role,
+                                    String slackId) {
 }
-

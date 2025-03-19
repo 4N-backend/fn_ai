@@ -1,4 +1,4 @@
-package com.fn.ai.user;
+package com.fn.ai.user.model.enums;
 
 public enum UserRoleEnum {
     MASTER(Authority.MASTER),

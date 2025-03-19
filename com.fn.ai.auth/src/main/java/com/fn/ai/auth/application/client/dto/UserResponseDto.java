@@ -6,9 +6,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 
 @Builder(access = AccessLevel.PRIVATE)
-public record UserResponseDto(UUID id, String username, String password, UserRoleEnum role) {
+public record UserResponseDto(UUID id, String username, String password, UserRoleEnum role, String slackId) {
 
-  public static UserResponseDto of(UUID id, String username, String password, UserRoleEnum role) {
-    return new UserResponseDto(id, username, password, role);
+  public static UserResponseDto of(UUID id, String username, String password, UserRoleEnum role, String slackId) {
+    return new UserResponseDto(id, username, password, role, slackId);
   }
 }

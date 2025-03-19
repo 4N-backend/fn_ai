@@ -1,9 +1,10 @@
 package com.fn.ai.user.application.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.fn.ai.user.presentation.dto.UserSignInResponseDto;
+import com.fn.ai.user.presentation.dto.UserSignUpRequestDto;
+import com.fn.ai.user.presentation.dto.UserSignUpResponseDto;
 
-@Service
-@RequiredArgsConstructor
-public class UserService {
+public interface UserService {
+    UserSignUpResponseDto signup(UserSignUpRequestDto requestDto);
+    UserSignInResponseDto getUserByUsername(String username);
 }
