@@ -1,13 +1,17 @@
 package com.fn.ai.delivery.model;
 
+import com.fn.ai.delivery.model.vo.DeliverySequence;
+import com.fn.ai.delivery.model.vo.Distance;
+import com.fn.ai.delivery.model.vo.Duration;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
-import java.time.Duration;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,23 +41,49 @@ public class DeliveryRoute {
 
   private UUID deliveryManagerId;
 
-  @Column(nullable = false)
-  private BigDecimal estimatedDistance;
+  @Embedded
+  @AttributeOverrides({
+      @AttributeOverride(
+          name = "value", column = @Column(name = "estimated_distance", nullable = false))
+  })
+  private Distance estimatedDistance;
 
-  @Column(nullable = false)
+  @Embedded
+  @AttributeOverrides({
+      @AttributeOverride(
+          name = "value", column = @Column(name = "estimated_duration", nullable = false))
+  })
   private Duration estimatedDuration;
 
-  private BigDecimal actualDistance;
+  @Embedded
+  @AttributeOverrides({
+      @AttributeOverride(
+          name = "value", column = @Column(name = "actual_distance"))
+  })
+  private Distance actualDistance;
 
+  @Embedded
+  @AttributeOverrides({
+      @AttributeOverride(
+          name = "value", column = @Column(name = "actual_duration"))
+  })
   private Duration actualDuration;
 
-  @Column(nullable = false)
-  private int sequence;
+  @Embedded
+  private DeliverySequence sequence;
 
   @Builder
-  private DeliveryRoute(UUID deliveryId, UUID departureHubId, UUID arrivalHubId, UUID deliveryManagerId,
-      BigDecimal estimatedDistance, Duration estimatedDuration, BigDecimal actualDistance,
-      Duration actualDuration, int sequence) {
+  private DeliveryRoute(
+      UUID deliveryId,
+      UUID departureHubId,
+      UUID arrivalHubId,
+      UUID deliveryManagerId,
+      Distance estimatedDistance,
+      Duration estimatedDuration,
+      Distance actualDistance,
+      Duration actualDuration,
+      DeliverySequence sequence
+  ) {
     this.deliveryId = deliveryId;
     this.departureHubId = departureHubId;
     this.arrivalHubId = arrivalHubId;
@@ -65,14 +95,21 @@ public class DeliveryRoute {
     this.sequence = sequence;
   }
 
-  public static DeliveryRoute of(UUID deliveryId, UUID departureHubId, UUID arrivalHubId,
-      BigDecimal estimatedDistance, Duration estimatedDuration) {
+  public static DeliveryRoute of(
+      UUID deliveryId,
+      UUID departureHubId,
+      UUID arrivalHubId,
+      Double estimatedDistance,
+      Long estimatedDuration,
+      Long sequence
+  ) {
     return DeliveryRoute.builder()
         .deliveryId(deliveryId)
         .departureHubId(departureHubId)
         .arrivalHubId(arrivalHubId)
-        .estimatedDistance(estimatedDistance)
-        .estimatedDuration(estimatedDuration)
+        .estimatedDistance(new Distance(estimatedDistance))
+        .estimatedDuration(new Duration(estimatedDuration))
+        .sequence(new DeliverySequence(sequence))
         .build();
   }
 }

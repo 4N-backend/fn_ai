@@ -2,6 +2,7 @@ package com.fn.ai.product.presentation.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public record ProductCreateRequestDto(
@@ -11,10 +12,10 @@ public record ProductCreateRequestDto(
     @Min(value = 1, message = "재고값은 1 이상이어야 합니다.")
     int stock,
 
-    @NotBlank(message = "허브 Id는 필수입니다.")
+    @NotNull(message = "허브 Id는 필수입니다.")
     UUID hubId,
 
-    @NotBlank(message = "업체 Id는 필수입니다.")
+    @NotNull(message = "업체 Id는 필수입니다.")
     UUID companyId
 ) {
 

@@ -1,9 +1,11 @@
 package com.fn.ai.delivery.model;
 
-import static com.fn.ai.delivery.model.type.DeliveryStatus.*;
+import static com.fn.ai.delivery.model.type.DeliveryStatus.READY;
 
 import com.fn.ai.delivery.model.type.DeliveryStatus;
+import com.fn.ai.delivery.model.vo.Address;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,18 +38,18 @@ public class Delivery {
   @Column(nullable = false)
   private UUID arrivalHubId;
 
-  @Column(nullable = false)
-  private String targetAddress;
+  @Embedded
+  private Address targetAddress;
 
   @Column(nullable = false)
   private DeliveryStatus status;
 
   @Builder
-  private Delivery(
+  public Delivery(
       UUID orderId,
       UUID departureHubId,
       UUID arrivalHubId,
-      String targetAddress,
+      Address targetAddress,
       DeliveryStatus status
   ) {
     this.orderId = orderId;
@@ -67,7 +69,7 @@ public class Delivery {
         .orderId(orderId)
         .departureHubId(departureHubId)
         .arrivalHubId(arrivalHubId)
-        .targetAddress(targetAddress)
+        .targetAddress(new Address(targetAddress))
         .status(READY)
         .build();
   }
