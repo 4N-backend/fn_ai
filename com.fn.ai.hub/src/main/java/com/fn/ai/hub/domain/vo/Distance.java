@@ -15,9 +15,15 @@ public class Distance {
     @Column(name = "distance", nullable = false)
     private double value;
 
-    public Distance(double value){
+    public Distance(double departure,double arrival){
         validate(value);
-        this.value = value;
+        validate(arrival);
+
+        /**
+         * TODO 거리 계산 로직 짤 것
+         * 밑에는 임시
+         */
+        this .value = arrival-departure;
     }
 
     private void validate(double value) {
@@ -26,7 +32,7 @@ public class Distance {
         }
     }
 
-    public Distance update(double value){
-        return new Distance(value);
+    public Distance update(double departure,double arrival){
+        return new Distance(departure,arrival);
     }
 }

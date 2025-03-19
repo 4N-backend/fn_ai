@@ -1,6 +1,7 @@
 package com.fn.ai.hub.domain;
 
 import com.fn.ai.hub.domain.vo.Distance;
+import com.fn.ai.hub.domain.vo.TravelTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -22,6 +23,9 @@ public class HubRoute {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "hub_route_id")
     private UUID id;
+
+    @Embedded
+    private TravelTime travelTime;
 
     @Embedded
     private Distance distance;
