@@ -5,6 +5,7 @@ import com.fn.ai.hub.application.dto.request.HubUpdateRequestDto;
 import com.fn.ai.hub.application.dto.response.HubResponseDto;
 import com.fn.ai.hub.domain.Hub;
 import com.fn.ai.hub.domain.repository.HubRepository;
+import com.fn.ai.hub.exception.HubNotFoundException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -42,7 +43,7 @@ public class HubService {
     public HubResponseDto getHub(UUID hubId) {
 
         Hub hub = hubRepository.findById(hubId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Id 입니다."));
+            .orElseThrow(HubNotFoundException::new);
 
         return HubResponseDto.of(hub);
     }
@@ -70,7 +71,7 @@ public class HubService {
     public HubResponseDto updateHub(HubUpdateRequestDto requestDto, UUID hub_id) {
 
         Hub hub = hubRepository.findById(hub_id)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Id입니다."));
+            .orElseThrow(HubNotFoundException::new);
 
         hub.updateHub(requestDto.name(), requestDto.address(), requestDto.latitude(),
             requestDto.longitude());
@@ -82,7 +83,7 @@ public class HubService {
 
     public HubResponseDto deleteHub(UUID hubId) {
         Hub hub = hubRepository.findById(hubId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Id입니다."));
+            .orElseThrow(HubNotFoundException::new);
 
         hub.deleteHub();
 
