@@ -1,5 +1,6 @@
 package com.fn.ai.product.application.service;
 
+import com.fn.ai.common.context.UserContext;
 import com.fn.ai.product.application.client.CompanyClient;
 import com.fn.ai.product.application.client.HubClient;
 import com.fn.ai.product.model.Product;
@@ -26,6 +27,13 @@ public class ProductService {
   private final ProductRepository productRepository;
 
   public ProductCreateResponseDto createProduct(ProductCreateRequestDto requestDto) {
+
+    hubClient.getHubById(requestDto.hubId()).orElseThrow(() ->
+        new RuntimeException("Hub not found"));
+
+    companyClient.getCompanyById(requestDto.companyId()).orElseThrow(() ->
+        new RuntimeException("Company not found"));
+
     return ProductCreateResponseDto.from(productRepository.save(Product.from(requestDto)));
   }
 
@@ -46,9 +54,12 @@ public class ProductService {
     return ProductUpdateResponseDto.from(product);
   }
 
-  public void deleteProduct(UUID productId) {
+  public ProductResponseDto deleteProduct(UUID productId, UserContext userInfo) {
     Product product = productRepository.findById(productId).orElseThrow(() ->
         new RuntimeException("Product not found"));
-    //추가예정
+
+    product.delete(userInfo.username());
+
+    return ProductResponseDto.from(product);
   }
 }

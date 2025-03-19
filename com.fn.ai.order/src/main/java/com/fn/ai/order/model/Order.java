@@ -1,5 +1,6 @@
 package com.fn.ai.order.model;
 
+import com.fn.ai.common.entity.BaseEntity;
 import com.fn.ai.order.presentation.dto.OrderCreateRequestDto;
 import com.fn.ai.order.presentation.dto.OrderUpdateRequestDto;
 import jakarta.persistence.CascadeType;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity(name = "p_order")
-public class Order {
+public class Order extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

@@ -1,5 +1,9 @@
 package com.fn.ai.product.presentation;
 
+import com.fn.ai.common.application.CommonResponse;
+import com.fn.ai.common.context.UserContext;
+import com.fn.ai.common.context.annotation.CurrentUserInfo;
+import com.fn.ai.common.exception.code.CommonResponseCode;
 import com.fn.ai.product.application.service.ProductService;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
 import com.fn.ai.product.presentation.dto.request.ProductCreateResponseDto;
@@ -27,27 +31,35 @@ public class ProductContoller {
   private final ProductService productService;
 
   @PostMapping
-  public ResponseEntity<ProductCreateResponseDto> createProduct(
+  public ResponseEntity<CommonResponse<ProductCreateResponseDto>> createProduct(
       @Valid @RequestBody ProductCreateRequestDto product) {
-    return ResponseEntity.ok().body(productService.createProduct(product));
+    return CommonResponse.of(CommonResponseCode.CREATED.getCode(),
+        CommonResponseCode.CREATED.getMessage(), productService.createProduct(product));
   }
 
   @GetMapping("/{productId}")
-  public ResponseEntity<ProductResponseDto> findProductById(
+  public ResponseEntity<CommonResponse<ProductResponseDto>> findProductById(
       @PathVariable UUID productId) {
-    return ResponseEntity.ok().body(productService.findProductById(productId));
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+        CommonResponseCode.SUCCESS.getMessage(), productService.findProductById(productId));
   }
 
   @PutMapping("/{productId}")
-  public ResponseEntity<ProductUpdateResponseDto> updateProduct(
+  public ResponseEntity<CommonResponse<ProductUpdateResponseDto>> updateProduct(
       @RequestBody ProductUpdateRequestDto requestDto,
       @PathVariable UUID productId) {
-    return ResponseEntity.ok().body(productService.updateProduct(requestDto, productId));
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+        CommonResponseCode.SUCCESS.getMessage(),
+        productService.updateProduct(requestDto, productId));
   }
 
   @DeleteMapping("/{productId}")
-  public ResponseEntity<Void> deleteProduct(@PathVariable UUID productId) {
-    productService.deleteProduct(productId);
-    return ResponseEntity.ok().build();
+  public ResponseEntity<CommonResponse<ProductResponseDto>> deleteProduct(
+      @PathVariable UUID productId,
+      @CurrentUserInfo UserContext userInfo) {
+
+    return CommonResponse.of(CommonResponseCode.NO_CONTENT.getCode(),
+        CommonResponseCode.NO_CONTENT.getMessage(),
+        productService.deleteProduct(productId, userInfo));
   }
 }
