@@ -1,5 +1,6 @@
 package com.fn.ai.user.config;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +13,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable());
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/user/signup").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/user/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/user/signup").permitAll()
                 .anyRequest().authenticated()
         );
         return http.build();

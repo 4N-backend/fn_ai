@@ -1,8 +1,11 @@
 package com.fn.ai.auth.presentation.dto.request;
 
-import lombok.Builder;
+import jakarta.validation.constraints.NotBlank;
 
-@Builder
-public record SignInRequestDto(String username, String password) {
+public record SignInRequestDto(
+        @NotBlank(message = "Username은 필수입니다.")
+        String username,
 
-}
+        @NotBlank(message = "Password는 필수입니다.")
+        String password
+) { }

@@ -2,6 +2,7 @@ package com.fn.ai.auth.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fn.ai.auth.presentation.dto.request.SignInRequestDto;
+import com.fn.ai.auth.presentation.dto.response.SignInResponseDto;
 import com.fn.ai.auth.security.UserDetailsImpl;
 import com.fn.ai.auth.security.UserRoleEnum;
 import jakarta.servlet.FilterChain;
@@ -54,14 +55,24 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
   @Override
   protected void successfulAuthentication(HttpServletRequest request,
-      HttpServletResponse response, FilterChain chain, Authentication authResult) {
+                                          HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
+
     UUID userId = ((UserDetailsImpl) authResult.getPrincipal()).getUserId();
     String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
     UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getRole();
 
     String token = jwtUtil.createToken(userId, username, role);
+    // JWT 토큰을 헤더에 추가
     response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
+
+    // JSON 응답
+    SignInResponseDto signInResponseDto = SignInResponseDto.of(username, role);
+
+    response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
+    new ObjectMapper().writeValue(response.getOutputStream(), signInResponseDto);
   }
+
 
   @Override
   protected void unsuccessfulAuthentication(HttpServletRequest request,
