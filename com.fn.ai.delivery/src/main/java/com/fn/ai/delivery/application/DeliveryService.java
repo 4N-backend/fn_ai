@@ -1,7 +1,7 @@
 package com.fn.ai.delivery.application;
 
-import com.fn.ai.delivery.dto.DeliveryCreateRequestDto;
-import com.fn.ai.delivery.dto.DeliveryCreateResponseDto;
+import com.fn.ai.delivery.presentation.dto.DeliveryCreateRequestDto;
+import com.fn.ai.delivery.presentation.dto.DeliveryCreateResponseDto;
 
 public interface DeliveryService {
 

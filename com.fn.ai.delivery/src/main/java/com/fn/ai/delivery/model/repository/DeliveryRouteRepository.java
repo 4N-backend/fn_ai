@@ -5,8 +5,6 @@ import java.util.List;
 
 public interface DeliveryRouteRepository {
 
-  DeliveryRoute save(DeliveryRoute deliveryRoute);
-
   List<DeliveryRoute> saveAll(List<DeliveryRoute> deliveryRouteList);
 
 }
