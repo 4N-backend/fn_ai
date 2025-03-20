@@ -5,11 +5,16 @@ import com.fn.ai.user.model.repository.UserRepository;
 import com.fn.ai.user.model.vo.Password;
 import com.fn.ai.user.model.vo.SlackId;
 import com.fn.ai.user.model.vo.Username;
+import com.fn.ai.user.presentation.dto.UserInfoResponseDto;
 import com.fn.ai.user.presentation.dto.UserSignInResponseDto;
 import com.fn.ai.user.presentation.dto.UserSignUpRequestDto;
 import com.fn.ai.user.presentation.dto.UserSignUpResponseDto;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,6 +44,14 @@ public class UserServiceImpl implements UserService {
                 .password(user.getPassword().getValue())
                 .role(user.getRole())
                 .build();
+    }
+
+    @Override
+    public Page<UserInfoResponseDto> getAllUsers(int page, int size, String sortBy, boolean isAsc) {
+        Sort sort = isAsc ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return userRepository.findAll(pageable).map(UserInfoResponseDto::of);
     }
 
     private void validateSignUp(UserSignUpRequestDto requestDto) {
