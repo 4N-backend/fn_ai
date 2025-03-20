@@ -13,20 +13,24 @@ import lombok.NoArgsConstructor;
 public class DeliverySequence {
 
   @Column(name = "sequence", nullable = false)
-  private long value;
+  private int value;
 
-  public DeliverySequence(long value) {
+  public DeliverySequence(int value) {
     validate(value);
     this.value = value;
   }
 
-  private void validate(long value) {
-    if (value <= 0) {
+  private void validate(int value) {
+    if (value < 0) {
       throw new IllegalArgumentException("Wrong sequence value");
     }
   }
 
-  public DeliverySequence update(long value) {
+  public DeliverySequence update(int value) {
     return new DeliverySequence(value);
+  }
+
+  public boolean isFirst() {
+    return this.value == 0;
   }
 }
