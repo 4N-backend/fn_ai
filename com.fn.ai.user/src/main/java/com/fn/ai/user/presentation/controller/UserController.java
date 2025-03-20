@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
@@ -73,6 +70,18 @@ public class UserController {
     return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
             CommonResponseCode.SUCCESS.getMessage(), userInfo);
   }
+
+  /**
+   * 유저 정보 단일 조회(MASTER)
+   * @param userId 조회할 유저 ID
+   */
+  @GetMapping("/{userId}")
+  public ResponseEntity<CommonResponse<MasterUserInfoResponseDto>> getUserById(@PathVariable UUID userId) {
+    MasterUserInfoResponseDto userInfo = userService.getMasterUserInfo(userId);
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), userInfo);
+  }
+
 
   /**
    * 개인 정보 수정

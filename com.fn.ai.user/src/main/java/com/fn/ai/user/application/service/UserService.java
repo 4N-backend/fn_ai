@@ -16,4 +16,6 @@ public interface UserService {
   UserInfoResponseDto updateUser(UUID userId, UserUpdateRequestDto requestDto);
 
   UserInfoResponseDto getOneUserInfo(UUID userId);
+
+  MasterUserInfoResponseDto getMasterUserInfo(UUID userId);
 }
