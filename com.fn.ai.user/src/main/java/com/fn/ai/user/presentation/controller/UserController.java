@@ -101,4 +101,15 @@ public class UserController {
   }
 
 
+  @DeleteMapping("/{userId}")
+  public ResponseEntity<CommonResponse<UserDeleteResponseDto>> deleteUser(
+          @PathVariable UUID userId,
+          @CurrentUserInfo UserContext userInfo) {
+
+    UserDeleteResponseDto responseDto = userService.deleteUser(userId, userInfo);
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), responseDto);
+  }
+  
+
 }

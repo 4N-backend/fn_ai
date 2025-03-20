@@ -1,5 +1,6 @@
 package com.fn.ai.user.application.service;
 
+import com.fn.ai.common.context.UserContext;
 import com.fn.ai.user.presentation.dto.*;
 import org.springframework.data.domain.Page;
 
@@ -18,4 +19,8 @@ public interface UserService {
   UserInfoResponseDto getOneUserInfo(UUID userId);
 
   MasterUserInfoResponseDto getMasterUserInfo(UUID userId);
+
+  UserDeleteResponseDto deleteUser(UUID userId, UserContext userInfo);
+
+
 }
