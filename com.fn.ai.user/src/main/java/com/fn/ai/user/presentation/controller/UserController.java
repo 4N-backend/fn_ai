@@ -110,6 +110,6 @@ public class UserController {
     return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
             CommonResponseCode.SUCCESS.getMessage(), responseDto);
   }
-  
+
 
 }
