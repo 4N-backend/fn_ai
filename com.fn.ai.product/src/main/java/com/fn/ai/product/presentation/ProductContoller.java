@@ -7,12 +7,16 @@ import com.fn.ai.common.exception.code.CommonResponseCode;
 import com.fn.ai.product.application.service.ProductService;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
 import com.fn.ai.product.presentation.dto.request.ProductCreateResponseDto;
+import com.fn.ai.product.presentation.dto.request.ProductSearchRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductResponseDto;
+import com.fn.ai.product.presentation.dto.response.ProductSearchResponseDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateResponseDto;
 import jakarta.validation.Valid;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,22 +36,33 @@ public class ProductContoller {
 
   @PostMapping
   public ResponseEntity<CommonResponse<ProductCreateResponseDto>> createProduct(
-      @Valid @RequestBody ProductCreateRequestDto product) {
+      @Valid @RequestBody ProductCreateRequestDto product
+  ) {
     return CommonResponse.of(CommonResponseCode.CREATED.getCode(),
         CommonResponseCode.CREATED.getMessage(), productService.createProduct(product));
   }
 
   @GetMapping("/{productId}")
   public ResponseEntity<CommonResponse<ProductResponseDto>> findProductById(
-      @PathVariable UUID productId) {
+      @PathVariable UUID productId
+  ) {
     return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
         CommonResponseCode.SUCCESS.getMessage(), productService.findProductById(productId));
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<CommonResponse<Page<ProductSearchResponseDto>>> searchProduct(
+      ProductSearchRequestDto requestDto, Pageable pageable
+  ) {
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+        CommonResponseCode.SUCCESS.getMessage(), productService.search(requestDto, pageable));
   }
 
   @PutMapping("/{productId}")
   public ResponseEntity<CommonResponse<ProductUpdateResponseDto>> updateProduct(
       @RequestBody ProductUpdateRequestDto requestDto,
-      @PathVariable UUID productId) {
+      @PathVariable UUID productId
+  ) {
     return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
         CommonResponseCode.SUCCESS.getMessage(),
         productService.updateProduct(requestDto, productId));
@@ -56,8 +71,8 @@ public class ProductContoller {
   @DeleteMapping("/{productId}")
   public ResponseEntity<CommonResponse<ProductResponseDto>> deleteProduct(
       @PathVariable UUID productId,
-      @CurrentUserInfo UserContext userInfo) {
-
+      @CurrentUserInfo UserContext userInfo
+  ) {
     return CommonResponse.of(CommonResponseCode.NO_CONTENT.getCode(),
         CommonResponseCode.NO_CONTENT.getMessage(),
         productService.deleteProduct(productId, userInfo));

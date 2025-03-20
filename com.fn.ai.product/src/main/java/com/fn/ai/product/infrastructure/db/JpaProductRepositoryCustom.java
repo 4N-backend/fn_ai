@@ -1,18 +1,11 @@
-package com.fn.ai.product.model.repository;
+package com.fn.ai.product.infrastructure.db;
 
-import com.fn.ai.product.model.Product;
 import com.fn.ai.product.presentation.dto.request.ProductSearchRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductSearchResponseDto;
-import java.util.Optional;
-import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface ProductRepository {
-
-  Product save(Product product);
-
-  Optional<Product> findById(UUID id);
+public interface JpaProductRepositoryCustom {
 
   Page<ProductSearchResponseDto> searchProduct(ProductSearchRequestDto requestDto,
       Pageable pageable);
