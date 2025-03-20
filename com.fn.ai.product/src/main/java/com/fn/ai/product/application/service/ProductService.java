@@ -62,7 +62,7 @@ public class ProductService {
     Product product = productRepository.findById(productId).orElseThrow(() ->
         new RuntimeException("Product not found"));
 
-    product.delete(userInfo.username());
+    product.delete();
 
     return ProductResponseDto.from(product);
   }

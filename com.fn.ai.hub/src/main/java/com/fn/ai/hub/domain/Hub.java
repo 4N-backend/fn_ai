@@ -1,5 +1,6 @@
 package com.fn.ai.hub.domain;
 
+import com.fn.ai.common.entity.BaseEntity;
 import com.fn.ai.hub.domain.vo.Address;
 import com.fn.ai.hub.domain.vo.Location;
 import com.fn.ai.hub.domain.vo.Name;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "p_hub")
 @Entity
-public class Hub {
+public class Hub extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -57,13 +58,5 @@ public class Hub {
 
     public void updatedLocation(double latitude,double longitude){
         this.location = this.location.update(latitude, longitude);
-    }
-
-    public void deleteHub() {
-        /**
-         * TODO
-         * soft delete 수행
-         * 나중에 BaseEntity에서 하거나, repository에서 직접 하는거로
-         */
     }
 }

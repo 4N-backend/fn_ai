@@ -6,27 +6,27 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Embeddable
-@Getter
 @EqualsAndHashCode
+@Getter
+@Embeddable
 @NoArgsConstructor
-public class Distance {
+public class TravelTime {
 
-    @Column(name = "distance", nullable = false)
+    @Column(name = "travel_time", nullable = false)
     private long value;
 
-    public Distance(long value){
+    public TravelTime(long value){
         validate(value);
         this.value = value;
     }
 
-    private void validate(double value) {
+    private void validate(long value){
         if (value <= 0) {
-            throw new IllegalArgumentException("Wrong distance value");
+            throw new IllegalArgumentException("너무 적은 값입니다.");
         }
     }
 
-    public Distance update(long value){
-        return new Distance(value);
+    public TravelTime update(long value){
+        return new TravelTime(value);
     }
 }

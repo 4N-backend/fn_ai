@@ -25,6 +25,9 @@ public class HubRepositoryImpl implements HubRepository {
     private final HubJpaRepository jpaRepository;
     private final JPAQueryFactory queryFactory;
 
+    /**
+     * TODO softdelete적용 -> delete_by가 null인 값만 찾도록 (모든 메서드)
+     */
 
     @Override
     public Optional<Hub> findByName(String name) {
@@ -81,6 +84,23 @@ public class HubRepositoryImpl implements HubRepository {
             .fetchOne();
 
         return new PageImpl<>(hubs, pageable, total != null ? total : 0);
+    }
+
+    @Override
+    public List<Hub> findAll() {
+
+        return jpaRepository.findAll();
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        QHub hub = QHub.hub;
+        Integer fetchOne = queryFactory
+                .selectOne()
+                .from(hub)
+                .where(hub.name.value.eq(name))
+                .fetchFirst();
+        return fetchOne != null;
     }
 }
 
