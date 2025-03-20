@@ -1,5 +1,10 @@
 package com.fn.ai.delivery.model;
 
+import static com.fn.ai.delivery.model.type.DeliveryRouteStatus.ARRIVED_HUB;
+import static com.fn.ai.delivery.model.type.DeliveryRouteStatus.READY;
+
+import com.fn.ai.common.entity.BaseEntity;
+import com.fn.ai.delivery.model.type.DeliveryRouteStatus;
 import com.fn.ai.delivery.model.vo.DeliverySequence;
 import com.fn.ai.delivery.model.vo.Distance;
 import com.fn.ai.delivery.model.vo.Duration;
@@ -11,6 +16,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -24,14 +31,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "p_delivery_route")
-public class DeliveryRoute {
+public class DeliveryRoute extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @Column(nullable = false)
-  private UUID deliveryId;
+  @ManyToOne
+  @JoinColumn(name = "delivery_id")
+  private Delivery delivery;
 
   @Column(nullable = false)
   private UUID departureHubId;
@@ -72,9 +80,12 @@ public class DeliveryRoute {
   @Embedded
   private DeliverySequence sequence;
 
+  @Column(nullable = false)
+  private DeliveryRouteStatus status;
+
   @Builder
   private DeliveryRoute(
-      UUID deliveryId,
+      Delivery delivery,
       UUID departureHubId,
       UUID arrivalHubId,
       UUID deliveryManagerId,
@@ -82,9 +93,10 @@ public class DeliveryRoute {
       Duration estimatedDuration,
       Distance actualDistance,
       Duration actualDuration,
-      DeliverySequence sequence
+      DeliverySequence sequence,
+      DeliveryRouteStatus status
   ) {
-    this.deliveryId = deliveryId;
+    this.delivery = delivery;
     this.departureHubId = departureHubId;
     this.arrivalHubId = arrivalHubId;
     this.deliveryManagerId = deliveryManagerId;
@@ -93,23 +105,45 @@ public class DeliveryRoute {
     this.actualDistance = actualDistance;
     this.actualDuration = actualDuration;
     this.sequence = sequence;
+    this.status = status;
   }
 
   public static DeliveryRoute of(
-      UUID deliveryId,
       UUID departureHubId,
       UUID arrivalHubId,
       Double estimatedDistance,
       Long estimatedDuration,
-      Long sequence
+      Integer sequence
   ) {
     return DeliveryRoute.builder()
-        .deliveryId(deliveryId)
         .departureHubId(departureHubId)
         .arrivalHubId(arrivalHubId)
         .estimatedDistance(new Distance(estimatedDistance))
         .estimatedDuration(new Duration(estimatedDuration))
         .sequence(new DeliverySequence(sequence))
+        .status(READY)
         .build();
+  }
+
+  public void updateStatue(DeliveryRouteStatus status) {
+    this.status = status;
+  }
+
+  public boolean isFirst() {
+    return this.sequence.isFirst();
+  }
+
+  public void arrived(double distance, long duration) {
+    updateStatue(ARRIVED_HUB);
+    updateActualRecord(distance, duration);
+  }
+
+  private void updateActualRecord(double distance, long duration) {
+    this.getActualDistance().update(distance);
+    this.getActualDuration().update(duration);
+  }
+
+  protected void setDelivery(Delivery delivery) {
+    this.delivery = delivery;
   }
 }
