@@ -21,7 +21,9 @@ public class AuthService {
     UserRegisterRequestDto userResponseDto = UserRegisterRequestDto.of(
         requestDto.username(),
         passwordEncoder.encode(requestDto.password()),
-        requestDto.role());
+        requestDto.role(),
+        requestDto.slackId()
+        );
 
     SignUpResponseDto responseDto = userClient.signup(userResponseDto).orElseThrow(
         () -> new IllegalArgumentException("Signup failed"));
