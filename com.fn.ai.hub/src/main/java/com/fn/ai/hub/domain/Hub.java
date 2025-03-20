@@ -1,5 +1,6 @@
 package com.fn.ai.hub.domain;
 
+import com.fn.ai.common.entity.BaseEntity;
 import com.fn.ai.hub.domain.vo.Address;
 import com.fn.ai.hub.domain.vo.Location;
 import com.fn.ai.hub.domain.vo.Name;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "p_hub")
 @Entity
-public class Hub {
+public class Hub extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

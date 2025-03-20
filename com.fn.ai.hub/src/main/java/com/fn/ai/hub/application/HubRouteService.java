@@ -15,7 +15,7 @@ public interface HubRouteService {
 
     HubRouteResponseDto createHubRoute(HubRouteCreateRequestDto requestDto);
 
-    HubRouteResponseDto updateHubRoute(HubRouteUpdateRequestDto requestDto);
+    HubRouteResponseDto updateHubRoute(UUID route_id,HubRouteUpdateRequestDto requestDto);
 
     HubRouteResponseDto deleteHubRoute(UUID route_id);
 
@@ -24,12 +24,13 @@ public interface HubRouteService {
     Page<HubRouteResponseDto> getAllHubRoutes(int page,int size,String sortBy,boolean isAsc);
 
     Page<HubRouteResponseDto> searchHubRoute(int page, int size, String sortBy, boolean isAsc,
-        String keyword);
+        UUID keyword);
 
     /**
      * 허브 루트 자동생성
      */
     void generateHubRoutes();
+    void calculateAllHubRoutes();
 
     Queue<HubRouteResponseDto> findDeliveryRoute(HubRouteFindRequestDto requestDto);
 

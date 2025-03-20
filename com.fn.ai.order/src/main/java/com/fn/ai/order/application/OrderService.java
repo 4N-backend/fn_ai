@@ -79,7 +79,7 @@ public class OrderService {
     Order order = orderRepository.findById(orderId).orElseThrow(() ->
         new RuntimeException("No Order found for given orderId"));
 
-    order.delete(userInfo.username());
+    order.delete();
 
     return OrderResponseDto.from(order);
   }

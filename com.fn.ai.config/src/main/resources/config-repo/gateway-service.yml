@@ -12,7 +12,7 @@ spring:
         - id: company-service  # 라우트 식별자
           uri: lb://company-service
           predicates:
-            - Path=/company/**
+            - Path=/api/company/**
         - id: delivery-service  # 라우트 식별자
           uri: lb://delivery-service
           predicates:

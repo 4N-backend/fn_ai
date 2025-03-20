@@ -33,7 +33,7 @@ public class HubRouteRepositoryImpl implements HubRouteRepository {
         Integer fetchOne = queryFactory
                 .selectOne()
                 .from(hubRoute)
-                .where(hubRoute.depatureHubId.eq(departureHubId)
+                .where(hubRoute.departureHubId.eq(departureHubId)
                         .and(hubRoute.arrivalHubId.eq(arrivalHubId)))
                 .fetchFirst();
         return fetchOne != null;
@@ -50,7 +50,7 @@ public class HubRouteRepositoryImpl implements HubRouteRepository {
         HubRoute result = queryFactory
                 .selectFrom(hubRoute)
                 .where(
-                        hubRoute.depatureHubId.eq(departureHubId)
+                        hubRoute.departureHubId.eq(departureHubId)
                                 .and(hubRoute.arrivalHubId.eq(arrivalHubId))
                 )
                 .fetchOne();
@@ -78,5 +78,30 @@ public class HubRouteRepositoryImpl implements HubRouteRepository {
     @Override
     public Optional<HubRoute> findHubRouteById(UUID routeId) {
         return null;
+    }
+
+    @Override
+    public Page<HubRoute> searchHubRoute(Pageable pageable, UUID keyword) {
+        QHubRoute hubRoute = QHubRoute.hubRoute;
+
+        List<HubRoute> hubRoutes = queryFactory
+            .selectFrom(hubRoute)
+            .where(hubRoute.departureHubId.eq(keyword))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long total = queryFactory
+            .select(hubRoute.count())
+            .from(hubRoute)
+            .where(hubRoute.departureHubId.eq(keyword))
+            .fetchOne();
+
+        return new PageImpl<>(hubRoutes, pageable, total != null ? total : 0);
+    }
+
+    @Override
+    public Optional<HubRoute> findById(UUID routeId) {
+        return jpaRepository.findById(routeId);
     }
 }

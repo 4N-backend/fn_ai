@@ -27,6 +27,7 @@ public class UserContextFilter extends OncePerRequestFilter {
 
     if (requestUri.startsWith("/api/user")) {
       filterChain.doFilter(request, response);
+      return;
     }
 
     UserContext userContext = UserContext.builder()

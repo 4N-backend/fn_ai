@@ -44,7 +44,7 @@ public abstract class BaseEntity {
     /**
      * soft delete
      */
-    public void delete(String deletedBy){
+    public void delete(){
         this.deletedAt = LocalDateTime.now();
         this.deletedBy = UserContextHolder.getUsername();
     }
