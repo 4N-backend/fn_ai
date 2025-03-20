@@ -1,33 +1,26 @@
 package com.fn.ai.user.application.service;
 
-import com.fn.ai.user.model.User;
-import com.fn.ai.user.model.UserRespository;
-import com.fn.ai.user.presentation.dto.UserSignInResponseDto;
-import com.fn.ai.user.presentation.dto.UserSignUpRequestDto;
-import com.fn.ai.user.presentation.dto.UserSignUpResponseDto;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.fn.ai.common.context.UserContext;
+import com.fn.ai.user.presentation.dto.*;
+import org.springframework.data.domain.Page;
 
-@Service
-@RequiredArgsConstructor
-public class UserService {
+import java.util.UUID;
 
-  private final UserRespository userRespository;
+public interface UserService {
 
-  public UserSignUpResponseDto signup(UserSignUpRequestDto requestDto) {
-    //회원가입 검증로직 필요
-    return UserSignUpResponseDto.of(userRespository.save(User.of(requestDto)));
-  }
+  UserSignUpResponseDto signup(UserSignUpRequestDto requestDto);
 
-  public UserSignInResponseDto getUserByUsername(String username) {
-    User user = userRespository.findByUsername(username)
-        .orElseThrow(() -> new IllegalArgumentException("유저정보 없음"));
+  UserSignInResponseDto getUserByUsername(String username);
 
-    return UserSignInResponseDto.builder()
-        .id(user.getId())
-        .username(user.getUsername())
-        .password(user.getPassword())
-        .role(user.getRole())
-        .build();
-  }
+  Page<UserInfoResponseDto> getAllUsers(int page, int size, String sortBy, boolean isAsc);
+
+  UserInfoResponseDto updateUser(UUID userId, UserUpdateRequestDto requestDto);
+
+  UserInfoResponseDto getOneUserInfo(UUID userId);
+
+  MasterUserInfoResponseDto getMasterUserInfo(UUID userId);
+
+  UserDeleteResponseDto deleteUser(UUID userId, UserContext userInfo);
+
+
 }

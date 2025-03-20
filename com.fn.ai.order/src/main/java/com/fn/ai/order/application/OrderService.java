@@ -9,6 +9,8 @@ import com.fn.ai.order.application.dto.DeliveryCreateRequestDto;
 import com.fn.ai.order.application.dto.DeliveryCreateResponseDto;
 import com.fn.ai.order.model.Order;
 import com.fn.ai.order.model.OrderRepository;
+import com.fn.ai.order.presentation.OrderSearchRequestDto;
+import com.fn.ai.order.presentation.OrderSearchResponseDto;
 import com.fn.ai.order.presentation.dto.OrderCreateRequestDto;
 import com.fn.ai.order.presentation.dto.OrderCreateResponseDto;
 import com.fn.ai.order.presentation.dto.OrderResponseDto;
@@ -16,6 +18,8 @@ import com.fn.ai.order.presentation.dto.OrderUpdateRequestDto;
 import com.fn.ai.order.presentation.dto.OrderUpdateResponseDto;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,5 +86,9 @@ public class OrderService {
     order.delete();
 
     return OrderResponseDto.from(order);
+  }
+
+  public Page<OrderSearchResponseDto> search(OrderSearchRequestDto requestDto, Pageable pageable) {
+    return orderRepository.searchOrder(requestDto, pageable);
   }
 }

@@ -1,5 +1,6 @@
 package com.fn.ai.delivery.presentation.dto;
 
+import com.fn.ai.delivery.model.Delivery;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
@@ -18,4 +19,11 @@ public record DeliveryCreateRequestDto(
     String targetAddress
 ) {
 
+    public Delivery toEntity() {
+        return Delivery.of(
+            this.orderId(),
+            this.departureHubId(),
+            this.arrivalHubId(),
+            this.targetAddress());
+    }
 }

@@ -24,11 +24,13 @@ public class UserContextFilter extends OncePerRequestFilter {
       FilterChain filterChain) throws ServletException, IOException {
 
     String requestUri = request.getRequestURI();
+    String method = request.getMethod();
 
     if (requestUri.startsWith("/api/user")) {
       filterChain.doFilter(request, response);
       return;
     }
+
 
     UserContext userContext = UserContext.builder()
         .username(request.getHeader(USER_NAME))
