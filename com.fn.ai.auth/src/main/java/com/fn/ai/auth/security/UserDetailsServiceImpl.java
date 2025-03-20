@@ -24,6 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         userResponseDto.id(),
         userResponseDto.username(),
         userResponseDto.password(),
-        userResponseDto.role()));
+        userResponseDto.role(),
+        userResponseDto.slackId()));
   }
 }

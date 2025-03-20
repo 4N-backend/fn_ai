@@ -19,6 +19,8 @@ public class UserDetailsImpl implements UserDetails {
 
   private final UserRoleEnum role;
 
+  private final String slackId;
+
   private final Collection<? extends GrantedAuthority> authorities;
 
   public UserDetailsImpl(UserResponseDto user) {
@@ -26,6 +28,7 @@ public class UserDetailsImpl implements UserDetails {
     this.username = user.username();
     this.password = user.password();
     this.role = user.role();
+    this.slackId = user.slackId();
     this.authorities = generateAuthorities(user.role());
   }
 

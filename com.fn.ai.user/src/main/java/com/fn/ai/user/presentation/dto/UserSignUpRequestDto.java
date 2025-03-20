@@ -7,6 +7,7 @@ import lombok.Builder;
 @Builder
 public record UserSignUpRequestDto(String username,
                                    String password,
-                                   UserRoleEnum role) {
+                                   UserRoleEnum role,
+                                   String slackId) {
 
 }

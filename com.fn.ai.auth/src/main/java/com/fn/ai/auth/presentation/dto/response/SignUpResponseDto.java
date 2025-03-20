@@ -8,6 +8,7 @@ import lombok.Builder;
 public record SignUpResponseDto(UUID userId,
                                 String username,
                                 String password,
-                                UserRoleEnum role) {
+                                UserRoleEnum role,
+                                String slackId) {
 
 }

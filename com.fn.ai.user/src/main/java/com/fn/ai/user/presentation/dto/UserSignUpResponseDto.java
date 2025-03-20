@@ -9,14 +9,16 @@ import lombok.Builder;
 public record UserSignUpResponseDto(UUID userId,
                                     String username,
                                     String password,
-                                    UserRoleEnum role) {
+                                    UserRoleEnum role,
+                                    String slackId) {
 
   public static UserSignUpResponseDto of(User user) {
     return UserSignUpResponseDto.builder()
-        .userId(user.getId())
-        .username(user.getUsername())
-        .password(user.getPassword())
-        .role(user.getRole())
-        .build();
+            .userId(user.getId())
+            .username(user.getUsername().getValue())
+            .password(user.getPassword().getValue())
+            .role(user.getRole())
+            .slackId(user.getSlackId().getValue())
+            .build();
   }
 }
