@@ -55,6 +55,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserInfoResponseDto getOneUserInfo(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        return UserInfoResponseDto.of(user);
+    }
+
+    @Override
     @Transactional
     public UserInfoResponseDto updateUser(UUID userId, UserUpdateRequestDto requestDto) {
         // 기존 사용자 정보 조회

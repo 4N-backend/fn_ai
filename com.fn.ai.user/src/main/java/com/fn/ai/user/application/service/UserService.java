@@ -14,4 +14,6 @@ public interface UserService {
   Page<UserInfoResponseDto> getAllUsers(int page, int size, String sortBy, boolean isAsc);
 
   UserInfoResponseDto updateUser(UUID userId, UserUpdateRequestDto requestDto);
+
+  UserInfoResponseDto getOneUserInfo(UUID userId);
 }

@@ -59,6 +59,22 @@ public class UserController {
   }
 
   /**
+   * 개인 정보 조회
+   * @param userContext 현재 사용자 정보
+   * @return 현재 로그인된 사용자 정보
+   */
+  @GetMapping("/self")
+  public ResponseEntity<CommonResponse<UserInfoResponseDto>> getCurrentUserInfo(
+          @CurrentUserInfo UserContext userContext) {
+    UUID userId = userContext.userId();
+
+    UserInfoResponseDto userInfo = userService.getOneUserInfo(userId);
+
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), userInfo);
+  }
+
+  /**
    * 개인 정보 수정
    * @param userContext 현재 사용자 정보
    * @param requestDto 수정할 정보
