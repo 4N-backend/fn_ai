@@ -5,17 +5,17 @@ import com.fn.ai.user.model.repository.UserRepository;
 import com.fn.ai.user.model.vo.Password;
 import com.fn.ai.user.model.vo.SlackId;
 import com.fn.ai.user.model.vo.Username;
-import com.fn.ai.user.presentation.dto.UserInfoResponseDto;
-import com.fn.ai.user.presentation.dto.UserSignInResponseDto;
-import com.fn.ai.user.presentation.dto.UserSignUpRequestDto;
-import com.fn.ai.user.presentation.dto.UserSignUpResponseDto;
+import com.fn.ai.user.presentation.dto.*;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +53,26 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findAll(pageable).map(UserInfoResponseDto::of);
     }
+
+    @Override
+    @Transactional
+    public UserInfoResponseDto updateUser(UUID userId, UserUpdateRequestDto requestDto) {
+        // 기존 사용자 정보 조회
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        if (requestDto.getSlackId() != null) {
+            user.updateSlackId(requestDto.getSlackId());
+        }
+        if (requestDto.getRole() != null) {
+            user.updateRole(requestDto.getRole());
+        }
+
+        userRepository.save(user);
+
+        return UserInfoResponseDto.of(user);
+    }
+
 
     private void validateSignUp(UserSignUpRequestDto requestDto) {
         // 필수 필드 체크

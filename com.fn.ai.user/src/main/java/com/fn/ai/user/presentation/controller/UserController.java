@@ -1,16 +1,20 @@
 package com.fn.ai.user.presentation.controller;
 
 import com.fn.ai.common.application.CommonResponse;
+import com.fn.ai.common.context.UserContext;
+import com.fn.ai.common.context.annotation.CurrentUserInfo;
 import com.fn.ai.common.exception.code.CommonResponseCode;
 import com.fn.ai.user.application.service.UserService;
-import com.fn.ai.user.presentation.dto.UserInfoResponseDto;
-import com.fn.ai.user.presentation.dto.UserSignInResponseDto;
-import com.fn.ai.user.presentation.dto.UserSignUpRequestDto;
-import com.fn.ai.user.presentation.dto.UserSignUpResponseDto;
+import com.fn.ai.user.presentation.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequiredArgsConstructor
@@ -53,5 +57,23 @@ public class UserController {
     return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
             CommonResponseCode.SUCCESS.getMessage(), usersInfo);
   }
+
+  /**
+   * 개인 정보 수정
+   * @param userContext 현재 사용자 정보
+   * @param requestDto 수정할 정보
+   */
+  @PatchMapping("/")
+  public ResponseEntity<UserInfoResponseDto> updateUserInfo(
+          @CurrentUserInfo UserContext userContext,
+          @RequestBody UserUpdateRequestDto requestDto) {
+
+    UUID userId = userContext.userId();
+
+    UserInfoResponseDto updatedUser = userService.updateUser(userId, requestDto);
+
+    return ResponseEntity.ok(updatedUser);
+  }
+
 
 }

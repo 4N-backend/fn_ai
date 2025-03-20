@@ -46,4 +46,13 @@ public class User extends BaseEntity {
             .slackId(new SlackId(requestDto.slackId()))
             .build();
   }
+
+  public void updateSlackId(String slackId) {
+    this.slackId = new SlackId(slackId);
+  }
+
+  public void updateRole(UserRoleEnum role) {
+    this.role = role;
+  }
+
 }

@@ -30,4 +30,5 @@ public class UserInfoResponseDto {
                 user.getSlackId().getValue()
         );
     }
+
 }
