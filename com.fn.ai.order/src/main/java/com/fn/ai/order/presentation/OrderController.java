@@ -12,6 +12,8 @@ import com.fn.ai.order.presentation.dto.OrderUpdateRequestDto;
 import com.fn.ai.order.presentation.dto.OrderUpdateResponseDto;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,22 +33,33 @@ public class OrderController {
 
   @PostMapping
   public ResponseEntity<CommonResponse<OrderCreateResponseDto>> createOrder(
-      @RequestBody OrderCreateRequestDto requestDto) {
+      @RequestBody OrderCreateRequestDto requestDto
+  ) {
     return CommonResponse.of(CommonResponseCode.CREATED.getCode(),
         CommonResponseCode.CREATED.getMessage(), orderService.createOrder(requestDto));
   }
 
   @GetMapping("/{orderId}")
   public ResponseEntity<CommonResponse<OrderResponseDto>> findByOrderId(
-      @PathVariable UUID orderId) {
+      @PathVariable UUID orderId
+  ) {
     return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
         CommonResponseCode.SUCCESS.getMessage(), orderService.findByOrderId(orderId));
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<CommonResponse<Page<OrderSearchResponseDto>>> searchOrder(
+      OrderSearchRequestDto requestDto, Pageable pageable
+  ) {
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+        CommonResponseCode.SUCCESS.getMessage(), orderService.search(requestDto, pageable));
   }
 
   @PutMapping("/{orderId}")
   public ResponseEntity<CommonResponse<OrderUpdateResponseDto>> updateOrder(
       @PathVariable UUID orderId,
-      @RequestBody OrderUpdateRequestDto requestDto) {
+      @RequestBody OrderUpdateRequestDto requestDto
+  ) {
     return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
         CommonResponseCode.SUCCESS.getMessage(), orderService.updateOrder(requestDto, orderId));
   }
@@ -54,8 +67,8 @@ public class OrderController {
   @DeleteMapping("/{orderId}")
   public ResponseEntity<CommonResponse<OrderResponseDto>> deleteOrder(
       @PathVariable UUID orderId,
-      @CurrentUserInfo UserContext userInfo) {
-
+      @CurrentUserInfo UserContext userInfo
+  ) {
     return CommonResponse.of(CommonResponseCode.NO_CONTENT.getCode(),
         CommonResponseCode.NO_CONTENT.getMessage(), orderService.deleteOrder(orderId, userInfo));
   }

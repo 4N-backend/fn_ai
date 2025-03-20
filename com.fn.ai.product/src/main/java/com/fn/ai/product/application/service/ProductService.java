@@ -7,11 +7,15 @@ import com.fn.ai.product.model.Product;
 import com.fn.ai.product.model.repository.ProductRepository;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
 import com.fn.ai.product.presentation.dto.request.ProductCreateResponseDto;
+import com.fn.ai.product.presentation.dto.request.ProductSearchRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductResponseDto;
+import com.fn.ai.product.presentation.dto.response.ProductSearchResponseDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateResponseDto;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,5 +65,10 @@ public class ProductService {
     product.delete(userInfo.username());
 
     return ProductResponseDto.from(product);
+  }
+
+  public Page<ProductSearchResponseDto> search(ProductSearchRequestDto requestDto,
+      Pageable pageable) {
+    return productRepository.searchProduct(requestDto, pageable);
   }
 }
