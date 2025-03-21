@@ -24,7 +24,7 @@ spring:
         - id: notification-service  # 라우트 식별자
           uri: lb://notification-service
           predicates:
-            - Path=/api/notification/**
+            - Path=/api/slacks/**
         - id: order-service  # 라우트 식별자
           uri: lb://order-service
           predicates:
