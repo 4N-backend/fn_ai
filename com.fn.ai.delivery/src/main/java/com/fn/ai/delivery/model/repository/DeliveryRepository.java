@@ -13,4 +13,8 @@ public interface DeliveryRepository {
 
   List<Delivery> findAll();
 
+  Optional<Delivery> findByIdWithRoutes(UUID id);
+
+  List<Delivery> findAllWithRoutes();
+
 }

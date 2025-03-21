@@ -17,7 +17,8 @@ public record DeliverySummaryResponseDto(
     return DeliverySummaryResponseDto.builder()
         .deliveryId(delivery.getId())
         .orderId(delivery.getOrderId())
-        .targetAddress(delivery.getTargetAddress().getValue())
+        .targetAddress(
+            delivery.getTargetAddress() != null ? delivery.getTargetAddress().getValue() : null)
         .status(delivery.getStatus())
         .build();
   }

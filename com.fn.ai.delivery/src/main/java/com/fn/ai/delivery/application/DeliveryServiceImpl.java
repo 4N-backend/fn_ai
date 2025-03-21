@@ -1,6 +1,7 @@
 package com.fn.ai.delivery.application;
 
 import com.fn.ai.delivery.application.client.HubClient;
+import com.fn.ai.delivery.application.client.dto.HubRouteRequestDto;
 import com.fn.ai.delivery.application.client.dto.HubRouteResponseDto;
 import com.fn.ai.delivery.application.client.dto.HubRouteResponseDto.RouteInfo;
 import com.fn.ai.delivery.exception.DeliveryNotFoundException;
@@ -37,7 +38,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     // 배송 경로 조회
     HubRouteResponseDto hubRouteResponseDto = hubClient.getHubRoute(
-        requestDto.departureHubId(), requestDto.arrivalHubId());
+        HubRouteRequestDto.of(requestDto.departureHubId(), requestDto.arrivalHubId()));
 
     // 배송 경로 기록 생성
     List<DeliveryRoute> routes = new ArrayList<>();
@@ -63,7 +64,7 @@ public class DeliveryServiceImpl implements DeliveryService {
   @Override
   @Transactional(readOnly = true)
   public List<DeliverySummaryResponseDto> readAll() {
-    List<Delivery> deliveryList = deliveryRepository.findAll();
+    List<Delivery> deliveryList = deliveryRepository.findAllWithRoutes();
     return deliveryList.stream().map(DeliverySummaryResponseDto::fromEntity).toList();
   }
 
@@ -101,6 +102,7 @@ public class DeliveryServiceImpl implements DeliveryService {
   }
 
   private Delivery getDeliveryOrThrow(UUID deliveryId) {
-    return deliveryRepository.findById(deliveryId).orElseThrow(DeliveryNotFoundException::new);
+    return deliveryRepository.findByIdWithRoutes(deliveryId)
+        .orElseThrow(DeliveryNotFoundException::new);
   }
 }
