@@ -1,10 +1,7 @@
 package com.fn.ai.user.application.service;
 
 import com.fn.ai.common.context.UserRoleEnum;
-import com.fn.ai.user.presentation.dto.DeliveryManagerInfoResponseDto;
-import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
-import com.fn.ai.user.presentation.dto.DeliveryManagerResponseDto;
-import com.fn.ai.user.presentation.dto.DeliveryManagerUpdaterRequestDto;
+import com.fn.ai.user.presentation.dto.*;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
@@ -23,5 +20,7 @@ public interface DeliveryManagerService {
 
     DeliveryManagerResponseDto updateDeliveryManager(UserRoleEnum role, UUID requesterId,
                                                      UUID targetId, DeliveryManagerUpdaterRequestDto requestDto);
+
+    DeliveryManagerDeleteResponseDto deleteDeliveryManager(UserRoleEnum role, UUID requesterId, UUID deliveryManagerId);
 
 }

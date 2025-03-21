@@ -207,6 +207,22 @@ public class UserController {
             CommonResponseCode.SUCCESS.getMessage(), responseDto);
   }
 
+  /**
+   * 배송 담당자 삭제 (소프트 딜리트)
+   * @param deliveryManagerId 삭제할 배송 담당자 ID
+   */
+    @DeleteMapping("/delivery-manager/{deliveryManagerId}")
+    public ResponseEntity<CommonResponse<DeliveryManagerDeleteResponseDto>> deleteDeliveryManager(
+            @PathVariable UUID deliveryManagerId,
+            @CurrentUserInfo UserContext userContext
+    ) {
+        DeliveryManagerDeleteResponseDto responseDto = deliveryManagerService.deleteDeliveryManager(
+                userContext.userRole(), userContext.userId(), deliveryManagerId
+        );
+
+        return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+                CommonResponseCode.SUCCESS.getMessage(), responseDto);
+    }
 
 
 

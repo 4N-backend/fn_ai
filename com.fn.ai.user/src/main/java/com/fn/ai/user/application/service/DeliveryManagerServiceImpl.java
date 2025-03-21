@@ -6,10 +6,7 @@ import com.fn.ai.user.model.DeliveryManager;
 import com.fn.ai.user.model.User;
 import com.fn.ai.user.model.repository.UserRepository;
 import com.fn.ai.user.model.type.DeliveryType;
-import com.fn.ai.user.presentation.dto.DeliveryManagerInfoResponseDto;
-import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
-import com.fn.ai.user.presentation.dto.DeliveryManagerResponseDto;
-import com.fn.ai.user.presentation.dto.DeliveryManagerUpdaterRequestDto;
+import com.fn.ai.user.presentation.dto.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -163,6 +160,31 @@ public class DeliveryManagerServiceImpl implements DeliveryManagerService {
             throw new IllegalStateException("배송 담당자 수정 중 오류 발생: " + e.getMessage(), e);
         }
     }
+
+    @Override
+    @Transactional
+    public DeliveryManagerDeleteResponseDto deleteDeliveryManager(UserRoleEnum role, UUID requesterId, UUID deliveryManagerId) {
+
+        DeliveryManager deliveryManager = deliveryManagerRepository.findById(deliveryManagerId)
+                .orElseThrow(() -> new EntityNotFoundException("배송 담당자를 찾을 수 없습니다: " + deliveryManagerId));
+
+        if (role != UserRoleEnum.MASTER) {
+            if (role == UserRoleEnum.HUB_MANAGER) {
+                UUID requesterHubId = getHubIdOf(requesterId);
+                UUID targetHubId = getHubIdOf(deliveryManagerId);
+
+                if (!Objects.equals(requesterHubId, targetHubId)) {
+                    throw new IllegalStateException("허브 관리자는 본인 허브의 배송 담당자만 삭제할 수 있습니다.");
+                }
+            } else {
+                throw new IllegalStateException("삭제 권한이 없습니다.");
+            }
+        }
+        // 소프트 삭제
+        deliveryManager.delete();
+        return new DeliveryManagerDeleteResponseDto(deliveryManagerId);
+    }
+
 
 
     private int calculateNextSequence(DeliveryType type, UUID hubId) {
