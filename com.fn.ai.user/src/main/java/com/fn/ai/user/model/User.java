@@ -37,6 +37,9 @@ public class User extends BaseEntity {
   @Embedded
   private SlackId slackId;
 
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private DeliveryManager deliveryManager;
+
 
   public static User of(UserSignUpRequestDto requestDto) {
     return User.builder()
@@ -53,6 +56,10 @@ public class User extends BaseEntity {
 
   public void updateRole(UserRoleEnum role) {
     this.role = role;
+  }
+
+  public void assignDeliveryManager(DeliveryManager deliveryManager) {
+    this.deliveryManager = deliveryManager;
   }
 
 }

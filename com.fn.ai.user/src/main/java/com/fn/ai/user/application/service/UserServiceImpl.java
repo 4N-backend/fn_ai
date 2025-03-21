@@ -1,6 +1,7 @@
 package com.fn.ai.user.application.service;
 
 import com.fn.ai.common.context.UserContext;
+import com.fn.ai.common.context.UserContextHolder;
 import com.fn.ai.user.model.User;
 import com.fn.ai.user.model.repository.UserRepository;
 import com.fn.ai.user.model.vo.Password;
@@ -94,17 +95,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDeleteResponseDto deleteUser(UUID userId, UserContext userInfo) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
-        user.delete(userInfo.username());
+        user.delete();
+
+        userRepository.save(user);
 
         return UserDeleteResponseDto.of(user);
     }
-
-
-
-
 
     private void validateSignUp(UserSignUpRequestDto requestDto) {
         // 필수 필드 체크
