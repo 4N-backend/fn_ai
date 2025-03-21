@@ -181,11 +181,30 @@ public class UserController {
   }
 
 
+  /**
+   * 배송 담당자 정보 전체 조회
+   * MASTER: 전체 조회 가능
+   * HUB_MANAGER: 본인 허브 소속만 조회
+   * DELIVERY_MANAGER: 본인만 조회
+   *
+   * @param page 페이지 번호 (기본값: 0)
+   * @param size 페이지 크기 (기본값: 10)
+   * @param sortBy 정렬 기준 필드 (기본값: createdAt)
+   * @param isAsc 오름차순 여부 (기본값: true)
+   */
+  @GetMapping("/delivery-manager")
+  public ResponseEntity<CommonResponse<Page<DeliveryManagerInfoResponseDto>>> getAllDeliveryManagers(
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "10") int size,
+          @RequestParam(defaultValue = "createdAt") String sortBy,
+          @RequestParam(defaultValue = "true") boolean isAsc,
+          @CurrentUserInfo UserContext userContext
+  ) {
+    Page<DeliveryManagerInfoResponseDto> result =
+            deliveryManagerService.getAllDeliveryManagers(userContext.userRole(), userContext.userId(), page, size, sortBy, isAsc);
 
-
-
-
-
-
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), result);
+  }
 
 }

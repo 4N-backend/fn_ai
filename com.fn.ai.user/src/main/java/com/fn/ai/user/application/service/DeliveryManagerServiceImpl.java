@@ -1,17 +1,21 @@
 package com.fn.ai.user.application.service;
 
+import com.fn.ai.common.context.UserRoleEnum;
 import com.fn.ai.user.infrastructure.jpa.JpaDeliveryManagerRepository;
 import com.fn.ai.user.model.DeliveryManager;
 import com.fn.ai.user.model.User;
 import com.fn.ai.user.model.repository.UserRepository;
 import com.fn.ai.user.model.type.DeliveryType;
+import com.fn.ai.user.presentation.dto.DeliveryManagerInfoResponseDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerResponseDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -85,6 +89,34 @@ public class DeliveryManagerServiceImpl implements DeliveryManagerService {
                 .map(DeliveryManager::getHubId)
                 .orElseThrow(() -> new EntityNotFoundException("배송 담당자 정보를 찾을 수 없습니다: " + userId));
     }
+
+    @Override
+    public Page<DeliveryManagerInfoResponseDto> getAllDeliveryManagers(UserRoleEnum role, UUID requesterId,
+                                                                       int page, int size, String sortBy, boolean isAsc) {
+        Sort sort = isAsc ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        if (role == UserRoleEnum.MASTER) {
+            return deliveryManagerRepository.findAll(pageable)
+                    .map(DeliveryManagerInfoResponseDto::of);
+        }
+
+//        if (role == UserRoleEnum.DELIVERY_MANAGER) {
+//            return deliveryManagerRepository.findByUserId(requesterId)
+//                    .map(dm -> new PageImpl<>(List.of(DeliveryManagerInfoResponseDto.of(dm)), pageable, 1))
+//                    .orElseThrow(() -> new EntityNotFoundException("배송 담당자 정보를 찾을 수 없습니다: " + requesterId));
+//        }
+
+        if (role == UserRoleEnum.HUB_MANAGER) {
+            UUID hubId = getHubIdOf(requesterId);
+            return deliveryManagerRepository.findAllByHubId(hubId, pageable)
+                    .map(DeliveryManagerInfoResponseDto::of);
+        }
+
+        throw new IllegalStateException("권한이 없습니다.");
+    }
+
+
 
 
     private int calculateNextSequence(DeliveryType type, UUID hubId) {

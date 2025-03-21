@@ -1,5 +1,6 @@
 package com.fn.ai.user.model;
 
+import com.fn.ai.common.entity.BaseEntity;
 import com.fn.ai.user.model.type.DeliveryType;
 import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class DeliveryManager {
+public class DeliveryManager extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

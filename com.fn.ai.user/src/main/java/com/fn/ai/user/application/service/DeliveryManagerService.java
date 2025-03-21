@@ -1,7 +1,10 @@
 package com.fn.ai.user.application.service;
 
+import com.fn.ai.common.context.UserRoleEnum;
+import com.fn.ai.user.presentation.dto.DeliveryManagerInfoResponseDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerResponseDto;
+import org.springframework.data.domain.Page;
 
 import java.util.UUID;
 
@@ -13,4 +16,8 @@ public interface DeliveryManagerService {
 
     // 허브 ID 조회 (HUB_MANAGER 권한 체크용)
     UUID getHubIdOf(UUID userId);
+
+    Page<DeliveryManagerInfoResponseDto> getAllDeliveryManagers(UserRoleEnum role, UUID requesterId,
+                                                                int page, int size, String sortBy, boolean isAsc);
+
 }
