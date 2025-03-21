@@ -1,6 +1,7 @@
 package com.fn.ai.product.presentation;
 
 import com.fn.ai.common.application.CommonResponse;
+import com.fn.ai.common.config.aop.RequireAuthorization;
 import com.fn.ai.common.context.UserContext;
 import com.fn.ai.common.context.annotation.CurrentUserInfo;
 import com.fn.ai.common.exception.code.CommonResponseCode;
@@ -37,6 +38,7 @@ public class ProductContoller {
   private final ProductService productService;
 
   @PostMapping
+  @RequireAuthorization({"MASTER", "HUB_MANAGER"})
   public ResponseEntity<CommonResponse<ProductCreateResponseDto>> createProduct(
       @Valid @RequestBody ProductCreateRequestDto product
   ) {
@@ -61,6 +63,7 @@ public class ProductContoller {
   }
 
   @PutMapping("/{productId}")
+  @RequireAuthorization({"MASTER", "HUB_MANAGER", "COMPANY_MANAGER"})
   public ResponseEntity<CommonResponse<ProductUpdateResponseDto>> updateProduct(
       @RequestBody ProductUpdateRequestDto requestDto,
       @PathVariable UUID productId
@@ -71,6 +74,7 @@ public class ProductContoller {
   }
 
   @DeleteMapping("/{productId}")
+  @RequireAuthorization({"MASTER", "HUB_MANAGER"})
   public ResponseEntity<CommonResponse<ProductResponseDto>> deleteProduct(
       @PathVariable UUID productId,
       @CurrentUserInfo UserContext userInfo
