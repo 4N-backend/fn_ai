@@ -32,6 +32,10 @@ springdoc:
       - name: order-service
         url: /api/orders/v3/api-docs
       - name: product-service
-        url: api/products/v3/api-docs
+        url: /api/products/v3/api-docs
       - name: notification-service
-        url: api/notification/v3/api-docs
+        url: /api/slacks/v3/api-docs
+      - name: company-service
+        url: /api/companies/v3/api-docs
+      - name: delivery-service
+        url: /api/deliveries/v3/api-docs

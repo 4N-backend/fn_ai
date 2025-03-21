@@ -13,10 +13,14 @@ spring:
           uri: lb://company-service
           predicates:
             - Path=/api/companies/**
+          filters:
+            - RewritePath=/api/companies/(?<segment>.*), /${segment}
         - id: delivery-service  # 라우트 식별자
           uri: lb://delivery-service
           predicates:
             - Path=/api/deliveries/**
+          filters:
+            - RewritePath=/api/deliveries/(?<segment>.*), /${segment}
         - id: hub-service  # 라우트 식별자
           uri: lb://hub-service
           predicates:
@@ -27,6 +31,8 @@ spring:
           uri: lb://notification-service
           predicates:
             - Path=/api/slacks/**
+          filters:
+            - RewritePath=/api/slacks/(?<segment>.*), /${segment}
         - id: order-service  # 라우트 식별자
           uri: lb://order-service
           predicates:

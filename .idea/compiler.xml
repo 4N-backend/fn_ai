@@ -14,7 +14,6 @@
         <module name="root.auth.main" />
         <module name="root.gateway.main" />
         <module name="root.config.main" />
-        <module name="root.company.main" />
         <module name="root.notification.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
@@ -36,6 +35,7 @@
         <module name="root.hub.main" />
         <module name="root.order.main" />
         <module name="root.common.main" />
+        <module name="root.company.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />
