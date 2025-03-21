@@ -43,4 +43,11 @@ public class DeliveryManager extends BaseEntity {
         user.assignDeliveryManager(manager);
         return manager;
     }
+
+    public void updateInfo(DeliveryType type, UUID hubId) {
+        this.type = type;
+        this.hubId = hubId;
+    }
+
+
 }

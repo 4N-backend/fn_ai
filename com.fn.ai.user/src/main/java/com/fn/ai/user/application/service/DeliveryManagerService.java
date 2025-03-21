@@ -4,6 +4,7 @@ import com.fn.ai.common.context.UserRoleEnum;
 import com.fn.ai.user.presentation.dto.DeliveryManagerInfoResponseDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerUpdaterRequestDto;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
@@ -19,5 +20,8 @@ public interface DeliveryManagerService {
 
     Page<DeliveryManagerInfoResponseDto> getAllDeliveryManagers(UserRoleEnum role, UUID requesterId,
                                                                 int page, int size, String sortBy, boolean isAsc);
+
+    DeliveryManagerResponseDto updateDeliveryManager(UserRoleEnum role, UUID requesterId,
+                                                     UUID targetId, DeliveryManagerUpdaterRequestDto requestDto);
 
 }

@@ -9,6 +9,7 @@ import com.fn.ai.user.model.type.DeliveryType;
 import com.fn.ai.user.presentation.dto.DeliveryManagerInfoResponseDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerUpdaterRequestDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -116,7 +118,51 @@ public class DeliveryManagerServiceImpl implements DeliveryManagerService {
         throw new IllegalStateException("권한이 없습니다.");
     }
 
+    @Override
+    @Transactional
+    public DeliveryManagerResponseDto updateDeliveryManager(UserRoleEnum role, UUID requesterId, UUID deliveryManagerId, DeliveryManagerUpdaterRequestDto requestDto) {
+        try {
 
+            DeliveryManager deliveryManager = deliveryManagerRepository.findById(deliveryManagerId)
+                    .orElseThrow(() -> new EntityNotFoundException("배송 담당자를 찾을 수 없습니다: " + deliveryManagerId));
+
+            // 권한 체크
+            if (role != UserRoleEnum.MASTER) {
+                if (role == UserRoleEnum.HUB_MANAGER) {
+                    UUID requesterHubId = getHubIdOf(requesterId);
+                    UUID targetHubId = getHubIdOf(deliveryManagerId);
+                    if (!Objects.equals(requesterHubId, targetHubId)) {
+                        throw new IllegalStateException("허브 관리자는 본인의 허브 배송 담당자만 수정할 수 있습니다.");
+                    }
+                } else {
+                    throw new IllegalStateException("수정 권한이 없습니다.");
+                }
+            }
+
+            DeliveryType type;
+            try {
+                type = DeliveryType.valueOf(requestDto.type().toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new IllegalStateException("잘못된 배송 담당자 유형입니다: " + requestDto.type());
+            }
+
+            // hubId 처리
+            UUID hubId = requestDto.hubId();
+            if (type == DeliveryType.HUB_DELIVERY_MANAGER) {
+                hubId = null;
+            } else if (type == DeliveryType.COMPANY_DELIVERY_MANAGER && hubId == null) {
+                throw new IllegalStateException("COMPANY_DELIVERY_MANAGER는 hubId가 필요합니다.");
+            }
+
+            deliveryManager.updateInfo(type, hubId);
+
+            return DeliveryManagerResponseDto.from(deliveryManager);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalStateException("배송 담당자 수정 중 오류 발생: " + e.getMessage(), e);
+        }
+    }
 
 
     private int calculateNextSequence(DeliveryType type, UUID hubId) {
