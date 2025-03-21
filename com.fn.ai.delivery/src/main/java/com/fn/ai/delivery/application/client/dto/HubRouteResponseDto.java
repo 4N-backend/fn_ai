@@ -1,11 +1,11 @@
 package com.fn.ai.delivery.application.client.dto;
 
 import com.fn.ai.delivery.model.DeliveryRoute;
-import java.util.List;
+import java.util.Queue;
 import java.util.UUID;
 
 public record HubRouteResponseDto(
-    List<RouteInfo> routeInfos
+    Queue<RouteInfo> routeInfos
 ) {
 
   public record RouteInfo(

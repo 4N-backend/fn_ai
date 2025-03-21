@@ -13,6 +13,8 @@ import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -81,6 +83,7 @@ public class DeliveryRoute extends BaseEntity {
   private DeliverySequence sequence;
 
   @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
   private DeliveryRouteStatus status;
 
   @Builder
@@ -135,12 +138,12 @@ public class DeliveryRoute extends BaseEntity {
 
   public void arrived(double distance, long duration) {
     updateStatue(ARRIVED_HUB);
-    updateActualRecord(distance, duration);
+    updateActualRecord(new Distance(distance), new Duration(duration));
   }
 
-  private void updateActualRecord(double distance, long duration) {
-    this.getActualDistance().update(distance);
-    this.getActualDuration().update(duration);
+  private void updateActualRecord(Distance distance, Duration duration) {
+    actualDistance = distance;
+    actualDuration = duration;
   }
 
   protected void setDelivery(Delivery delivery) {

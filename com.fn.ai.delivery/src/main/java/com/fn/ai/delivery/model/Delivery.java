@@ -16,6 +16,8 @@ import com.fn.ai.delivery.model.vo.DeliverySequence;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -50,13 +52,14 @@ public class Delivery extends BaseEntity {
   @Column(nullable = false)
   private UUID arrivalHubId;
 
-  @OneToMany(fetch = LAZY, cascade = PERSIST)
+  @OneToMany(fetch = LAZY, cascade = PERSIST, mappedBy = "delivery")
   private List<DeliveryRoute> deliveryRoutes = new ArrayList<>();
 
   @Embedded
   private Address targetAddress;
 
   @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
   private DeliveryStatus status;
 
   @Builder
@@ -64,17 +67,19 @@ public class Delivery extends BaseEntity {
       UUID orderId,
       UUID departureHubId,
       UUID arrivalHubId,
+      List<DeliveryRoute> deliveryRoutes,
       Address targetAddress,
       DeliveryStatus status
   ) {
     this.orderId = orderId;
     this.departureHubId = departureHubId;
     this.arrivalHubId = arrivalHubId;
+    this.deliveryRoutes = deliveryRoutes;
     this.targetAddress = targetAddress;
     this.status = status;
   }
 
-  public static Delivery of(
+  public static Delivery createOf(
       UUID orderId,
       UUID departureHubId,
       UUID arrivalHubId,

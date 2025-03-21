@@ -1,16 +1,14 @@
 package com.fn.ai.delivery.infrastructure;
 
+import com.fn.ai.delivery.application.client.dto.HubRouteRequestDto;
 import com.fn.ai.delivery.application.client.dto.HubRouteResponseDto;
-import java.util.UUID;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "hub-service")
 public interface HubFeignClient {
 
   @GetMapping("/api/hubs/routes/b2b")
-  HubRouteResponseDto getHubRoute(
-      @RequestParam UUID departureHubId,
-      @RequestParam UUID arrivalHubId);
+  HubRouteResponseDto getHubRoute(@RequestBody HubRouteRequestDto requestDto);
 }

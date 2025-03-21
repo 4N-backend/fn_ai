@@ -20,7 +20,7 @@ public record DeliveryCreateRequestDto(
 ) {
 
     public Delivery toEntity() {
-        return Delivery.of(
+        return Delivery.createOf(
             this.orderId(),
             this.departureHubId(),
             this.arrivalHubId(),
