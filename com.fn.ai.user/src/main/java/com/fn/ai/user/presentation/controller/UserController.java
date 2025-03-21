@@ -80,12 +80,11 @@ public class UserController {
    * 유저 정보 단일 조회(MASTER)
    * @param userId 조회할 유저 ID
    */
-//  @GetMapping("/{userId}")
-//  public ResponseEntity<CommonResponse<MasterUserInfoResponseDto>> getUserById(@PathVariable UUID userId) {
-//    MasterUserInfoResponseDto userInfo = userService.getMasterUserInfo(userId);
-//    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
-//            CommonResponseCode.SUCCESS.getMessage(), userInfo);
-//  }
+  @GetMapping("/info/{userId}")
+  public ResponseEntity<MasterUserInfoResponseDto> getUserById(@PathVariable UUID userId) {
+    MasterUserInfoResponseDto userInfo = userService.getMasterUserInfo(userId);
+    return ResponseEntity.ok(userInfo);
+  }
 
 
   /**
