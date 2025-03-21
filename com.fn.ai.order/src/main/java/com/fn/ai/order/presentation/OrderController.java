@@ -1,6 +1,7 @@
 package com.fn.ai.order.presentation;
 
 import com.fn.ai.common.application.CommonResponse;
+import com.fn.ai.common.config.aop.RequireAuthorization;
 import com.fn.ai.common.context.UserContext;
 import com.fn.ai.common.context.annotation.CurrentUserInfo;
 import com.fn.ai.common.exception.code.CommonResponseCode;
@@ -40,6 +41,7 @@ public class OrderController {
   }
 
   @GetMapping("/{orderId}")
+  @RequireAuthorization({"MASTER", "HUB_MANAGER"})
   public ResponseEntity<CommonResponse<OrderResponseDto>> findByOrderId(
       @PathVariable UUID orderId
   ) {
@@ -56,6 +58,7 @@ public class OrderController {
   }
 
   @PutMapping("/{orderId}")
+  @RequireAuthorization({"MASTER", "HUB_MANAGER"})
   public ResponseEntity<CommonResponse<OrderUpdateResponseDto>> updateOrder(
       @PathVariable UUID orderId,
       @RequestBody OrderUpdateRequestDto requestDto
@@ -65,6 +68,7 @@ public class OrderController {
   }
 
   @DeleteMapping("/{orderId}")
+  @RequireAuthorization({"MASTER", "HUB_MANAGER"})
   public ResponseEntity<CommonResponse<OrderResponseDto>> deleteOrder(
       @PathVariable UUID orderId,
       @CurrentUserInfo UserContext userInfo
