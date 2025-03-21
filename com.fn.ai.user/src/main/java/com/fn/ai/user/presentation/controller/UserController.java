@@ -2,8 +2,11 @@ package com.fn.ai.user.presentation.controller;
 
 import com.fn.ai.common.application.CommonResponse;
 import com.fn.ai.common.context.UserContext;
+import com.fn.ai.common.context.UserContextHolder;
+import com.fn.ai.common.context.UserRoleEnum;
 import com.fn.ai.common.context.annotation.CurrentUserInfo;
 import com.fn.ai.common.exception.code.CommonResponseCode;
+import com.fn.ai.user.application.service.DeliveryManagerService;
 import com.fn.ai.user.application.service.UserService;
 import com.fn.ai.user.presentation.dto.*;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,8 @@ import java.util.UUID;
 public class UserController {
 
   private final UserService userService;
+
+  private final DeliveryManagerService deliveryManagerService;
 
   @PostMapping("/signup")
   public ResponseEntity<UserSignUpResponseDto> signup(
@@ -75,12 +80,12 @@ public class UserController {
    * 유저 정보 단일 조회(MASTER)
    * @param userId 조회할 유저 ID
    */
-  @GetMapping("/{userId}")
-  public ResponseEntity<CommonResponse<MasterUserInfoResponseDto>> getUserById(@PathVariable UUID userId) {
-    MasterUserInfoResponseDto userInfo = userService.getMasterUserInfo(userId);
-    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
-            CommonResponseCode.SUCCESS.getMessage(), userInfo);
-  }
+//  @GetMapping("/{userId}")
+//  public ResponseEntity<CommonResponse<MasterUserInfoResponseDto>> getUserById(@PathVariable UUID userId) {
+//    MasterUserInfoResponseDto userInfo = userService.getMasterUserInfo(userId);
+//    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+//            CommonResponseCode.SUCCESS.getMessage(), userInfo);
+//  }
 
 
   /**
@@ -111,5 +116,31 @@ public class UserController {
             CommonResponseCode.SUCCESS.getMessage(), responseDto);
   }
 
+  /**
+   * 배송 담당자 등록
+   * @param userId 배송 담당자로 등록할 사용자 ID
+   * @param requestDto 배송 담당자 등록 정보
+   * @param userContext 현재 로그인된 사용자 정보 (Bearer 토큰에서 추출됨)
+   */
+  @PostMapping("/{userId}/delivery")
+  public ResponseEntity<CommonResponse<DeliveryManagerResponseDto>> createDeliveryManager(
+          @PathVariable UUID userId,
+          @RequestBody DeliveryManagerRequestDto requestDto,
+          @CurrentUserInfo UserContext userContext
+  ) {
+
+    UserRoleEnum role = userContext.userRole();
+
+    // 등록 권한 확인
+    if (!(role == UserRoleEnum.DELIVERY_MANAGER || role == UserRoleEnum.MASTER)) {
+      throw new IllegalStateException("접근 권한이 없습니다.");
+    }
+
+    // 배송 담당자 생성
+    DeliveryManagerResponseDto responseDto = deliveryManagerService.createDeliveryManager(userId, requestDto);
+
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), responseDto);
+  }
 
 }
