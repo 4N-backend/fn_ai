@@ -69,6 +69,24 @@ public class DeliveryManagerServiceImpl implements DeliveryManagerService {
         return DeliveryManagerResponseDto.from(deliveryManager);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public DeliveryManagerResponseDto getDeliveryManager(UUID userId) {
+        DeliveryManager deliveryManager = deliveryManagerRepository.findByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("배송 담당자 정보를 찾을 수 없습니다: " + userId));
+
+        return DeliveryManagerResponseDto.from(deliveryManager);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public UUID getHubIdOf(UUID userId) {
+        return deliveryManagerRepository.findByUserId(userId)
+                .map(DeliveryManager::getHubId)
+                .orElseThrow(() -> new EntityNotFoundException("배송 담당자 정보를 찾을 수 없습니다: " + userId));
+    }
+
+
     private int calculateNextSequence(DeliveryType type, UUID hubId) {
         Optional<Integer> maxSeq = (hubId == null)
                 ? deliveryManagerRepository.findMaxSequenceByTypeAndHubIdIsNull(type)

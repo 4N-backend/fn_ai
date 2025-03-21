@@ -18,4 +18,7 @@ public interface JpaDeliveryManagerRepository extends DeliveryManagerRepository,
     @Query("SELECT MAX(dm.deliverySequence) FROM DeliveryManager dm WHERE dm.type = :type AND dm.hubId = :hubId")
     Optional<Integer> findMaxSequenceByTypeAndHubId(@Param("type") DeliveryType type, @Param("hubId") UUID hubId);
 
+    Optional<DeliveryManager> findByUserId(UUID userId);
+
+
 }

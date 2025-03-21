@@ -122,7 +122,7 @@ public class UserController {
    * @param requestDto 배송 담당자 등록 정보
    * @param userContext 현재 로그인된 사용자 정보 (Bearer 토큰에서 추출됨)
    */
-  @PostMapping("/{userId}/delivery")
+  @PostMapping("/{userId}/delivery-manager")
   public ResponseEntity<CommonResponse<DeliveryManagerResponseDto>> createDeliveryManager(
           @PathVariable UUID userId,
           @RequestBody DeliveryManagerRequestDto requestDto,
@@ -142,5 +142,50 @@ public class UserController {
     return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
             CommonResponseCode.SUCCESS.getMessage(), responseDto);
   }
+
+
+  /**
+   * 배송 담당자 정보 조회 - (MASTER-모든 정보 조회 가능, DELIVERY_MANAGER-본인 정보만 조회 가능, HUB_MANAGER-본인 허브 정보만 조회 가능)
+   * @param userId 조회할 배송 담당자 ID
+   *
+   */
+  @GetMapping("/delivery-manager/{userId}")
+  public ResponseEntity<CommonResponse<DeliveryManagerResponseDto>> getDeliveryManager(
+          @PathVariable UUID userId,
+          @CurrentUserInfo UserContext userContext
+  ) {
+    validateAccess(userContext.userRole(), userContext.userId(), userId);
+
+    DeliveryManagerResponseDto responseDto = deliveryManagerService.getDeliveryManager(userId);
+    return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
+            CommonResponseCode.SUCCESS.getMessage(), responseDto);
+  }
+
+  private void validateAccess(UserRoleEnum role, UUID requesterId, UUID targetId) {
+    if (role == UserRoleEnum.MASTER) return;
+
+    if (role == UserRoleEnum.DELIVERY_MANAGER && !requesterId.equals(targetId)) {
+      throw new IllegalStateException("배송 담당자는 본인 정보만 조회할 수 있습니다.");
+    }
+
+    if (role == UserRoleEnum.HUB_MANAGER) {
+      UUID targetHubId = deliveryManagerService.getHubIdOf(targetId);
+      UUID myHubId = deliveryManagerService.getHubIdOf(requesterId);
+      if (!targetHubId.equals(myHubId)) {
+        throw new IllegalStateException("허브 관리자는 본인의 허브 배송 담당자만 조회할 수 있습니다.");
+      }
+      return;
+    }
+
+    throw new IllegalStateException("조회 권한이 없습니다.");
+  }
+
+
+
+
+
+
+
+
 
 }
