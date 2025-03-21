@@ -43,6 +43,12 @@ public class HubController {
             CommonResponseCode.CREATED.getMessage(), responseDto);
     }
 
+    @GetMapping("/client/{hub_id}")
+    public ResponseEntity<HubResponseDto> getHubClient(@PathVariable UUID hub_id) {
+        HubResponseDto responseDto = hubService.getHub(hub_id);
+        return ResponseEntity.ok(responseDto);
+    }
+
     @GetMapping("/")
     public ResponseEntity<CommonResponse<Page<HubResponseDto>>> getAllHub(
         @RequestParam int page,
