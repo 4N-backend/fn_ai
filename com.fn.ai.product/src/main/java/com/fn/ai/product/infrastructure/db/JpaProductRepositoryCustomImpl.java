@@ -2,6 +2,7 @@ package com.fn.ai.product.infrastructure.db;
 
 import static com.fn.ai.product.model.QProduct.product;
 
+import com.fn.ai.product.application.dto.ProductRequestDto;
 import com.fn.ai.product.model.Product;
 import com.fn.ai.product.presentation.dto.request.ProductSearchRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductSearchResponseDto;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +59,36 @@ public class JpaProductRepositoryCustomImpl implements JpaProductRepositoryCusto
             .collect(Collectors.toList());
 
     return new PageImpl<>(responseDtoList, pageable, totalCount == null ? 0 : totalCount);
+  }
+
+  @Override
+  public long reduceStock(List<ProductRequestDto> requestDto) {
+    return updateStock(requestDto, false);
+  }
+
+  @Override
+  public long increaseStock(List<ProductRequestDto> requestDto) {
+    return updateStock(requestDto, true);
+  }
+
+  public long updateStock(List<ProductRequestDto> requestDto, boolean isIncrease) {
+    long updatedStock = 0;
+
+    for (ProductRequestDto productDto : requestDto) {
+      long stockChange = isIncrease ? productDto.stock() : productDto.stock() * -1;
+      long execute = queryFactory
+          .update(product)
+          .set(product.stock, product.stock.add(stockChange))
+          .where(productIdEq(productDto.productId()))
+          .execute();
+
+      updatedStock += execute;
+    }
+    return updatedStock;
+  }
+
+  private BooleanExpression productIdEq(UUID productId) {
+    return Objects.nonNull(productId) ? product.id.eq(productId) : null;
   }
 
   private BooleanExpression containsProductName(String productName) {

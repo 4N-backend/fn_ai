@@ -3,6 +3,7 @@ package com.fn.ai.product.application.service;
 import com.fn.ai.common.context.UserContext;
 import com.fn.ai.product.application.client.CompanyClient;
 import com.fn.ai.product.application.client.HubClient;
+import com.fn.ai.product.application.dto.ProductRequestDto;
 import com.fn.ai.product.model.Product;
 import com.fn.ai.product.model.repository.ProductRepository;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
@@ -12,6 +13,7 @@ import com.fn.ai.product.presentation.dto.response.ProductResponseDto;
 import com.fn.ai.product.presentation.dto.response.ProductSearchResponseDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateResponseDto;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,15 +34,16 @@ public class ProductService {
 
   public ProductCreateResponseDto createProduct(ProductCreateRequestDto requestDto) {
 
-    hubClient.getHubById(requestDto.hubId()).orElseThrow(() ->
-        new RuntimeException("Hub not found"));
-
-    companyClient.getCompanyById(requestDto.companyId()).orElseThrow(() ->
-        new RuntimeException("Company not found"));
+//    hubClient.getHubById(requestDto.hubId()).orElseThrow(() ->
+//        new RuntimeException("Hub not found"));
+//
+//    companyClient.getCompanyById(requestDto.companyId()).orElseThrow(() ->
+//        new RuntimeException("Company not found"));
 
     return ProductCreateResponseDto.from(productRepository.save(Product.from(requestDto)));
   }
 
+  @Transactional(readOnly = true)
   public ProductResponseDto findProductById(UUID productId) {
     Product product = productRepository.findById(productId).orElseThrow(() ->
         new RuntimeException("Product not found"));
@@ -67,8 +70,18 @@ public class ProductService {
     return ProductResponseDto.from(product);
   }
 
+  @Transactional(readOnly = true)
   public Page<ProductSearchResponseDto> search(ProductSearchRequestDto requestDto,
       Pageable pageable) {
     return productRepository.searchProduct(requestDto, pageable);
   }
+
+  public Boolean reduceStock(List<ProductRequestDto> requestDto) {
+    return productRepository.reduceStock(requestDto) == requestDto.size();
+  }
+
+  public Boolean increaseStock(List<ProductRequestDto> requestDto) {
+    return productRepository.increaseStock(requestDto) == requestDto.size();
+  }
+
 }

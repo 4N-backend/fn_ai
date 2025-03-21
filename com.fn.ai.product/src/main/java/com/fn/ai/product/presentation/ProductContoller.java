@@ -4,6 +4,7 @@ import com.fn.ai.common.application.CommonResponse;
 import com.fn.ai.common.context.UserContext;
 import com.fn.ai.common.context.annotation.CurrentUserInfo;
 import com.fn.ai.common.exception.code.CommonResponseCode;
+import com.fn.ai.product.application.dto.ProductRequestDto;
 import com.fn.ai.product.application.service.ProductService;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
 import com.fn.ai.product.presentation.dto.request.ProductCreateResponseDto;
@@ -13,6 +14,7 @@ import com.fn.ai.product.presentation.dto.response.ProductSearchResponseDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductUpdateResponseDto;
 import jakarta.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -76,5 +78,19 @@ public class ProductContoller {
     return CommonResponse.of(CommonResponseCode.NO_CONTENT.getCode(),
         CommonResponseCode.NO_CONTENT.getMessage(),
         productService.deleteProduct(productId, userInfo));
+  }
+
+  @PostMapping("/reduce")
+  public Boolean reduceProduct(
+      @RequestBody List<ProductRequestDto> requestDto
+  ) {
+    return productService.reduceStock(requestDto);
+  }
+
+  @PostMapping("/increase")
+  public Boolean increaseProduct(
+      @RequestBody List<ProductRequestDto> requestDto
+  ) {
+    return productService.increaseStock(requestDto);
   }
 }
