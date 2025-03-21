@@ -118,15 +118,21 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public CompanyGetHubResponseDto getHubIdOfCompany(UUID companyId) {
+    public CompanyGetHubResponseDto getHubIdOfCompany(UUID producerId,UUID receiverId) {
 
-        Company company = companyRepository.findById(companyId)
+        Company produceCompany = companyRepository.findById(producerId)
             .orElseThrow(() -> new IllegalArgumentException("업체가 존재하지 않습니다."));
 
-        HubInfoResponseDto hubInfo = hubClient.getHub(company.getHubId())
+        HubInfoResponseDto produceCompanyHub = hubClient.getHub(produceCompany.getHubId())
             .orElseThrow(() -> new IllegalArgumentException("허브가 존재하지 않습니다."));
 
-        return CompanyGetHubResponseDto.of(hubInfo);
+        Company receiveCompany = companyRepository.findById(receiverId)
+            .orElseThrow(() -> new IllegalArgumentException("업체가 존재하지 않습니다."));
+
+        HubInfoResponseDto receiveCompanyHub = hubClient.getHub(receiveCompany.getHubId())
+            .orElseThrow(() -> new IllegalArgumentException("허브가 존재하지 않습니다."));
+
+        return CompanyGetHubResponseDto.of(produceCompanyHub, receiveCompanyHub);
     }
 
 }

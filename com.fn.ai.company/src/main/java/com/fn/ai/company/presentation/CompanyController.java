@@ -96,10 +96,13 @@ public class CompanyController {
         return createResponse(responseDto, CommonResponseCode.SUCCESS);
     }
 
-    @GetMapping("/info/{company_id}")
-    public ResponseEntity<CommonResponse<CompanyGetHubResponseDto>> getHubIdOfCompany(@PathVariable UUID company_id) {
+    @GetMapping("/info")
+    public ResponseEntity<CommonResponse<CompanyGetHubResponseDto>> getHubIdOfCompany(
+        @RequestParam UUID producerId,
+        @RequestParam UUID receiverId
+    ) {
 
-        CompanyGetHubResponseDto responseDto = companyService.getHubIdOfCompany(company_id);
+        CompanyGetHubResponseDto responseDto = companyService.getHubIdOfCompany(producerId,receiverId);
         return createResponse(responseDto, CommonResponseCode.SUCCESS);
     }
 }

@@ -23,5 +23,5 @@ public interface CompanyService {
 
     Page<CompanyResponseDto> searchCompany(int page, int size, String sortBy, boolean isAsc, String keyword);
 
-    CompanyGetHubResponseDto getHubIdOfCompany(UUID companyId);
+    CompanyGetHubResponseDto getHubIdOfCompany(UUID producerId,UUID receiverId);
 }
