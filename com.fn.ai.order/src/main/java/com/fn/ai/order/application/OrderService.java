@@ -7,6 +7,7 @@ import com.fn.ai.order.application.client.ProductClient;
 import com.fn.ai.order.application.dto.CompanyResponseDto;
 import com.fn.ai.order.application.dto.DeliveryCreateRequestDto;
 import com.fn.ai.order.application.dto.DeliveryCreateResponseDto;
+import com.fn.ai.order.application.dto.ProductStockRequestDto;
 import com.fn.ai.order.model.Order;
 import com.fn.ai.order.model.OrderRepository;
 import com.fn.ai.order.presentation.OrderSearchRequestDto;
@@ -40,24 +41,33 @@ public class OrderService {
         new RuntimeException("No Hub found for given supplierId"));
 
     //상품 존재 확인 및 재고 감소
-    if (!productClient.reduceStockByOrderItems(requestDto.orderItems())) {
+    if (!productClient.reduceStockByOrderItems(requestDto.orderItems().stream()
+        .map(ProductStockRequestDto::of).toList())) {
       throw new RuntimeException("No exist Product");
     }
 
     //주문생성
     Order order = orderRepository.save(Order.create(requestDto));
 
-    //배송통신로직
-    DeliveryCreateResponseDto deliveryResponseDto = deliveryClient.createDelivery(
-        DeliveryCreateRequestDto.of(
-            order.getId(),
-            companyResponseDto.receiverHubId(),
-            companyResponseDto.supplierHubId(),
-            companyResponseDto.supplierHubAddress())).orElseThrow(() ->
-        new RuntimeException("fail to create delivery"));
+    try {//배송통신로직
+      DeliveryCreateResponseDto deliveryResponseDto = deliveryClient.createDelivery(
+          DeliveryCreateRequestDto.of(
+              order.getId(),
+              companyResponseDto.receiverHubId(),
+              companyResponseDto.supplierHubId(),
+              companyResponseDto.supplierHubAddress())).orElseThrow(() ->
+          new RuntimeException("fail to create delivery"));
 
-    //받아온 배송ID를 set해준다
-    order.updateDeliveryId(deliveryResponseDto.deliveryId());
+      // 받아온 배송 ID를 set해준다
+      order.updateDeliveryId(deliveryResponseDto.deliveryId());
+    } catch (RuntimeException e) {
+      // 배송 생성 실패 시 재고 롤백
+      if (!productClient.increaseStockByOrderItems(requestDto.orderItems().stream()
+          .map(ProductStockRequestDto::of).toList())) {
+        //생각중
+      }
+      throw e;
+    }
 
     return OrderCreateResponseDto.of(order);
   }
@@ -88,6 +98,7 @@ public class OrderService {
     return OrderResponseDto.from(order);
   }
 
+  @Transactional(readOnly = true)
   public Page<OrderSearchResponseDto> search(OrderSearchRequestDto requestDto, Pageable pageable) {
     return orderRepository.searchOrder(requestDto, pageable);
   }
