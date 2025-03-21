@@ -154,12 +154,14 @@ public class UserController {
           @PathVariable UUID userId,
           @CurrentUserInfo UserContext userContext
   ) {
-    validateAccess(userContext.userRole(), userContext.userId(), userId);
+    DeliveryManagerResponseDto responseDto = deliveryManagerService.getDeliveryManager(
+            userContext.userRole(), userContext.userId(), userId
+    );
 
-    DeliveryManagerResponseDto responseDto = deliveryManagerService.getDeliveryManager(userId);
     return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
             CommonResponseCode.SUCCESS.getMessage(), responseDto);
   }
+
 
   /**
    * 배송 담당자 정보 전체 조회
@@ -223,27 +225,5 @@ public class UserController {
         return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
                 CommonResponseCode.SUCCESS.getMessage(), responseDto);
     }
-
-
-
-  private void validateAccess(UserRoleEnum role, UUID requesterId, UUID targetId) {
-    if (role == UserRoleEnum.MASTER) return;
-
-    if (role == UserRoleEnum.DELIVERY_MANAGER && !requesterId.equals(targetId)) {
-      throw new IllegalStateException("배송 담당자는 본인 정보만 조회할 수 있습니다.");
-    }
-
-    if (role == UserRoleEnum.HUB_MANAGER) {
-      UUID targetHubId = deliveryManagerService.getHubIdOf(targetId);
-      UUID myHubId = deliveryManagerService.getHubIdOf(requesterId);
-      if (!targetHubId.equals(myHubId)) {
-        throw new IllegalStateException("허브 관리자는 본인의 허브 배송 담당자만 조회할 수 있습니다.");
-      }
-      return;
-    }
-
-    throw new IllegalStateException("조회 권한이 없습니다.");
-  }
-
 
 }

@@ -72,14 +72,33 @@ public class DeliveryManagerServiceImpl implements DeliveryManagerService {
         return DeliveryManagerResponseDto.from(deliveryManager);
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public DeliveryManagerResponseDto getDeliveryManager(UUID userId) {
-        DeliveryManager deliveryManager = deliveryManagerRepository.findByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException("배송 담당자 정보를 찾을 수 없습니다: " + userId));
+    @Transactional(readOnly = true)
+    public DeliveryManagerResponseDto getDeliveryManager(UserRoleEnum role, UUID requesterId, UUID targetId) {
+        if (role != UserRoleEnum.MASTER) {
+            if (role == UserRoleEnum.DELIVERY_MANAGER && !requesterId.equals(targetId)) {
+                throw new IllegalStateException("배송 담당자는 본인 정보만 조회할 수 있습니다.");
+            }
+
+            if (role == UserRoleEnum.HUB_MANAGER) {
+                UUID requesterHubId = getHubIdOf(requesterId);
+                UUID targetHubId = getHubIdOf(targetId);
+                if (!Objects.equals(requesterHubId, targetHubId)) {
+                    throw new IllegalStateException("허브 관리자는 본인의 허브 배송 담당자만 조회할 수 있습니다.");
+                }
+            }
+
+            if (role != UserRoleEnum.HUB_MANAGER && role != UserRoleEnum.DELIVERY_MANAGER) {
+                throw new IllegalStateException("조회 권한이 없습니다.");
+            }
+        }
+
+        DeliveryManager deliveryManager = deliveryManagerRepository.findByUserId(targetId)
+                .orElseThrow(() -> new EntityNotFoundException("배송 담당자 정보를 찾을 수 없습니다: " + targetId));
 
         return DeliveryManagerResponseDto.from(deliveryManager);
     }
+
 
     @Transactional(readOnly = true)
     @Override
