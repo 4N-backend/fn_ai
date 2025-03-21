@@ -27,3 +27,7 @@ naver:
   map:
     client-id : ${NAVER_CLIENT_ID}
     secret-key : ${NAVER_SECRET_KEY}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs

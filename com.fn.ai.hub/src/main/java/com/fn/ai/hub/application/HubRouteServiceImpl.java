@@ -10,7 +10,6 @@ import com.fn.ai.hub.domain.HubRoute;
 import com.fn.ai.hub.domain.repository.CalcHubRouteRepository;
 import com.fn.ai.hub.domain.repository.HubRepository;
 import com.fn.ai.hub.domain.repository.HubRouteRepository;
-import com.fn.ai.hub.exception.HubNotFoundException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -49,9 +48,9 @@ public class HubRouteServiceImpl implements HubRouteService {
         UUID arrivalHubId = requestDto.arrivalHubId();
 
         Hub departureHub = hubRepository.findById(departureHubId).orElseThrow(
-            HubNotFoundException::new);
+            () -> new IllegalArgumentException("허브가 존재하지 않습니다."));
         Hub arrivalHub = hubRepository.findById(arrivalHubId)
-            .orElseThrow(HubNotFoundException::new);
+            .orElseThrow(() -> new IllegalArgumentException("허브가 존재하지 않습니다."));
 
         if (hubRouteRepository.findByDepatureHubIdAndArrivalHubId(departureHubId, arrivalHubId)
             .isPresent()) {
@@ -81,9 +80,9 @@ public class HubRouteServiceImpl implements HubRouteService {
         UUID arrivalHubId = requestDto.arrivalHubId();
 
         Hub departureHub = hubRepository.findById(departureHubId).orElseThrow(
-            HubNotFoundException::new);
+            () -> new IllegalArgumentException("허브가 존재하지 않습니다."));
         Hub arrivalHub = hubRepository.findById(arrivalHubId)
-            .orElseThrow(HubNotFoundException::new);
+            .orElseThrow(()-> new IllegalArgumentException("허브가 존재하지 않습니다."));
 
         if (hubRouteRepository.findByDepatureHubIdAndArrivalHubId(departureHubId, arrivalHubId)
             .isPresent()) {

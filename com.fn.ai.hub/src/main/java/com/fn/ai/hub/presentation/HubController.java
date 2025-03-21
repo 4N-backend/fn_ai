@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/hubs")
+//@RequestMapping("/api/hubs")
 @RequiredArgsConstructor
 public class HubController {
 
     private final HubService hubService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<CommonResponse<HubResponseDto>> createHub(@RequestBody HubCreateRequestDto requestDto) {
 
         HubResponseDto responseDto = hubService.createHub(requestDto);
@@ -49,7 +49,7 @@ public class HubController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<CommonResponse<Page<HubResponseDto>>> getAllHub(
         @RequestParam int page,
         @RequestParam int size,

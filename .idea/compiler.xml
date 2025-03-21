@@ -8,16 +8,14 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.36/5a30490a6e14977d97d9c73c924c1f1b5311ea95/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="root.com.fn.ai.config.main" />
-        <module name="root.com.fn.ai.notification.main" />
-        <module name="root.com.fn.ai.product.main" />
-        <module name="root.com.fn.ai.common.main" />
-        <module name="root.com.fn.ai.company.main" />
-        <module name="root.com.fn.ai.user.main" />
-        <module name="root.com.fn.ai.delivery.main" />
-        <module name="root.com.fn.ai.eureka.main" />
-        <module name="root.com.fn.ai.order.main" />
-        <module name="root.com.fn.ai.gateway.main" />
+        <module name="root.user.main" />
+        <module name="root.delivery.main" />
+        <module name="root.eureka.main" />
+        <module name="root.auth.main" />
+        <module name="root.gateway.main" />
+        <module name="root.config.main" />
+        <module name="root.company.main" />
+        <module name="root.notification.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
@@ -34,7 +32,10 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mysema.commons/mysema-commons-lang/0.2.4/d09c8489d54251a6c22fbce804bdd4a070557317/mysema-commons-lang-0.2.4.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jdt/ecj/3.26.0/4837be609a3368a0f7e7cf0dc1bdbc7fe94993de/ecj-3.26.0.jar" />
         </processorPath>
-        <module name="root.com.fn.ai.hub.main" />
+        <module name="root.product.main" />
+        <module name="root.hub.main" />
+        <module name="root.order.main" />
+        <module name="root.common.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

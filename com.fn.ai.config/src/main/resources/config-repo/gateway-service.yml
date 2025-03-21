@@ -21,6 +21,8 @@ spring:
           uri: lb://hub-service
           predicates:
             - Path=/api/hubs/**
+          filters:
+            - RewritePath=/api/hubs/(?<segment>.*), /${segment}
         - id: notification-service  # 라우트 식별자
           uri: lb://notification-service
           predicates:
@@ -29,14 +31,20 @@ spring:
           uri: lb://order-service
           predicates:
             - Path=/api/orders/**
+          filters:
+            - RewritePath=/api/orders/(?<segment>.*), /${segment}
         - id: user-service  # 라우트 식별자
           uri: lb://user-service
           predicates:
             - Path=/api/user/**
+          filters:
+            - RewritePath=/api/user/(?<segment>.*), /${segment}
         - id: product-service  # 라우트 식별자
           uri: lb://product-service
           predicates:
             - Path=/api/products/**
+          filters:
+            - RewritePath=/api/products/(?<segment>.*), /${segment}
         - id: auth-service  # 라우트 식별자
           uri: lb://auth-service
           predicates:
