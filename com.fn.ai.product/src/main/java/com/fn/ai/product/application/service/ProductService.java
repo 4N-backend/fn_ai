@@ -34,11 +34,11 @@ public class ProductService {
 
   public ProductCreateResponseDto createProduct(ProductCreateRequestDto requestDto) {
 
-//    hubClient.getHubById(requestDto.hubId()).orElseThrow(() ->
-//        new RuntimeException("Hub not found"));
-//
-//    companyClient.getCompanyById(requestDto.companyId()).orElseThrow(() ->
-//        new RuntimeException("Company not found"));
+    hubClient.getHubById(requestDto.hubId()).orElseThrow(() ->
+        new RuntimeException("Hub not found"));
+
+    companyClient.getCompanyById(requestDto.companyId()).orElseThrow(() ->
+        new RuntimeException("Company not found"));
 
     return ProductCreateResponseDto.from(productRepository.save(Product.from(requestDto)));
   }
