@@ -4,7 +4,9 @@ spring:
   application:
     name: hub-service
   config:
-    import: "configserver:"
+    import:
+      - "configserver:"
+      - optional:file:.env[.properties]
   cloud:
     config:
       discovery:
