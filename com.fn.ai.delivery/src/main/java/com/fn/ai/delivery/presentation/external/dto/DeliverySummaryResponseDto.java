@@ -1,4 +1,4 @@
-package com.fn.ai.delivery.presentation.dto;
+package com.fn.ai.delivery.presentation.external.dto;
 
 import com.fn.ai.delivery.model.Delivery;
 import com.fn.ai.delivery.model.type.DeliveryStatus;
