@@ -23,4 +23,5 @@ public interface ProductRepository {
 
   long reduceStock(List<ProductRequestDto> requestDto);
 
+  List<Product> findAll();
 }
