@@ -1,13 +1,13 @@
 package com.fn.ai.delivery.application;
 
-import com.fn.ai.delivery.presentation.dto.DeliveryArriveHubRequestDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryArriveHubResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryCompleteResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryCreateRequestDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryCreateResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryDepartHubResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryDetailsResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliverySummaryResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryArriveHubRequestDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryArriveHubResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryCompleteResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryDepartHubResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryDetailsResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliverySummaryResponseDto;
+import com.fn.ai.delivery.presentation.internal.dto.DeliveryCreateRequestDto;
+import com.fn.ai.delivery.presentation.internal.dto.DeliveryCreateResponseDto;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,4 +27,5 @@ public interface DeliveryService {
       DeliveryArriveHubRequestDto requestDto);
 
   DeliveryCompleteResponseDto complete(UUID deliveryId);
+
 }

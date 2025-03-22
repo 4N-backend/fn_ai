@@ -141,6 +141,13 @@ public class DeliveryRoute extends BaseEntity {
     updateActualRecord(new Distance(distance), new Duration(duration));
   }
 
+  public void assignDeliveryManager(UUID deliveryManagerId) {
+    if (this.deliveryManagerId != null) {
+      throw new IllegalStateException("이미 배정된 배송입니다.");
+    }
+    this.deliveryManagerId = deliveryManagerId;
+  }
+
   private void updateActualRecord(Distance distance, Duration duration) {
     actualDistance = distance;
     actualDuration = duration;
