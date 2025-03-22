@@ -22,6 +22,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class Delivery extends BaseEntity {
   private UUID arrivalHubId;
 
   @OneToMany(fetch = LAZY, cascade = PERSIST, mappedBy = "delivery")
+  @OrderBy("sequence ASC")
   private List<DeliveryRoute> deliveryRoutes = new ArrayList<>();
 
   @Embedded
@@ -123,7 +125,7 @@ public class Delivery extends BaseEntity {
     currentRoute.arrived(distance, duration);
   }
 
-  private DeliveryRoute getRouteBySequence(DeliverySequence sequence) {
+  public DeliveryRoute getRouteBySequence(DeliverySequence sequence) {
     if (sequence.getValue() > deliveryRoutes.size()) {
       throw new DeliverySequenceOutOfRangeException();
     }

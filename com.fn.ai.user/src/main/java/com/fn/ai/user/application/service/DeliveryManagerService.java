@@ -23,4 +23,5 @@ public interface DeliveryManagerService {
 
     DeliveryManagerDeleteResponseDto deleteDeliveryManager(UserRoleEnum role, UUID requesterId, UUID deliveryManagerId);
 
+    DeliveryManagerAssignResponseDto assign(UUID departureHubId);
 }

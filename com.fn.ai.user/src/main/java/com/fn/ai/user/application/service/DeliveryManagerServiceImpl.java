@@ -204,6 +204,15 @@ public class DeliveryManagerServiceImpl implements DeliveryManagerService {
         return new DeliveryManagerDeleteResponseDto(deliveryManagerId);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public DeliveryManagerAssignResponseDto assign(UUID departureHubId) {
+        List<DeliveryManager> deliveryManagers = deliveryManagerRepository
+            .findByHubIdIsNull();
+        // 선별 알고리즘
+        DeliveryManager selected = deliveryManagers.get(0);
+        return DeliveryManagerAssignResponseDto.of(selected);
+    }
 
 
     private int calculateNextSequence(DeliveryType type, UUID hubId) {
