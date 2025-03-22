@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("company-service")
 public interface CompanyFeignClient {
 
-  @GetMapping("/api/companies")
+  @GetMapping("/api/companies/info")
   Optional<CompanyResponseDto> getHubByCompanyId(
-      @RequestParam UUID supplierId,
+      @RequestParam UUID producerId,
       @RequestParam UUID receiverId);
 }
