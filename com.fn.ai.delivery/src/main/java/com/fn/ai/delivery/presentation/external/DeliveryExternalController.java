@@ -1,49 +1,36 @@
-package com.fn.ai.delivery.presentation;
-
-import static com.fn.ai.common.exception.code.CommonResponseCode.CREATED;
+package com.fn.ai.delivery.presentation.external;
 
 import com.fn.ai.common.application.CommonResponse;
+import com.fn.ai.delivery.application.DeliveryAssignService;
 import com.fn.ai.delivery.application.DeliveryService;
-import com.fn.ai.delivery.presentation.dto.DeliveryArriveHubRequestDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryArriveHubResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryCompleteResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryCreateRequestDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryCreateResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryDepartHubResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliveryDetailsResponseDto;
-import com.fn.ai.delivery.presentation.dto.DeliverySummaryResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryArriveHubRequestDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryArriveHubResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryAssignResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryCompleteResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryDepartHubResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliveryDetailsResponseDto;
+import com.fn.ai.delivery.presentation.external.dto.DeliverySummaryResponseDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 @Validated
-public class DeliveryController {
+public class DeliveryExternalController {
 
   private final DeliveryService deliveryService;
-
-  /**
-   * 배송 생성
-   */
-  @PostMapping
-  public ResponseEntity<CommonResponse<DeliveryCreateResponseDto>> create(
-      @Valid @RequestBody DeliveryCreateRequestDto requestDto
-  ) {
-    return CommonResponse.success(CREATED.getMessage(), deliveryService.create(requestDto));
-  }
+  private final DeliveryAssignService deliveryAssignService;
 
   /**
    * 배송 단 건 조회
@@ -70,6 +57,17 @@ public class DeliveryController {
   public ResponseEntity<CommonResponse<Void>> delete(@PathVariable UUID deliveryId) {
     deliveryService.delete(deliveryId);
     return CommonResponse.success(null);
+  }
+
+  /**
+   * 배송담당자 배정
+   */
+  @PostMapping("/{deliveryId}/route/{sequence}/assign")
+  public ResponseEntity<CommonResponse<DeliveryAssignResponseDto>> assign(
+      @PathVariable UUID deliveryId,
+      @PathVariable @PositiveOrZero int sequence
+  ) {
+    return CommonResponse.success(deliveryAssignService.assign(deliveryId, sequence));
   }
 
   /**

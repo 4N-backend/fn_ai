@@ -1,4 +1,4 @@
-package com.fn.ai.delivery.presentation.dto;
+package com.fn.ai.delivery.presentation.internal.dto;
 
 import com.fn.ai.delivery.model.Delivery;
 import jakarta.validation.constraints.NotBlank;

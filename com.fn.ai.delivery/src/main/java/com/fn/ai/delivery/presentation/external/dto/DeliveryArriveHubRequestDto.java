@@ -1,4 +1,4 @@
-package com.fn.ai.delivery.presentation.dto;
+package com.fn.ai.delivery.presentation.external.dto;
 
 import jakarta.validation.constraints.Positive;
 
