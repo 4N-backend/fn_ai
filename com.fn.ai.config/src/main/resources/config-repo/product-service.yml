@@ -17,5 +17,9 @@ spring:
     show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    open-in-view: false
     generate-ddl: true
+    properties:
+      hibernate:
+        spring.jpa.open-in-view: false
+        format_sql: true
+        default_batch_fetch_size: 10
