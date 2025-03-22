@@ -45,6 +45,12 @@ spring:
             - Path=/api/user/**
           filters:
             - RewritePath=/api/user/(?<segment>.*), /${segment}
+        - id: delivery-manager-service  # 라우트 식별자
+          uri: lb://user-service
+          predicates:
+            - Path=/api/delivery-managers/**
+          filters:
+            - RewritePath=/api/delivery-managers/(?<segment>.*), /${segment}
         - id: product-service  # 라우트 식별자
           uri: lb://product-service
           predicates:
