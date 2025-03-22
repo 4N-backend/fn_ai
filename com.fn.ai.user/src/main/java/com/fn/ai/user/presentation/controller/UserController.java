@@ -18,7 +18,6 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
 public class UserController {
 
   private final UserService userService;
@@ -32,7 +31,8 @@ public class UserController {
     return ResponseEntity.ok().body(responseDto);
   }
 
-  @GetMapping("/{username}")
+
+  @GetMapping("/username/{username}")
   public ResponseEntity<UserSignInResponseDto> getUserByUsername(
       @PathVariable String username) {
     UserSignInResponseDto responseDto = userService.getUserByUsername(username);
@@ -105,7 +105,7 @@ public class UserController {
   }
 
 
-  @DeleteMapping("/{userId}")
+  @DeleteMapping("/userId/{userId}")
   public ResponseEntity<CommonResponse<UserDeleteResponseDto>> deleteUser(
           @PathVariable UUID userId,
           @CurrentUserInfo UserContext userInfo) {

@@ -21,3 +21,21 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:18080/eureka/
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: hub-service
+        url: /api/hubs/v3/api-docs
+      - name: user-service
+        url: /api/user/v3/api-docs
+      - name: order-service
+        url: /api/orders/v3/api-docs
+      - name: product-service
+        url: /api/products/v3/api-docs
+      - name: notification-service
+        url: /api/slacks/v3/api-docs
+      - name: company-service
+        url: /api/companies/v3/api-docs
+      - name: delivery-service
+        url: /api/deliveries/v3/api-docs

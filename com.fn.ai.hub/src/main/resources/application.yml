@@ -27,3 +27,4 @@ naver:
   map:
     client-id : ${NAVER_CLIENT_ID}
     secret-key : ${NAVER_SECRET_KEY}
+

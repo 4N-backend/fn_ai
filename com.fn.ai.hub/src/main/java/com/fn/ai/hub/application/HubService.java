@@ -1,13 +1,10 @@
 package com.fn.ai.hub.application;
 
-import com.fn.ai.common.context.UserContextHolder;
-import com.fn.ai.common.context.UserRoleEnum;
 import com.fn.ai.hub.application.dto.request.HubCreateRequestDto;
 import com.fn.ai.hub.application.dto.request.HubUpdateRequestDto;
 import com.fn.ai.hub.application.dto.response.HubResponseDto;
 import com.fn.ai.hub.domain.Hub;
 import com.fn.ai.hub.domain.repository.HubRepository;
-import com.fn.ai.hub.exception.HubNotFoundException;
 
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +44,7 @@ public class HubService {
     public HubResponseDto getHub(UUID hubId) {
 
         Hub hub = hubRepository.findById(hubId)
-            .orElseThrow(HubNotFoundException::new);
+            .orElseThrow(()-> new IllegalArgumentException("허브가 존재하지 않습니다."));
 
         return HubResponseDto.of(hub);
     }
@@ -75,7 +72,7 @@ public class HubService {
     public HubResponseDto updateHub(HubUpdateRequestDto requestDto, UUID hub_id) {
 
         Hub hub = hubRepository.findById(hub_id)
-            .orElseThrow(HubNotFoundException::new);
+            .orElseThrow(()-> new IllegalArgumentException("허브가 존재하지 않습니다."));
 
         hub.updateHub(requestDto.name(), requestDto.address(), requestDto.latitude(),
             requestDto.longitude());
@@ -87,7 +84,7 @@ public class HubService {
 
     public HubResponseDto deleteHub(UUID hubId) {
         Hub hub = hubRepository.findById(hubId)
-            .orElseThrow(HubNotFoundException::new);
+            .orElseThrow(()-> new IllegalArgumentException("허브가 존재하지 않습니다."));
 
         return HubResponseDto.of(hub);
     }

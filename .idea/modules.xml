@@ -2,11 +2,22 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.auth/root.auth.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.auth/root.auth.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.common/root.com.fn.ai.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.common/root.com.fn.ai.common.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.config/root.com.fn.ai.config.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.config/root.com.fn.ai.config.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.eureka/root.com.fn.ai.eureka.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.eureka/root.com.fn.ai.eureka.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.hub/root.com.fn.ai.hub.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.hub/root.com.fn.ai.hub.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/company/root.company.iml" filepath="$PROJECT_DIR$/.idea/modules/company/root.company.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.common/root.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.common/root.common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.company/root.company.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.company/root.company.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.config/root.config.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.config/root.config.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.delivery/root.delivery.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.delivery/root.delivery.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.eureka/root.eureka.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.eureka/root.eureka.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.gateway/root.gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.gateway/root.gateway.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.hub/root.hub.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.hub/root.hub.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.notification/root.notification.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.notification/root.notification.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.order/root.order.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.order/root.order.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.product/root.product.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.product/root.product.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.fn.ai.user/root.user.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.fn.ai.user/root.user.main.iml" />
     </modules>
   </component>
 </project>

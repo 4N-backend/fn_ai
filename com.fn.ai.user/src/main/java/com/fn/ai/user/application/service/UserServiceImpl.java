@@ -100,7 +100,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
         user.delete();
-
         userRepository.save(user);
 
         return UserDeleteResponseDto.of(user);

@@ -5,11 +5,13 @@ import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @EqualsAndHashCode
 @NoArgsConstructor
 @Embeddable
 @Getter
+@Slf4j
 public class Username {
 
     @Column(name = "username", nullable = false)
@@ -21,6 +23,7 @@ public class Username {
     }
 
     private void validate(String value) {
+        log.info("들어온 값 : {}",value);
         if (value == null || value.isBlank()) {
             throw new NullPointerException("Username is Null");
         }
