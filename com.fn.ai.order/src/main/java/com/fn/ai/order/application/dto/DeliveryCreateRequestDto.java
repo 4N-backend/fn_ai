@@ -5,8 +5,8 @@ import lombok.Builder;
 
 @Builder
 public record DeliveryCreateRequestDto(UUID orderId,
-                                       UUID arrivalHubId,
                                        UUID departureHubId,
+                                       UUID arrivalHubId,
                                        String targetAddress) {
 
   public static DeliveryCreateRequestDto of(
@@ -16,8 +16,8 @@ public record DeliveryCreateRequestDto(UUID orderId,
       String receiverHubAddress) {
     return DeliveryCreateRequestDto.builder()
         .orderId(orderId)
-        .arrivalHubId(receiverHubId)
         .departureHubId(supplierHubId)
+        .arrivalHubId(receiverHubId)
         .targetAddress(receiverHubAddress)
         .build();
   }

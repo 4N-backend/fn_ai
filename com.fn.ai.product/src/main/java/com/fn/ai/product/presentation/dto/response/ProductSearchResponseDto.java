@@ -20,6 +20,7 @@ public record ProductSearchResponseDto(
     return ProductSearchResponseDto.builder()
         .productId(product.getId())
         .name(product.getName())
+        .stock(product.getStock())
         .createdBy(product.getCreatedBy())
         .createdAt(product.getCreatedAt())
         .updatedBy(product.getUpdatedBy())
