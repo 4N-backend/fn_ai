@@ -4,7 +4,6 @@ import com.fn.ai.common.context.UserContext;
 import com.fn.ai.product.application.client.CompanyClient;
 import com.fn.ai.product.application.client.HubClient;
 import com.fn.ai.product.application.dto.ProductRequestDto;
-import com.fn.ai.product.infrastructure.config.KafkaDtoParser;
 import com.fn.ai.product.model.Product;
 import com.fn.ai.product.model.repository.ProductRepository;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
@@ -20,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,19 +33,6 @@ public class ProductService {
   private final CompanyClient companyClient;
 
   private final ProductRepository productRepository;
-
-  private final KafkaDtoParser kafkaDtoParser;
-
-  @KafkaListener(groupId = "product", topics = "createOrder")
-  public Boolean createOrderConsumeFromProduct(
-      List<ProductRequestDto> requestDto) {
-
-    List<ProductRequestDto> parseDtoList = kafkaDtoParser.parseList(requestDto,
-        ProductRequestDto.class);
-
-    return productRepository.reduceStock(parseDtoList) == requestDto.size();
-  }
-
 
   public ProductCreateResponseDto createProduct(ProductCreateRequestDto requestDto) {
 
