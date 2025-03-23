@@ -4,10 +4,9 @@ import com.fn.ai.notification.slack.presentation.dto.request.SlackCreateRequestD
 import com.fn.ai.notification.slack.presentation.dto.request.SlackUpdateRequestDto;
 import com.fn.ai.notification.slack.presentation.dto.response.SlackResponseDto;
 import com.fn.ai.notification.slack.presentation.dto.response.SlackUpdateResponseDto;
+import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.UUID;
 
 public interface SlackService {
 

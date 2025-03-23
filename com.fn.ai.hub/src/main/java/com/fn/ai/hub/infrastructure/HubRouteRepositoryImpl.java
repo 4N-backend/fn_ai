@@ -5,15 +5,14 @@ import com.fn.ai.hub.domain.QHubRoute;
 import com.fn.ai.hub.domain.repository.HubRouteRepository;
 import com.fn.ai.hub.infrastructure.jpa.HubRouJpaRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor

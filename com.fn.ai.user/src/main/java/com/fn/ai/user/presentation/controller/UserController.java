@@ -2,22 +2,40 @@ package com.fn.ai.user.presentation.controller;
 
 import com.fn.ai.common.application.CommonResponse;
 import com.fn.ai.common.context.UserContext;
-import com.fn.ai.common.context.UserContextHolder;
 import com.fn.ai.common.context.UserRoleEnum;
 import com.fn.ai.common.context.annotation.CurrentUserInfo;
 import com.fn.ai.common.exception.code.CommonResponseCode;
 import com.fn.ai.user.application.service.DeliveryManagerService;
 import com.fn.ai.user.application.service.UserService;
-import com.fn.ai.user.presentation.dto.*;
+import com.fn.ai.user.presentation.dto.DeliveryManagerDeleteResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerInfoResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerUpdaterRequestDto;
+import com.fn.ai.user.presentation.dto.MasterUserInfoResponseDto;
+import com.fn.ai.user.presentation.dto.UserDeleteResponseDto;
+import com.fn.ai.user.presentation.dto.UserInfoResponseDto;
+import com.fn.ai.user.presentation.dto.UserSignInResponseDto;
+import com.fn.ai.user.presentation.dto.UserSignUpRequestDto;
+import com.fn.ai.user.presentation.dto.UserSignUpResponseDto;
+import com.fn.ai.user.presentation.dto.UserUpdateRequestDto;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/users")
 public class UserController {
 
   private final UserService userService;

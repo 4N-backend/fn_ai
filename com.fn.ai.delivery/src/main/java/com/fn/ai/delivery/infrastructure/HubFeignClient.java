@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "hub-service")
 public interface HubFeignClient {
 
-  @GetMapping("/routes/b2b")
+  @GetMapping("/api/hubs/routes/b2b")
   Queue<HubRouteResponseDto> getHubRoute(@RequestBody HubRouteRequestDto requestDto);
 }

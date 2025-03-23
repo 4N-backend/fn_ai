@@ -1,12 +1,11 @@
 package com.fn.ai.hub.domain.repository;
 
 import com.fn.ai.hub.domain.HubRoute;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface HubRouteRepository {
     HubRoute save(HubRoute route);

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/delivery-managers")
+@RequestMapping("/api/delivery-managers")
 @Slf4j
 public class DeliveryManagerController {
 

@@ -2,7 +2,6 @@ package com.fn.ai.user.presentation.dto;
 
 import com.fn.ai.user.model.DeliveryManager;
 import com.fn.ai.user.model.type.DeliveryType;
-
 import java.util.UUID;
 
 public record DeliveryManagerResponseDto(
