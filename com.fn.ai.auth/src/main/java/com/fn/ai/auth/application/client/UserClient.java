@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "user-service")
 public interface UserClient {
 
-  @PostMapping("/signup")
+  @PostMapping("/api/users/signup")
   Optional<SignUpResponseDto> signup(@RequestBody UserRegisterRequestDto dto);
 
-  @GetMapping("/username/{username}")
+  @GetMapping("/api/users/username/{username}")
   Optional<UserResponseDto> getUserByUsername(@PathVariable String username);
 }
