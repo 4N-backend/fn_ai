@@ -7,7 +7,6 @@ import com.fn.ai.hub.application.dto.request.HubRouteCreateRequestDto;
 import com.fn.ai.hub.application.dto.request.HubRouteFindRequestDto;
 import com.fn.ai.hub.application.dto.request.HubRouteUpdateRequestDto;
 import com.fn.ai.hub.application.dto.response.HubRouteResponseDto;
-
 import java.util.Queue;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/routes")
+@RequestMapping("/api/hubs/routes")
 @RequiredArgsConstructor
 public class HubRouteController {
 

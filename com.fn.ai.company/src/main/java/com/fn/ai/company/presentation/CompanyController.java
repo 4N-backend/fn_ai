@@ -9,7 +9,6 @@ import com.fn.ai.company.application.dto.response.CompanyCreateResponseDto;
 import com.fn.ai.company.application.dto.response.CompanyGetHubResponseDto;
 import com.fn.ai.company.application.dto.response.CompanyResponseDto;
 import com.fn.ai.company.application.dto.response.CompanyUpdateResponseDto;
-import jakarta.ws.rs.PUT;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/companies")
 public class CompanyController {
 
     private final CompanyService companyService;
