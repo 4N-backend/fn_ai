@@ -11,8 +11,8 @@ public record DeliveryCreateRequestDto(UUID orderId,
 
   public static DeliveryCreateRequestDto of(
       UUID orderId,
-      UUID receiverHubId,
       UUID supplierHubId,
+      UUID receiverHubId,
       String receiverHubAddress) {
     return DeliveryCreateRequestDto.builder()
         .orderId(orderId)

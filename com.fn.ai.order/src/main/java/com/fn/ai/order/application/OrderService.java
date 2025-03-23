@@ -53,9 +53,9 @@ public class OrderService {
       DeliveryCreateResponseDto deliveryResponseDto = deliveryClient.createDelivery(
           DeliveryCreateRequestDto.of(
               order.getId(),
-              companyResponseDto.receiveHubId(),
               companyResponseDto.produceHubId(),
-              companyResponseDto.produceHubAddress())).orElseThrow(() ->
+              companyResponseDto.receiveHubId(),
+              companyResponseDto.receiveHubAddress())).orElseThrow(() ->
           new RuntimeException("fail to create delivery"));
 
       // 받아온 배송 ID를 set해준다

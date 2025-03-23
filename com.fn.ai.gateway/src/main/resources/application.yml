@@ -4,7 +4,9 @@ spring:
   application:
     name: gateway-service
   config:
-    import: "configserver:"
+    import:
+      - "configserver:"
+      - optional:file:.env[.properties]
   cloud:
     config:
       discovery:
@@ -39,3 +41,6 @@ springdoc:
         url: /api/companies/v3/api-docs
       - name: delivery-service
         url: /api/deliveries/v3/api-docs
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
