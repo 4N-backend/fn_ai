@@ -4,6 +4,7 @@ import com.fn.ai.common.context.UserContext;
 import com.fn.ai.product.application.client.CompanyClient;
 import com.fn.ai.product.application.client.HubClient;
 import com.fn.ai.product.application.dto.ProductRequestDto;
+import com.fn.ai.product.infrastructure.config.KafkaDtoParser;
 import com.fn.ai.product.model.Product;
 import com.fn.ai.product.model.repository.ProductRepository;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
@@ -16,14 +17,17 @@ import com.fn.ai.product.presentation.dto.response.ProductUpdateResponseDto;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ProductService {
 
   private final HubClient hubClient;
@@ -31,6 +35,19 @@ public class ProductService {
   private final CompanyClient companyClient;
 
   private final ProductRepository productRepository;
+
+  private final KafkaDtoParser kafkaDtoParser;
+
+  @KafkaListener(groupId = "product", topics = "createOrder")
+  public Boolean createOrderConsumeFromProduct(
+      List<ProductRequestDto> requestDto) {
+
+    List<ProductRequestDto> parseDtoList = kafkaDtoParser.parseList(requestDto,
+        ProductRequestDto.class);
+
+    return productRepository.reduceStock(parseDtoList) == requestDto.size();
+  }
+
 
   public ProductCreateResponseDto createProduct(ProductCreateRequestDto requestDto) {
 
@@ -77,6 +94,15 @@ public class ProductService {
   }
 
   public Boolean reduceStock(List<ProductRequestDto> requestDto) {
+    for (ProductRequestDto productDto : requestDto) {
+
+      int stock = productRepository.findById(productDto.productId()).orElseThrow(() ->
+          new RuntimeException("Product not found")).getStock();
+
+      if (stock < productDto.stock()) {
+        throw new RuntimeException("재고가 부족합니다.");
+      }
+    }
     return productRepository.reduceStock(requestDto) == requestDto.size();
   }
 
