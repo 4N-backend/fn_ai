@@ -1,7 +1,6 @@
 package com.fn.ai.hub.domain.repository;
 
 import com.fn.ai.hub.domain.Hub;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

@@ -5,7 +5,6 @@ import com.fn.ai.hub.application.dto.request.HubUpdateRequestDto;
 import com.fn.ai.hub.application.dto.response.HubResponseDto;
 import com.fn.ai.hub.domain.Hub;
 import com.fn.ai.hub.domain.repository.HubRepository;
-
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

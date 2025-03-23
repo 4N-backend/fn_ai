@@ -1,23 +1,26 @@
 package com.fn.ai.user.application.service;
 
 import com.fn.ai.common.context.UserContext;
-import com.fn.ai.common.context.UserContextHolder;
 import com.fn.ai.user.model.User;
 import com.fn.ai.user.model.repository.UserRepository;
 import com.fn.ai.user.model.vo.Password;
 import com.fn.ai.user.model.vo.SlackId;
 import com.fn.ai.user.model.vo.Username;
-import com.fn.ai.user.presentation.dto.*;
-
+import com.fn.ai.user.presentation.dto.MasterUserInfoResponseDto;
+import com.fn.ai.user.presentation.dto.UserDeleteResponseDto;
+import com.fn.ai.user.presentation.dto.UserInfoResponseDto;
+import com.fn.ai.user.presentation.dto.UserSignInResponseDto;
+import com.fn.ai.user.presentation.dto.UserSignUpRequestDto;
+import com.fn.ai.user.presentation.dto.UserSignUpResponseDto;
+import com.fn.ai.user.presentation.dto.UserUpdateRequestDto;
 import jakarta.transaction.Transactional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

@@ -6,17 +6,24 @@ import com.fn.ai.user.model.DeliveryManager;
 import com.fn.ai.user.model.User;
 import com.fn.ai.user.model.repository.UserRepository;
 import com.fn.ai.user.model.type.DeliveryType;
-import com.fn.ai.user.presentation.dto.*;
+import com.fn.ai.user.presentation.dto.DeliveryManagerAssignResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerDeleteResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerInfoResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerUpdaterRequestDto;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

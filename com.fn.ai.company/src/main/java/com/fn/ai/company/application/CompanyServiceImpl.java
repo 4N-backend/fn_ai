@@ -11,7 +11,6 @@ import com.fn.ai.company.application.dto.response.UserInfoResponseDto;
 import com.fn.ai.company.domain.Company;
 import com.fn.ai.company.domain.CompanyType;
 import com.fn.ai.company.domain.repository.CompanyRepository;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
