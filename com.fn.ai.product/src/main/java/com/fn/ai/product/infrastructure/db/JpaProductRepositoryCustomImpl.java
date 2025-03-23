@@ -68,6 +68,7 @@ public class JpaProductRepositoryCustomImpl implements JpaProductRepositoryCusto
 
   @Override
   public long increaseStock(List<ProductRequestDto> requestDto) {
+
     return updateStock(requestDto, true);
   }
 
@@ -84,6 +85,7 @@ public class JpaProductRepositoryCustomImpl implements JpaProductRepositoryCusto
 
       updatedStock += execute;
     }
+
     return updatedStock;
   }
 
