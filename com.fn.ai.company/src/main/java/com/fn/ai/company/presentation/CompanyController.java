@@ -96,12 +96,11 @@ public class CompanyController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<CommonResponse<CompanyGetHubResponseDto>> getHubIdOfCompany(
+    public CompanyGetHubResponseDto getHubIdOfCompany(
         @RequestParam UUID producerId,
         @RequestParam UUID receiverId
     ) {
 
-        CompanyGetHubResponseDto responseDto = companyService.getHubIdOfCompany(producerId,receiverId);
-        return createResponse(responseDto, CommonResponseCode.SUCCESS);
+      return companyService.getHubIdOfCompany(producerId,receiverId);
     }
 }

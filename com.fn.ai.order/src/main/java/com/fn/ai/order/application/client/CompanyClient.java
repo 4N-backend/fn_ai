@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface CompanyClient {
 
   Optional<CompanyResponseDto> getHubByCompanyId(
-      @RequestParam UUID supplierId,
+      @RequestParam UUID producerId,
       @RequestParam UUID receiverId);
 }
