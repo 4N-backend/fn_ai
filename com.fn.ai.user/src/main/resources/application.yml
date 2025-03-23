@@ -21,6 +21,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:18080/eureka/
-springdoc:
-  api-docs:
-    path: /v3/api-docs
