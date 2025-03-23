@@ -1,6 +1,5 @@
 package com.fn.ai.hub.application;
 
-import com.fn.ai.hub.application.dto.request.HubCreateDeliveryRouteRequestDto;
 import com.fn.ai.hub.application.dto.request.HubRouteCreateRequestDto;
 import com.fn.ai.hub.application.dto.request.HubRouteFindRequestDto;
 import com.fn.ai.hub.application.dto.request.HubRouteUpdateRequestDto;

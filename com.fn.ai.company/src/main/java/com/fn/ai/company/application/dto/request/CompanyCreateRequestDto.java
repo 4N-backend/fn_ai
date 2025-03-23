@@ -1,7 +1,5 @@
 package com.fn.ai.company.application.dto.request;
 
-import com.fn.ai.company.application.dto.response.CompanyResponseDto;
-import com.fn.ai.company.domain.Company;
 import com.fn.ai.company.domain.CompanyType;
 import jakarta.validation.constraints.NotBlank;
 import java.util.UUID;

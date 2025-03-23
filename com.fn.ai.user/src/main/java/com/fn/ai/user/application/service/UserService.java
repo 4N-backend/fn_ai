@@ -1,10 +1,15 @@
 package com.fn.ai.user.application.service;
 
 import com.fn.ai.common.context.UserContext;
-import com.fn.ai.user.presentation.dto.*;
-import org.springframework.data.domain.Page;
-
+import com.fn.ai.user.presentation.dto.MasterUserInfoResponseDto;
+import com.fn.ai.user.presentation.dto.UserDeleteResponseDto;
+import com.fn.ai.user.presentation.dto.UserInfoResponseDto;
+import com.fn.ai.user.presentation.dto.UserSignInResponseDto;
+import com.fn.ai.user.presentation.dto.UserSignUpRequestDto;
+import com.fn.ai.user.presentation.dto.UserSignUpResponseDto;
+import com.fn.ai.user.presentation.dto.UserUpdateRequestDto;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
 
 public interface UserService {
 

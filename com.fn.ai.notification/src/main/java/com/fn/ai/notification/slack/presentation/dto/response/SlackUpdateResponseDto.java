@@ -1,9 +1,10 @@
 package com.fn.ai.notification.slack.presentation.dto.response;
 
 import com.fn.ai.notification.slack.domain.model.Slack;
-import lombok.*;
-
 import java.util.UUID;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor

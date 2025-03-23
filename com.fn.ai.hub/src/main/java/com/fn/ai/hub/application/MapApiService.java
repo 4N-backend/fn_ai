@@ -1,7 +1,6 @@
 package com.fn.ai.hub.application;
 
 import com.fn.ai.hub.domain.vo.Location;
-import org.springframework.http.ResponseEntity;
 
 public interface MapApiService {
     String createUri(Location departureLocation, Location arrivalLocation);
