@@ -92,6 +92,7 @@ public class Delivery extends BaseEntity {
         .departureHubId(departureHubId)
         .arrivalHubId(arrivalHubId)
         .targetAddress(new Address(targetAddress))
+        .deliveryRoutes(new ArrayList<>())
         .status(READY)
         .build();
   }
