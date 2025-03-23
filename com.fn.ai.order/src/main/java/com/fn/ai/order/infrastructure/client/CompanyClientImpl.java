@@ -15,7 +15,7 @@ public class CompanyClientImpl implements CompanyClient {
   private final CompanyFeignClient companyFeignClient;
 
   @Override
-  public Optional<CompanyResponseDto> getHubByCompanyId(UUID supplierId, UUID receiverId) {
-    return companyFeignClient.getHubByCompanyId(supplierId, receiverId);
+  public Optional<CompanyResponseDto> getHubByCompanyId(UUID producerId, UUID receiverId) {
+    return companyFeignClient.getHubByCompanyId(producerId, receiverId);
   }
 }

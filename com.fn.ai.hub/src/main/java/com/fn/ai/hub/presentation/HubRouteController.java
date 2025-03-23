@@ -98,12 +98,10 @@ public class HubRouteController {
     }
 
     @PostMapping("/b2b")
-    public ResponseEntity<CommonResponse<Queue<HubRouteResponseDto>>> findDeliveryRoute(@RequestBody
+    public Queue<HubRouteResponseDto> findDeliveryRoute(@RequestBody
     HubRouteFindRequestDto requestDto) {
 
-        Queue<HubRouteResponseDto> responseDto = hubRouteService.findDeliveryRoute(requestDto);
-        return CommonResponse.of(CommonResponseCode.SUCCESS.getCode(),
-            CommonResponseCode.SUCCESS.getMessage(), responseDto);
+      return hubRouteService.findDeliveryRoute(requestDto);
     }
 
     @GetMapping("/generate")

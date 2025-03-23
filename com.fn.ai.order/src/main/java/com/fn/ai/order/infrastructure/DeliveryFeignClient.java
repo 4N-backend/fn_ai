@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient("delivery-service")
 public interface DeliveryFeignClient {
 
-  @PostMapping("/api/deliveries")
+  @PostMapping
   Optional<DeliveryCreateResponseDto> createDelivery(
       @RequestBody DeliveryCreateRequestDto requestDto);
 }

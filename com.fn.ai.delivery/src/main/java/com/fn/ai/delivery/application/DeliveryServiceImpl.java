@@ -3,7 +3,6 @@ package com.fn.ai.delivery.application;
 import com.fn.ai.delivery.application.client.HubClient;
 import com.fn.ai.delivery.application.client.dto.HubRouteRequestDto;
 import com.fn.ai.delivery.application.client.dto.HubRouteResponseDto;
-import com.fn.ai.delivery.application.client.dto.HubRouteResponseDto.RouteInfo;
 import com.fn.ai.delivery.exception.DeliveryNotFoundException;
 import com.fn.ai.delivery.model.Delivery;
 import com.fn.ai.delivery.model.DeliveryRoute;
@@ -18,6 +17,7 @@ import com.fn.ai.delivery.presentation.internal.dto.DeliveryCreateRequestDto;
 import com.fn.ai.delivery.presentation.internal.dto.DeliveryCreateResponseDto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,13 +37,15 @@ public class DeliveryServiceImpl implements DeliveryService {
     Delivery delivery = requestDto.toEntity();
 
     // 배송 경로 조회
-    HubRouteResponseDto hubRouteResponseDto = hubClient.getHubRoute(
+    Queue<HubRouteResponseDto> routeResponses = hubClient.getHubRoute(
         HubRouteRequestDto.of(requestDto.departureHubId(), requestDto.arrivalHubId()));
+
+    // TODO: 큐 사이즈가 0일 때 예외처리
 
     // 배송 경로 기록 생성
     List<DeliveryRoute> routes = new ArrayList<>();
     int sequence = 0;
-    for (RouteInfo routeInfo : hubRouteResponseDto.routeInfos()) {
+    for (HubRouteResponseDto routeInfo : routeResponses) {
       DeliveryRoute deliveryRoute = routeInfo.toEntity(sequence++);
       routes.add(deliveryRoute);
     }
