@@ -30,7 +30,10 @@ public class CustomPreFilter implements GlobalFilter, Ordered {
     logger.info("Pre Filter : request URI: " + request.getURI());
 
     if (path.equals("/api/auth/signup") || path.equals("/api/auth/signin")
-        || path.contains("/v3/api-docs")) {
+        || path.contains("/v3/api-docs")
+        || path.contains("/swagger-ui")
+        || path.contains("/swagger-resources")
+        || path.contains("/webjars")) {
       return chain.filter(exchange);
     }
 
