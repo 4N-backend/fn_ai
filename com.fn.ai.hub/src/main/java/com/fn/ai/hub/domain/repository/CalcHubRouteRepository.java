@@ -8,4 +8,6 @@ public interface CalcHubRouteRepository {
     CalcHubRouteDistance save(CalcHubRouteDistance calculateHubDistance);
 
     List<CalcHubRouteDistance> findAll();
+
+    void saveAll(List<CalcHubRouteDistance> resultList);
 }

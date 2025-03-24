@@ -22,4 +22,9 @@ public class CalcHubRouteRepositoryImpl implements CalcHubRouteRepository {
     public List<CalcHubRouteDistance> findAll() {
         return jpaRepository.findAll();
     }
+
+    @Override
+    public void saveAll(List<CalcHubRouteDistance> resultList) {
+        jpaRepository.saveAll(resultList);
+    }
 }
