@@ -1,8 +1,7 @@
 package com.fn.ai.delivery.infrastructure;
 
 import com.fn.ai.delivery.application.client.DeliveryManagerClient;
-import com.fn.ai.delivery.application.client.dto.DeliveryManagerAssignResponseDto;
-import java.util.UUID;
+import com.fn.ai.delivery.application.client.dto.DeliveryManagerNextSequenceResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +12,7 @@ public class DeliveryManagerClientImpl implements DeliveryManagerClient {
   private final DeliveryManagerFeignClient deliveryManagerFeignClient;
 
   @Override
-  public DeliveryManagerAssignResponseDto getAssignedDeliveryManager(
-      UUID departureId) {
-    return deliveryManagerFeignClient.getAssignDeliveryManager(departureId);
+  public DeliveryManagerNextSequenceResponseDto getNextSequenceDeliveryManager(long lastSequence) {
+    return deliveryManagerFeignClient.getNextSequenceDeliveryManager(lastSequence);
   }
 }

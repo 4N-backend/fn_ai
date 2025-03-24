@@ -22,19 +22,20 @@ public interface JpaDeliveryManagerRepository extends JpaRepository<DeliveryMana
 
     Optional<DeliveryManager> findByUserId(UUID userId);
 
-    @Query("SELECT dm FROM DeliveryManager dm JOIN FETCH dm.user WHERE dm.hubId IS NULL")
-    List<DeliveryManager> findByHubIdIsNull();
-
-    @Query("SELECT dm FROM DeliveryManager dm JOIN FETCH dm.user WHERE dm.hubId = :hubId")
-    List<DeliveryManager> findByHubIdWithUser(@Param("hubId") UUID hubId);
-
     boolean existsByUserId(UUID userId);
 
-    @Query("SELECT MAX(dm.deliverySequence) FROM DeliveryManager dm WHERE dm.type = :type AND dm.hubId IS NULL")
+    @Query("SELECT MAX(dm.deliverySequence) FROM DeliveryManager dm "
+        + "WHERE dm.type = :type AND dm.hubId IS NULL")
     Optional<Integer> findMaxSequenceByTypeAndHubIdIsNull(@Param("type") DeliveryType type);
 
-    @Query("SELECT MAX(dm.deliverySequence) FROM DeliveryManager dm WHERE dm.type = :type AND dm.hubId = :hubId")
+    @Query("SELECT MAX(dm.deliverySequence) FROM DeliveryManager dm "
+        + "WHERE dm.type = :type AND dm.hubId = :hubId")
     Optional<Integer> findMaxSequenceByTypeAndHubId(@Param("type") DeliveryType type, @Param("hubId") UUID hubId);
+
+    @Query("SELECT dm FROM DeliveryManager dm "
+        + "WHERE (dm.deliverySequence >= :sequence AND dm.hubId IS NULL) "
+        + "ORDER BY dm.deliverySequence ASC")
+    List<DeliveryManager> findAllByNextSequenceAndHubIsNull(@Param("sequence") long sequence);
 
     long countByType(DeliveryType type);
 
