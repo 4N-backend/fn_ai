@@ -8,7 +8,7 @@ import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.FetchType.LAZY;
 
 import com.fn.ai.common.entity.BaseEntity;
-import com.fn.ai.delivery.exception.AlreadyCompletedDelivery;
+import com.fn.ai.delivery.exception.AlreadyCompletedDeliveryException;
 import com.fn.ai.delivery.exception.DeliverySequenceOutOfRangeException;
 import com.fn.ai.delivery.model.type.DeliveryStatus;
 import com.fn.ai.delivery.model.vo.Address;
@@ -108,7 +108,7 @@ public class Delivery extends BaseEntity {
 
   public void completed() {
     if (this.status == COMPLETED) {
-      throw new AlreadyCompletedDelivery();
+      throw new AlreadyCompletedDeliveryException();
     }
     this.status = COMPLETED;
   }
