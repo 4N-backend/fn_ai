@@ -27,20 +27,23 @@ eureka:
 springdoc:
   swagger-ui:
     urls:
-      - name: hub-service
+      - name: 0-auth-service
+        url: /api/auth/v3/api-docs
+      - name: 1-hub-service
         url: /api/hubs/v3/api-docs
-      - name: user-service
+      - name: 2-user-service
         url: /api/user/v3/api-docs
-      - name: order-service
+      - name: 3-order-service
         url: /api/orders/v3/api-docs
-      - name: product-service
+      - name: 4-product-service
         url: /api/products/v3/api-docs
-      - name: notification-service
+      - name: 5-notification-service
         url: /api/slacks/v3/api-docs
-      - name: company-service
+      - name: 6-company-service
         url: /api/companies/v3/api-docs
-      - name: delivery-service
+      - name: 7-delivery-service
         url: /api/deliveries/v3/api-docs
+
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}

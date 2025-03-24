@@ -1,6 +1,7 @@
 package com.fn.ai.auth.presentation;
 
 import com.fn.ai.auth.application.AuthService;
+import com.fn.ai.auth.presentation.dto.request.SignInRequestDto;
 import com.fn.ai.auth.presentation.dto.request.SignUpRequestDto;
 import com.fn.ai.auth.presentation.dto.response.SignUpResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -20,5 +21,10 @@ public class AuthController {
   @PostMapping("/signup")
   public ResponseEntity<SignUpResponseDto> signup(@RequestBody SignUpRequestDto requestDto) {
     return ResponseEntity.ok().body(authService.signup(requestDto));
+  }
+
+  @PostMapping("/signin")
+  public void signin(@RequestBody SignInRequestDto requestDto){
+    // 로그인용 컨트롤러
   }
 }

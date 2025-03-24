@@ -53,7 +53,8 @@ public class UserContextFilter extends OncePerRequestFilter {
     }
 
     if (requestUri.startsWith("/api/users/username") ||
-        requestUri.startsWith("/api/auth/signup")) {
+        requestUri.equals("/api/auth/signup") ||
+        requestUri.equals("/api/users/signup")) {
       filterChain.doFilter(request, response);
       return;
     }

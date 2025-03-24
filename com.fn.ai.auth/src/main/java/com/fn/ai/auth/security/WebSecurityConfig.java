@@ -63,10 +63,17 @@ public class WebSecurityConfig {
 
     http.authorizeHttpRequests((authorizeHttpRequests) ->
         authorizeHttpRequests
-            .requestMatchers("/api/auth/**").permitAll()
-            .requestMatchers("/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html",
-                "/swagger-ui/**")
-            .permitAll()
+            .requestMatchers(// 직접 접근용
+                "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
+                "/swagger-resources/**", "/webjars/**",
+
+                // Gateway 프록시 접근용
+                "/api/auth/v3/api-docs/**", "/api/auth/swagger-ui/**",
+                "/api/auth/swagger-ui.html", "/api/auth/webjars/**",
+                "/api/auth/swagger-resources/**",
+
+                // 일반 API
+                "/api/auth/**").permitAll()
             .anyRequest().authenticated()
     );
 
