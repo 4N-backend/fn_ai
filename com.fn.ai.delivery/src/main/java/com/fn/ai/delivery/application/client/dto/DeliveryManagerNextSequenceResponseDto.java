@@ -2,9 +2,10 @@ package com.fn.ai.delivery.application.client.dto;
 
 import java.util.UUID;
 
-public record DeliveryManagerAssignResponseDto(
+public record DeliveryManagerNextSequenceResponseDto(
     UUID deliveryManagerId,
-    String slackId
+    String slackId,
+    long sequence
 ) {
 
 }
