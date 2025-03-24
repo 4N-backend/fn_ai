@@ -1,7 +1,7 @@
 package com.fn.ai.user.application.service;
 
 import com.fn.ai.common.context.UserRoleEnum;
-import com.fn.ai.user.presentation.dto.DeliveryManagerAssignResponseDto;
+import com.fn.ai.user.presentation.dto.DeliveryManagerNextSequenceResponseDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerDeleteResponseDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerInfoResponseDto;
 import com.fn.ai.user.presentation.dto.DeliveryManagerRequestDto;
@@ -11,21 +11,24 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 
 public interface DeliveryManagerService {
-    DeliveryManagerResponseDto createDeliveryManager(UUID userId, DeliveryManagerRequestDto requestDto);
 
-    // 배송 담당자 정보 단건 조회
-    DeliveryManagerResponseDto getDeliveryManager(UserRoleEnum role, UUID requesterId, UUID targetId);
+  DeliveryManagerResponseDto createDeliveryManager(UUID userId,
+      DeliveryManagerRequestDto requestDto);
 
-    // 허브 ID 조회 (HUB_MANAGER 권한 체크용)
-    UUID getHubIdOf(UUID userId);
+  // 배송 담당자 정보 단건 조회
+  DeliveryManagerResponseDto getDeliveryManager(UserRoleEnum role, UUID requesterId, UUID targetId);
 
-    Page<DeliveryManagerInfoResponseDto> getAllDeliveryManagers(UserRoleEnum role, UUID requesterId,
-                                                                int page, int size, String sortBy, boolean isAsc);
+  // 허브 ID 조회 (HUB_MANAGER 권한 체크용)
+  UUID getHubIdOf(UUID userId);
 
-    DeliveryManagerResponseDto updateDeliveryManager(UserRoleEnum role, UUID requesterId,
-                                                     UUID targetId, DeliveryManagerUpdaterRequestDto requestDto);
+  Page<DeliveryManagerInfoResponseDto> getAllDeliveryManagers(UserRoleEnum role, UUID requesterId,
+      int page, int size, String sortBy, boolean isAsc);
 
-    DeliveryManagerDeleteResponseDto deleteDeliveryManager(UserRoleEnum role, UUID requesterId, UUID deliveryManagerId);
+  DeliveryManagerResponseDto updateDeliveryManager(UserRoleEnum role, UUID requesterId,
+      UUID targetId, DeliveryManagerUpdaterRequestDto requestDto);
 
-    DeliveryManagerAssignResponseDto assign(UUID departureHubId);
+  DeliveryManagerDeleteResponseDto deleteDeliveryManager(UserRoleEnum role, UUID requesterId,
+      UUID deliveryManagerId);
+
+  DeliveryManagerNextSequenceResponseDto getNextDeliveryManager(long lastSequence);
 }

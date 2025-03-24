@@ -1,10 +1,9 @@
 package com.fn.ai.delivery.application.client;
 
-import com.fn.ai.delivery.application.client.dto.DeliveryManagerAssignResponseDto;
-import java.util.UUID;
+import com.fn.ai.delivery.application.client.dto.DeliveryManagerNextSequenceResponseDto;
 
 public interface DeliveryManagerClient {
 
-  DeliveryManagerAssignResponseDto getAssignedDeliveryManager(UUID departureId);
+  DeliveryManagerNextSequenceResponseDto getNextSequenceDeliveryManager(long lastSequence);
 
 }

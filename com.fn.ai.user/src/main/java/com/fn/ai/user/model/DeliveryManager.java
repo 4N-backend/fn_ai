@@ -40,13 +40,13 @@ public class DeliveryManager extends BaseEntity {
     private DeliveryType type;
 
     @Column(name = "delivery_sequence", nullable = false)
-    private int deliverySequence;
+    private long deliverySequence;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    public static DeliveryManager of(DeliveryManagerRequestDto requestDto, int sequence, User user) {
+    public static DeliveryManager of(DeliveryManagerRequestDto requestDto, long sequence, User user) {
         DeliveryManager manager = DeliveryManager.builder()
                 .hubId(requestDto.hubId())
                 .type(DeliveryType.valueOf(requestDto.type().toUpperCase()))
@@ -61,6 +61,4 @@ public class DeliveryManager extends BaseEntity {
         this.type = type;
         this.hubId = hubId;
     }
-
-
 }

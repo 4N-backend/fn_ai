@@ -9,7 +9,7 @@ public record DeliveryManagerInfoResponseDto(
         String username,
         UUID hubId,
         DeliveryType type,
-        int deliverySequence
+        long deliverySequence
 ) {
     public static DeliveryManagerInfoResponseDto of(DeliveryManager dm) {
         return new DeliveryManagerInfoResponseDto(

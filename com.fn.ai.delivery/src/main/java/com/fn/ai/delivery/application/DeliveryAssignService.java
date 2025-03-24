@@ -1,7 +1,9 @@
 package com.fn.ai.delivery.application;
 
 import com.fn.ai.delivery.application.client.DeliveryManagerClient;
-import com.fn.ai.delivery.application.client.dto.DeliveryManagerAssignResponseDto;
+import com.fn.ai.delivery.application.client.dto.DeliveryManagerNextSequenceResponseDto;
+import com.fn.ai.delivery.infrastructure.redis.CacheRepository;
+import com.fn.ai.delivery.infrastructure.redis.DistributeLock;
 import com.fn.ai.delivery.model.Delivery;
 import com.fn.ai.delivery.model.DeliveryRoute;
 import com.fn.ai.delivery.model.repository.DeliveryRepository;
@@ -18,8 +20,10 @@ public class DeliveryAssignService {
 
   private final DeliveryRepository deliveryRepository;
   private final DeliveryManagerClient deliveryManagerClient;
+  private final CacheRepository cacheRepository;
 
   @Transactional
+  @DistributeLock(key = "#lastSequence")
   public DeliveryAssignResponseDto assign(UUID deliveryId, int sequence) {
     // 배송 조회
     Delivery delivery = deliveryRepository.findByIdWithRoutes(deliveryId)
@@ -28,12 +32,18 @@ public class DeliveryAssignService {
     // 배정될 배송 루트 조회
     DeliveryRoute route = delivery.getRouteBySequence(new DeliverySequence(sequence));
 
+    // 가장 최근에 배정된 sequence 조회
+    long lastSequence = cacheRepository.getLastDeliveryManagerSequence();
+
     // 배정될 배송 담당자 조회
-    DeliveryManagerAssignResponseDto deliveryManagerAssignResponseDto = deliveryManagerClient
-        .getAssignedDeliveryManager(route.getDepartureHubId());
+    DeliveryManagerNextSequenceResponseDto nextDeliveryManagerInfo = deliveryManagerClient
+        .getNextSequenceDeliveryManager(lastSequence);
 
-    route.assignDeliveryManager(deliveryManagerAssignResponseDto.deliveryManagerId());
+    // 배송 경로에 배송 담당자 배정
+    route.assignDeliveryManager(nextDeliveryManagerInfo.deliveryManagerId());
 
-    return DeliveryAssignResponseDto.of(delivery, deliveryManagerAssignResponseDto);
+    // 캐시 반영
+    cacheRepository.setLastDeliveryManagerSequence(nextDeliveryManagerInfo.sequence());
+    return DeliveryAssignResponseDto.of(delivery, nextDeliveryManagerInfo);
   }
 }
