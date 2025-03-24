@@ -144,22 +144,22 @@ public class HubRouteServiceImpl implements HubRouteService {
     @Override
     @Transactional
     public void generateHubRoutes() {
-        final long MAX_DISTANCE_M = 50000; // 🚀 50km 이하만 저장 (단위: m)
+        final long MAX_DISTANCE_M = 50000; // 🚀 50km 이하만 저장
 
         List<Hub> hubs = hubRepository.findAll();
         Map<UUID, Map<UUID, Long[]>> graph = new HashMap<>();
 
-        // ✅ 1. 메인 노드 설정 (서울, 대전, 대구)
+        // 메인 노드 설정 (서울, 대전, 대구)
         UUID seoulHubId = hubRepository.findByName("서울특별시 센터").orElseThrow().getId();
         UUID daejeonHubId = hubRepository.findByName("대전광역시 센터").orElseThrow().getId();
         UUID daeguHubId = hubRepository.findByName("대구광역시 센터").orElseThrow().getId();
 
         List<UUID> mainHubs = List.of(seoulHubId, daejeonHubId, daeguHubId);
 
-        // ✅ 2. DB에서 거리 정보 가져오기
+        // DB에서 거리 정보 가져오기
         List<CalcHubRouteDistance> allDistances = calcHubRouteRepository.findAll();
 
-        // 🚀 1) 메인 허브들끼리만 연결 (서울 ↔ 대전, 대전 ↔ 대구, 서울 ↔ 대구)
+        // 메인 허브들끼리만 연결
         List<UUID[]> mainHubPairs = List.of(
             new UUID[]{seoulHubId, daejeonHubId},
             new UUID[]{daejeonHubId, daeguHubId},
@@ -185,18 +185,17 @@ public class HubRouteServiceImpl implements HubRouteService {
                 graph.computeIfAbsent(hubB, k -> new HashMap<>())
                     .put(hubA, new Long[]{distance, travelTime});
 
-                log.info("✅ 메인 허브 연결됨: {} ↔ {}", hubA, hubB);
             }
         }
 
-        // 🚀 2) 최대 거리(`MAX_DISTANCE_M`) 이하의 일반 허브들끼리 연결 (메인 허브 제외)
+        //  최대 거리 이하의 일반 허브들끼리 연결 (메인 허브 제외)
         for (CalcHubRouteDistance distanceData : allDistances) {
             UUID startHubId = distanceData.getStartHubId();
             UUID endHubId = distanceData.getEndHubId();
             long distance = distanceData.getDistance().getValue();
             long travelTime = distanceData.getTravelTime().getValue();
 
-            // 🚀 메인 허브가 아닌 경우에만 연결
+            // 메인 허브가 아닌 경우에만 연결
             if (!mainHubs.contains(startHubId) && !mainHubs.contains(endHubId)
                 && distance <= MAX_DISTANCE_M) {
                 graph.computeIfAbsent(startHubId, k -> new HashMap<>())
@@ -206,10 +205,10 @@ public class HubRouteServiceImpl implements HubRouteService {
             }
         }
 
-        // 🚀 3) 모든 일반 허브를 가장 가까운 메인 허브와 연결
+        // 모든 일반 허브를 가장 가까운 메인 허브와 연결
         for (Hub hub : hubs) {
             UUID hubId = hub.getId();
-            if (!mainHubs.contains(hubId)) { // 🚀 메인 허브가 아닌 경우만 처리
+            if (!mainHubs.contains(hubId)) { // 메인 허브가 아닌 경우만 처리
                 Optional<CalcHubRouteDistance> nearestRoute = allDistances.stream()
                     .filter(
                         d -> (d.getStartHubId().equals(hubId) && mainHubs.contains(d.getEndHubId()))
@@ -228,18 +227,16 @@ public class HubRouteServiceImpl implements HubRouteService {
                         .put(nearestHubId, new Long[]{distance, travelTime});
                     graph.computeIfAbsent(nearestHubId, k -> new HashMap<>())
                         .put(hubId, new Long[]{distance, travelTime});
-
-                    log.info("✅ 일반 허브가 메인 허브와 연결됨: {} ↔ {}", hubId, nearestHubId);
                 }
             }
         }
 
-        // 🚀 4) 최적 경로를 `HubRoute`에 저장
+        // 🚀최적 경로 저장
         for (UUID departureHubId : graph.keySet()) {
             for (UUID arrivalHubId : graph.get(departureHubId).keySet()) {
                 boolean exists = hubRouteRepository.existsByDepatureHubIdAndArrivalHubId(
                     departureHubId, arrivalHubId);
-                log.info("🔍 저장 여부 체크: {} → {} = {}", departureHubId, arrivalHubId, exists);
+
 
                 if (!exists) {
                     Long[] routeData = graph.get(departureHubId).get(arrivalHubId);
@@ -250,8 +247,6 @@ public class HubRouteServiceImpl implements HubRouteService {
                     HubRoute hubRoute = new HubRoute(routeData[1], routeData[0], departureHubId,
                         departureHubName, arrivalHubId, arrivalHubName);
                     hubRouteRepository.save(hubRoute);
-                    log.info("✅ HubRoute 저장됨: {} → {} (거리: {}m)", departureHubId, arrivalHubId,
-                        routeData[0]);
                 }
             }
         }
