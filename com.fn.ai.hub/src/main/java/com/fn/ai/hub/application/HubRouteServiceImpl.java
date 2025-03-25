@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -196,6 +198,10 @@ public class HubRouteServiceImpl implements HubRouteService {
         executor.shutdown();
     }
 
+    @Cacheable(
+        value = "deliveryRoutes",
+        key = "#requestDto.departureHubId().toString() + '->' + #requestDto.arrivalHubId().toString()"
+    )
     @Override
     public Queue<HubRouteResponseDto> findDeliveryRoute(HubRouteFindRequestDto requestDto) {
         Map<UUID, UUID> previous = new HashMap<>();
@@ -285,6 +291,7 @@ public class HubRouteServiceImpl implements HubRouteService {
         return deliveryRoute;
     }
 
+    @CacheEvict(value = "deliveryRoutes", allEntries = true)
     @Override
     @Transactional
     public void generateHubRoutes() {
