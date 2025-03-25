@@ -1,4 +1,4 @@
-package com.fn.ai.order.model;
+package com.fn.ai.product.infrastructure.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

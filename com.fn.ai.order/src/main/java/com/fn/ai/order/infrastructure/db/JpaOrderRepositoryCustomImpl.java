@@ -1,12 +1,12 @@
 package com.fn.ai.order.infrastructure.db;
 
-import static com.fn.ai.order.model.QOrder.order;
-import static com.fn.ai.order.model.QOrderItem.orderItem;
+import static com.fn.ai.order.domain.model.QOrder.order;
+import static com.fn.ai.order.domain.model.QOrderItem.orderItem;
 
-import com.fn.ai.order.model.Order;
-import com.fn.ai.order.model.OrderSortType;
-import com.fn.ai.order.presentation.OrderSearchRequestDto;
-import com.fn.ai.order.presentation.OrderSearchResponseDto;
+import com.fn.ai.order.domain.OrderSortType;
+import com.fn.ai.order.domain.model.Order;
+import com.fn.ai.order.presentation.dto.OrderSearchRequestDto;
+import com.fn.ai.order.presentation.dto.OrderSearchResponseDto;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -69,8 +69,8 @@ public class JpaOrderRepositoryCustomImpl implements JpaOrderRepositoryCustom {
     List<OrderSpecifier<?>> orderSpecifierList = new ArrayList<>();
 
     Map<String, OrderSortType> sortTypeMap = Map.of(
-        OrderSortType.CreateAt.getName(), OrderSortType.CreateAt,
-        OrderSortType.DeleteAt.getName(), OrderSortType.DeleteAt
+        OrderSortType.CREATE_AT.getName(), OrderSortType.CREATE_AT,
+        OrderSortType.UPDATE_AT.getName(), OrderSortType.UPDATE_AT
     );
 
     if (pageable.getSort().isSorted()) {

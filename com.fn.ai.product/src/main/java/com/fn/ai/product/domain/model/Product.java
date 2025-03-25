@@ -1,4 +1,4 @@
-package com.fn.ai.product.model;
+package com.fn.ai.product.domain.model;
 
 import com.fn.ai.common.entity.BaseEntity;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
@@ -8,16 +8,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
+@SQLRestriction("deleted_at IS NULL")
 @Entity(name = "p_product")
 public class Product extends BaseEntity {
 
@@ -34,6 +37,7 @@ public class Product extends BaseEntity {
   @Column(nullable = false)
   private UUID companyId;
 
+  @Min(0)
   private int stock;
 
 
@@ -53,4 +57,5 @@ public class Product extends BaseEntity {
     this.hubId = requestDto.hubId();
     return this;
   }
+
 }

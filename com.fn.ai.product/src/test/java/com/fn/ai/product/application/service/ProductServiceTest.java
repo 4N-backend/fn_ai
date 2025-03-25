@@ -5,8 +5,8 @@ import static org.assertj.core.groups.Tuple.tuple;
 
 import com.fn.ai.product.application.dto.ProductRequestDto;
 import com.fn.ai.product.common.UnitTestSupport;
-import com.fn.ai.product.model.Product;
-import com.fn.ai.product.model.repository.ProductRepository;
+import com.fn.ai.product.domain.model.Product;
+import com.fn.ai.product.domain.repository.ProductRepository;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
 import com.fn.ai.product.presentation.dto.request.ProductSearchRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductSearchResponseDto;
@@ -160,5 +160,5 @@ class ProductApplicationTests extends UnitTestSupport {
     list.add(new ProductRequestDto(productId, stock));
     return list;
   }
-  
+
 }

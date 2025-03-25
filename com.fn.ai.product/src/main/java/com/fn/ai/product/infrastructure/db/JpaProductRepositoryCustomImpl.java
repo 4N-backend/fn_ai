@@ -1,9 +1,12 @@
 package com.fn.ai.product.infrastructure.db;
 
-import static com.fn.ai.product.model.QProduct.product;
+import static com.fn.ai.product.domain.model.QProduct.product;
 
+import com.fn.ai.common.exception.BaseException;
+import com.fn.ai.common.exception.code.CommonResponseCode;
 import com.fn.ai.product.application.dto.ProductRequestDto;
-import com.fn.ai.product.model.Product;
+import com.fn.ai.product.domain.ProductSortType;
+import com.fn.ai.product.domain.model.Product;
 import com.fn.ai.product.presentation.dto.request.ProductSearchRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductSearchResponseDto;
 import com.querydsl.core.types.OrderSpecifier;
@@ -18,6 +21,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -68,7 +72,6 @@ public class JpaProductRepositoryCustomImpl implements JpaProductRepositoryCusto
 
   @Override
   public long increaseStock(List<ProductRequestDto> requestDto) {
-
     return updateStock(requestDto, true);
   }
 
@@ -77,13 +80,19 @@ public class JpaProductRepositoryCustomImpl implements JpaProductRepositoryCusto
 
     for (ProductRequestDto productDto : requestDto) {
       long stockChange = isIncrease ? productDto.stock() : productDto.stock() * -1;
-      long execute = queryFactory
-          .update(product)
-          .set(product.stock, product.stock.add(stockChange))
-          .where(productIdEq(productDto.productId()))
-          .execute();
+      try {
 
-      updatedStock += execute;
+        long execute = queryFactory
+            .update(product)
+            .set(product.stock, product.stock.add(stockChange))
+            .where(productIdEq(productDto.productId()))
+            .execute();
+
+        updatedStock += execute;
+
+      } catch (DataIntegrityViolationException e) {
+        throw new BaseException(CommonResponseCode.BAD_REQUEST.getCode(), e.getMessage());
+      }
     }
 
     return updatedStock;
@@ -106,7 +115,9 @@ public class JpaProductRepositoryCustomImpl implements JpaProductRepositoryCusto
 
     Map<String, ProductSortType> sortTypeMap = Map.of(
         ProductSortType.PRODUCT_NAME.getName(), ProductSortType.PRODUCT_NAME,
-        ProductSortType.PRODUCT_STOCK.getName(), ProductSortType.PRODUCT_STOCK
+        ProductSortType.PRODUCT_STOCK.getName(), ProductSortType.PRODUCT_STOCK,
+        ProductSortType.CREATED_AT.getName(), ProductSortType.CREATED_AT,
+        ProductSortType.UPDATED_AT.getName(), ProductSortType.UPDATED_AT
     );
 
     if (pageable.getSort().isSorted()) {

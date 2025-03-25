@@ -1,4 +1,4 @@
-package com.fn.ai.order.infrastructure;
+package com.fn.ai.order.infrastructure.client;
 
 import com.fn.ai.order.application.dto.DeliveryCreateRequestDto;
 import com.fn.ai.order.application.dto.DeliveryCreateResponseDto;

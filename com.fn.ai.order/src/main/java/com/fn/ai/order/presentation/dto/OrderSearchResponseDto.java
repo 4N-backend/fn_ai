@@ -1,7 +1,7 @@
-package com.fn.ai.order.presentation;
+package com.fn.ai.order.presentation.dto;
 
-import com.fn.ai.order.model.Order;
-import com.fn.ai.order.model.OrderItem;
+import com.fn.ai.order.domain.model.Order;
+import com.fn.ai.order.domain.model.OrderItem;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
