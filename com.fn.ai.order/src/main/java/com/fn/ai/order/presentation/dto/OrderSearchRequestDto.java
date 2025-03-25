@@ -1,4 +1,4 @@
-package com.fn.ai.order.presentation;
+package com.fn.ai.order.presentation.dto;
 
 import java.util.UUID;
 

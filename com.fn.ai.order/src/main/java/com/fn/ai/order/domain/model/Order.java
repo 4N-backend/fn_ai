@@ -1,4 +1,4 @@
-package com.fn.ai.order.model;
+package com.fn.ai.order.domain.model;
 
 import com.fn.ai.common.entity.BaseEntity;
 import com.fn.ai.order.presentation.dto.OrderCreateRequestDto;
@@ -16,9 +16,11 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 @Getter
 @NoArgsConstructor
+@SQLRestriction("deleted_at IS NULL")
 @Entity(name = "p_order")
 public class Order extends BaseEntity {
 

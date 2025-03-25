@@ -1,7 +1,7 @@
-package com.fn.ai.product.model.repository;
+package com.fn.ai.product.domain.repository;
 
 import com.fn.ai.product.application.dto.ProductRequestDto;
-import com.fn.ai.product.model.Product;
+import com.fn.ai.product.domain.model.Product;
 import com.fn.ai.product.presentation.dto.request.ProductSearchRequestDto;
 import com.fn.ai.product.presentation.dto.response.ProductSearchResponseDto;
 import java.util.List;

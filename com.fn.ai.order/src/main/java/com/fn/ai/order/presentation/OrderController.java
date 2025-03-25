@@ -9,6 +9,8 @@ import com.fn.ai.order.application.OrderService;
 import com.fn.ai.order.presentation.dto.OrderCreateRequestDto;
 import com.fn.ai.order.presentation.dto.OrderCreateResponseDto;
 import com.fn.ai.order.presentation.dto.OrderResponseDto;
+import com.fn.ai.order.presentation.dto.OrderSearchRequestDto;
+import com.fn.ai.order.presentation.dto.OrderSearchResponseDto;
 import com.fn.ai.order.presentation.dto.OrderUpdateRequestDto;
 import com.fn.ai.order.presentation.dto.OrderUpdateResponseDto;
 import java.util.UUID;

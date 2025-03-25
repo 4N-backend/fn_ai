@@ -1,6 +1,6 @@
-package com.fn.ai.order.model;
+package com.fn.ai.order.domain;
 
-import static com.fn.ai.order.model.QOrder.order;
+import static com.fn.ai.order.domain.model.QOrder.order;
 
 import com.querydsl.core.types.OrderSpecifier;
 import java.util.function.Function;
@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum OrderSortType {
 
-  CreateAt("createAt",
+  CREATE_AT("createAt",
       direction -> direction ? order.createdAt.asc() : order.createdAt.desc()),
-  DeleteAt("deleteAt",
+  UPDATE_AT("deleteAt",
       direction -> direction ? order.deletedAt.asc() : order.deletedBy.desc());
 
   @Getter

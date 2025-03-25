@@ -1,6 +1,6 @@
 package com.fn.ai.product.presentation.dto.response;
 
-import com.fn.ai.product.model.Product;
+import com.fn.ai.product.domain.model.Product;
 import java.util.UUID;
 import lombok.Builder;
 

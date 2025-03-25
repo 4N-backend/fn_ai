@@ -2,7 +2,6 @@ package com.fn.ai.order.infrastructure.client;
 
 import com.fn.ai.order.application.client.ProductClient;
 import com.fn.ai.order.application.dto.ProductStockRequestDto;
-import com.fn.ai.order.infrastructure.ProductFeignClient;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

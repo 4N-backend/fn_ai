@@ -1,6 +1,6 @@
 package com.fn.ai.order.presentation.dto;
 
-import com.fn.ai.order.model.OrderItem;
+import com.fn.ai.order.domain.model.OrderItem;
 import java.util.UUID;
 import lombok.Builder;
 
