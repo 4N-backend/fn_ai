@@ -93,16 +93,15 @@ public class HubRouteController {
             CommonResponseCode.SUCCESS.getMessage(), responseDto);
     }
 
-    @Operation(summary = "허브 루트 검색",description = "키워드를 기준으로 허브 루트를 검색합니다.\n"
-        + "키워드는 출발 허브의 이름입니다.")
+    @Operation(summary = "허브 루트 검색",description = "출발허브의 이름을 기준으로 검색합니다.")
     @GetMapping("/search")
     @RequireAuthorization({"MASTER", "HUB_MANAGER", "COMPANY_MANAGER","DELIVERY_MANAGER"})
     public ResponseEntity<CommonResponse<Page<HubRouteResponseDto>>> searchHubRoute(
-        @RequestParam int page,
-        @RequestParam int size,
-        @RequestParam String sortBy,
-        @RequestParam boolean isAsc,
-        @RequestParam UUID keyword
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "true") boolean isAsc,
+        @RequestParam String keyword
     ) {
 
         Page<HubRouteResponseDto> responseDto = hubRouteService.searchHubRoute(page, size, sortBy,
@@ -129,7 +128,8 @@ public class HubRouteController {
             CommonResponseCode.CREATED.getMessage(), "허브 그래프 생성");
     }
 
-    @Operation(summary = "허브간의 거리 및 시간 계산",description = "미리 모든 허브들간의 소요 거리와 시간을 Naver Map direction5 API를 이용해 계산하여 데이터베이스에 저장합니다.")
+    @Operation(summary = "허브간의 거리 및 시간 계산",description = "미리 모든 허브들간의 소요 거리와 시간을 Naver Map direction5 API를 이용해 계산하여 데이터베이스에 저장합니다.\n"
+        + "처리하는데 시간이 조금 소요됩니다.")
     @GetMapping("/generate/cal")
     @RequireAuthorization({"MASTER"})
     public ResponseEntity<CommonResponse<String>> calculateAllHubRoutes() {

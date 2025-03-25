@@ -19,6 +19,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "p_calc_hub_route_distance")
 public class CalcHubRouteDistance {
 
+    /**
+     * BaseEntity 적용 X
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

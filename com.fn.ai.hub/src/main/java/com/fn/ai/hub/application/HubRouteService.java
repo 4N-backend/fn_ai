@@ -23,7 +23,7 @@ public interface HubRouteService {
     Page<HubRouteResponseDto> getAllHubRoutes(int page,int size,String sortBy,boolean isAsc);
 
     Page<HubRouteResponseDto> searchHubRoute(int page, int size, String sortBy, boolean isAsc,
-        UUID keyword);
+        String keyword);
 
     /**
      * 허브 루트 자동생성

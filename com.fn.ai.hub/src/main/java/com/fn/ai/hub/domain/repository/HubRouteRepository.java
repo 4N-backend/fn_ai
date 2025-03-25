@@ -20,7 +20,7 @@ public interface HubRouteRepository {
 
     Optional<HubRoute> findHubRouteById(UUID routeId);
 
-    Page<HubRoute> searchHubRoute(Pageable pageable, UUID keyword);
+    Page<HubRoute> searchHubRoute(Pageable pageable, String keyword);
 
     Optional<HubRoute> findById(UUID routeId);
 }
