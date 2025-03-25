@@ -64,10 +64,10 @@ public class HubController {
     @GetMapping
     @RequireAuthorization({"MASTER", "HUB_MANAGER", "COMPANY_MANAGER","DELIVERY_MANAGER"})
     public ResponseEntity<CommonResponse<Page<HubResponseDto>>> getAllHub(
-        @RequestParam int page,
-        @RequestParam int size,
-        @RequestParam String sortBy,
-        @RequestParam boolean isAsc
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "true") boolean isAsc
     ) {
 
         Page<HubResponseDto> responseDto = hubService.getAllHub(page, size, sortBy, isAsc);
@@ -75,14 +75,14 @@ public class HubController {
             CommonResponseCode.SUCCESS.getMessage(), responseDto);
     }
 
-    @Operation(summary = "허브 검색", description = "키워드를 기준으로 허브를 검색합니다.")
+    @Operation(summary = "허브 검색", description = "허브이름으로 검색합니다.")
     @GetMapping("/search")
     @RequireAuthorization({"MASTER", "HUB_MANAGER", "COMPANY_MANAGER","DELIVERY_MANAGER"})
     public ResponseEntity<CommonResponse<Page<HubResponseDto>>> searchHub(
-        @RequestParam int page,
-        @RequestParam int size,
-        @RequestParam String sortBy,
-        @RequestParam boolean isAsc,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "true") boolean isAsc,
         @RequestParam String keyword
     ) {
 

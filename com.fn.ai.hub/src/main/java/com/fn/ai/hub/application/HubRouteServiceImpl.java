@@ -138,7 +138,7 @@ public class HubRouteServiceImpl implements HubRouteService {
 
     @Override
     public Page<HubRouteResponseDto> searchHubRoute(int page, int size, String sortBy,
-        boolean isAsc, UUID keyword) {
+        boolean isAsc, String keyword) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
