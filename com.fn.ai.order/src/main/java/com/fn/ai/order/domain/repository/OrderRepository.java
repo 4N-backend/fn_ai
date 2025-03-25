@@ -1,7 +1,8 @@
-package com.fn.ai.order.model;
+package com.fn.ai.order.domain.repository;
 
-import com.fn.ai.order.presentation.OrderSearchRequestDto;
-import com.fn.ai.order.presentation.OrderSearchResponseDto;
+import com.fn.ai.order.domain.model.Order;
+import com.fn.ai.order.presentation.dto.OrderSearchRequestDto;
+import com.fn.ai.order.presentation.dto.OrderSearchResponseDto;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Page;

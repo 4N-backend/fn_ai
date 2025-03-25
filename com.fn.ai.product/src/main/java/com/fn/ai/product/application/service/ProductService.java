@@ -1,11 +1,13 @@
 package com.fn.ai.product.application.service;
 
 import com.fn.ai.common.context.UserContext;
+import com.fn.ai.common.exception.BaseException;
+import com.fn.ai.common.exception.code.CommonResponseCode;
 import com.fn.ai.product.application.client.CompanyClient;
 import com.fn.ai.product.application.client.HubClient;
 import com.fn.ai.product.application.dto.ProductRequestDto;
-import com.fn.ai.product.model.Product;
-import com.fn.ai.product.model.repository.ProductRepository;
+import com.fn.ai.product.domain.model.Product;
+import com.fn.ai.product.domain.repository.ProductRepository;
 import com.fn.ai.product.presentation.dto.request.ProductCreateRequestDto;
 import com.fn.ai.product.presentation.dto.request.ProductCreateResponseDto;
 import com.fn.ai.product.presentation.dto.request.ProductSearchRequestDto;
@@ -37,10 +39,10 @@ public class ProductService {
   public ProductCreateResponseDto createProduct(ProductCreateRequestDto requestDto) {
 
     hubClient.getHubById(requestDto.hubId()).orElseThrow(() ->
-        new RuntimeException("Hub not found"));
+        new BaseException(CommonResponseCode.BAD_REQUEST.getCode(), "HubId 요청에 실패했습니다."));
 
     companyClient.getCompanyById(requestDto.companyId()).orElseThrow(() ->
-        new RuntimeException("Company not found"));
+        new BaseException(CommonResponseCode.BAD_REQUEST.getCode(), "CompanyId 요청에 실패했습니다."));
 
     return ProductCreateResponseDto.from(productRepository.save(Product.from(requestDto)));
   }
@@ -48,7 +50,7 @@ public class ProductService {
   @Transactional(readOnly = true)
   public ProductResponseDto findProductById(UUID productId) {
     Product product = productRepository.findById(productId).orElseThrow(() ->
-        new RuntimeException("Product not found"));
+        new BaseException(CommonResponseCode.DATA_NOT_FOUND.getCode(), "상품을 찾을 수 없습니다."));
 
     return ProductResponseDto.from(product);
   }
@@ -57,7 +59,7 @@ public class ProductService {
       UUID productId) {
 
     Product product = productRepository.findById(productId).orElseThrow(() ->
-        new RuntimeException("Product not found"));
+        new BaseException(CommonResponseCode.DATA_NOT_FOUND.getCode(), "상품을 찾을 수 없습니다."));
 
     product.update(requestDto);
     return ProductUpdateResponseDto.from(product);
@@ -65,7 +67,7 @@ public class ProductService {
 
   public ProductResponseDto deleteProduct(UUID productId, UserContext userInfo) {
     Product product = productRepository.findById(productId).orElseThrow(() ->
-        new RuntimeException("Product not found"));
+        new BaseException(CommonResponseCode.DATA_NOT_FOUND.getCode(), "상품을 찾을 수 없습니다."));
 
     product.delete();
 
@@ -82,10 +84,11 @@ public class ProductService {
     for (ProductRequestDto productDto : requestDto) {
 
       int stock = productRepository.findById(productDto.productId()).orElseThrow(() ->
-          new RuntimeException("Product not found")).getStock();
+              new BaseException(CommonResponseCode.DATA_NOT_FOUND.getCode(), "상품을 찾을 수 없습니다."))
+          .getStock();
 
       if (stock < productDto.stock()) {
-        throw new RuntimeException("재고가 부족합니다.");
+        throw new BaseException(CommonResponseCode.SERVER_ERROR.getCode(), "재고가 부족합니다.");
       }
     }
     return productRepository.reduceStock(requestDto) == requestDto.size();
@@ -94,5 +97,4 @@ public class ProductService {
   public Boolean increaseStock(List<ProductRequestDto> requestDto) {
     return productRepository.increaseStock(requestDto) == requestDto.size();
   }
-
 }
