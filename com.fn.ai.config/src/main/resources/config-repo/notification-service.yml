@@ -7,7 +7,7 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://db:5432/slack
+    url: jdbc:postgresql://db:5432/notifications
     platform: postgres
     username: sa
     password: sa
