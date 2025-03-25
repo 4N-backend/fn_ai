@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: docker
   application:
     name: gateway-service
   config:
@@ -22,7 +22,7 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:18080/eureka/
+      defaultZone: http://eureka:18080/eureka/
 
 springdoc:
   swagger-ui:
@@ -32,7 +32,7 @@ springdoc:
       - name: 1-hub-service
         url: /api/hubs/v3/api-docs
       - name: 2-user-service
-        url: /api/user/v3/api-docs
+        url: /api/users/v3/api-docs
       - name: 3-order-service
         url: /api/orders/v3/api-docs
       - name: 4-product-service
