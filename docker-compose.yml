@@ -1,24 +1,243 @@
+version: '3.8'
+
 services:
   db:
-    container_name: db
     image: postgres:latest
+    container_name: db
     ports:
       - "5433:5432"
     environment:
       POSTGRES_USER: sa
       POSTGRES_PASSWORD: sa
-    networks:
-      - app_network
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-
-  zipkin:
-    container_name: zipkin
-    image: openzipkin/zipkin
     networks:
       - app_network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app_network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
     ports:
       - "9411:9411"
+    networks:
+      - app_network
+
+  eureka:
+    build:
+      context: ./com.fn.ai.eureka
+    container_name: eureka
+    ports:
+      - "18080:18080"
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  config:
+    build:
+      context: ./com.fn.ai.config
+    container_name: config
+    ports:
+      - "19000:19000"
+    depends_on:
+      eureka:
+        condition: service_healthy
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: native
+      DEBUG: "true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:19000/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  gateway:
+    build:
+      context: ./com.fn.ai.gateway
+    container_name: gateway
+    ports:
+      - "18081:18081"
+    depends_on:
+      config:
+        condition: service_healthy
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+
+  auth:
+    build:
+      context: ./com.fn.ai.auth
+    container_name: auth
+    ports:
+      - "18089:18089"
+    depends_on:
+      config:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      db:
+        condition: service_started
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+  company:
+    build:
+      context: ./com.fn.ai.company
+    container_name: company
+    ports:
+      - "18082:18082"
+    depends_on:
+      config:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      db:
+        condition: service_started
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+  delivery:
+    build:
+      context: ./com.fn.ai.delivery
+    container_name: delivery
+    ports:
+      - "18083:18083"
+    depends_on:
+      config:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      db:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+  hub:
+    build:
+      context: ./com.fn.ai.hub
+    container_name: hub
+    ports:
+      - "18084:18084"
+    depends_on:
+      config:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      db:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      NAVER_CLIENT_ID: ${NAVER_CLIENT_ID}
+      NAVER_SECRET_KEY: ${NAVER_SECRET_KEY}
+
+  notification:
+    build:
+      context: ./com.fn.ai.notification
+    container_name: notification
+    ports:
+      - "18086:18086"
+    depends_on:
+      config:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      db:
+        condition: service_started
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
+
+  order:
+    build:
+      context: ./com.fn.ai.order
+    container_name: order
+    ports:
+      - "18085:18085"
+    depends_on:
+      config:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      db:
+        condition: service_started
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+  product:
+    build:
+      context: ./com.fn.ai.product
+    container_name: product
+    ports:
+      - "18088:18088"
+    depends_on:
+      config:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      db:
+        condition: service_started
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+  user:
+    build:
+      context: ./com.fn.ai.user
+    container_name: user
+    ports:
+      - "18087:18087"
+    depends_on:
+      config:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      db:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    networks:
+      - app_network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
 
   redis:
     container_name: redis

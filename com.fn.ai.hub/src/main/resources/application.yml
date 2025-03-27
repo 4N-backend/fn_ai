@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: docker
   application:
     name: hub-service
   config:
@@ -22,7 +22,7 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:18080/eureka/
+      defaultZone: http://eureka:18080/eureka/
 
 
 naver:
