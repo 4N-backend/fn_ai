@@ -39,10 +39,10 @@ spring:
           predicates:
             - Path=/api/users/**
 
-        - id: delivery-service  # 라우트 식별자
-          uri: lb://delivery-service
+        - id: delivery-manager-service  # 라우트 식별자
+          uri: lb://user-service
           predicates:
-            - Path=/api/deliveries/**
+            - Path=/api/delivery-managers/**
 
         - id: product-service  # 라우트 식별자
           uri: lb://product-service

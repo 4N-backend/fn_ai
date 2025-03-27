@@ -15,6 +15,7 @@ public class RedissonConfig {
   public RedissonClient redissonClient() {
     Config config = new Config();
     config.useSingleServer().setAddress(REDISSON_HOST_PREFIX + "redis:6379");
+
     return Redisson.create(config);
   }
 }
